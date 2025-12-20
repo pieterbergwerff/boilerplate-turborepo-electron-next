@@ -1,0 +1,439 @@
+name: 🚀 Comprehensive CI/CD Pipeline with Turborepo
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily at 2 AM UTC for dependency checks
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip test execution'
+        required: false
+        default: false
+        type: boolean
+      deploy_artifacts:
+        description: 'Deploy build artifacts'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION_MATRIX: '[24]'
+  ELECTRON_CACHE: ~/.cache/electron
+  ELECTRON_BUILDER_CACHE: ~/.cache/electron-builder
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 📋 Pre-flight checks
+  preflight:
+    name: 🔍 Pre-flight Checks
+    runs-on: ubuntu-latest
+    outputs:
+      should-run-tests: ${{ steps.changes.outputs.should-run-tests }}
+      should-build: ${{ steps.changes.outputs.should-build }}
+      node-versions: ${{ steps.setup.outputs.node-versions }}
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📊 Detect changes
+        id: changes
+        run: |
+          if git diff --quiet HEAD~1 HEAD -- '*.md' '*.txt' '*.yml' '.github/' || [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "should-run-tests=true" >> $GITHUB_OUTPUT
+            echo "should-build=true" >> $GITHUB_OUTPUT
+          else
+            echo "should-run-tests=true" >> $GITHUB_OUTPUT
+            echo "should-build=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🎯 Setup matrix
+        id: setup
+        run: |
+          echo "node-versions=${{ env.NODE_VERSION_MATRIX }}" >> $GITHUB_OUTPUT
+
+  # 🔐 Security & Dependency Analysis
+  security:
+    name: 🔐 Security Analysis
+    runs-on: ubuntu-latest
+    needs: preflight
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Run npm audit
+        run: |
+          npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: 🛡️ CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+        continue-on-error: true
+
+      - name: 🔍 CodeQL Analyze
+        uses: github/codeql-action/analyze@v3
+        continue-on-error: true
+
+      - name: 🔒 Dependency Review
+        uses: actions/dependency-review-action@v4
+        if: github.event_name == 'pull_request'
+
+  # 🧹 Code Quality Checks
+  quality:
+    name: 🧹 Code Quality (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs: preflight
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: � Configure Git for Windows line endings
+        if: matrix.os == 'windows-latest'
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: �📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🎨 Check Prettier formatting
+        run: npm run format:check
+
+      - name: 🔍 ESLint analysis
+        run: npm run lint
+
+      - name: 📝 TypeScript type checking
+        run: npm run typecheck
+
+      - name: 📊 Code complexity analysis
+        run: npx complexity-report -o complexity-report.json -f json src/ || echo "Complexity analysis skipped"
+        continue-on-error: true
+
+      - name: 📈 Upload complexity report
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: complexity-report
+          path: |
+            complexity-report.json
+            complexity-electron.json
+          retention-days: 7
+        continue-on-error: true
+
+  # 🧪 Comprehensive Testing
+  test:
+    name: 🧪 Test Suite (Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs: [preflight, quality]
+    if: needs.preflight.outputs.should-run-tests == 'true' && !inputs.skip_tests
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [24]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run tests with coverage
+        run: npm run test:coverage
+        env:
+          CI: true
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        if: matrix.os == 'ubuntu-latest' && matrix.node == '24'
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+
+  # 🏗️ Build & Package Testing
+  build:
+    name: 🏗️ Build & Package (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs: [preflight, quality]
+    if: needs.preflight.outputs.should-build == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 🍎 Setup macOS certificate (macOS only)
+        if: matrix.os == 'macos-latest'
+        run: echo "macOS certificate setup would go here"
+        # Add actual certificate setup for real deployment
+
+      - name: 🗂️ Cache Electron
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.ELECTRON_CACHE }}
+          key: ${{ runner.os }}-electron-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-electron-cache-
+
+      - name: 🗂️ Cache Electron Builder
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-builder-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-electron-builder-cache-
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Next.js
+        run: npm run build:next
+
+      - name: 🔧 Build TypeScript
+        run: npm run build:ts
+
+      - name: 📱 Build Electron App
+        run: npm run build:electron
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📋 List build artifacts
+        run: |
+          echo "📁 Build directory contents:"
+          find dist -type f -name "*.app" -o -name "*.exe" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" | head -20
+
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: inputs.deploy_artifacts || github.event_name == 'push'
+        with:
+          name: electron-app-${{ matrix.os }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.deb
+            dist/*.rpm
+            dist/*.AppImage
+            dist/mac*/*.app
+          retention-days: 30
+
+  # 🔄 End-to-End Testing
+  e2e:
+    name: 🔄 E2E Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs: [build, test]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: electron-app-${{ matrix.os }}
+          path: dist/
+
+      - name: 🖥️ Setup display (Linux only)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: 🧪 Run E2E tests
+        run: |
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            xvfb-run -a npm run test:e2e
+          else
+            npm run test:e2e
+          fi
+        continue-on-error: true
+
+  # 📊 Performance & Bundle Analysis
+  performance:
+    name: 📊 Performance Analysis
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 📊 Bundle size analysis
+        run: |
+          npx bundlewatch --config .bundlewatch.config.js
+        continue-on-error: true
+
+      - name: 📈 Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun
+        continue-on-error: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # 🚀 Release & Deployment
+  release:
+    name: 🚀 Release & Deployment
+    runs-on: ubuntu-latest
+    needs: [security, quality, test, build, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: 📋 Generate changelog
+        id: changelog
+        run: |
+          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          cat CHANGELOG.md | head -50 >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🏷️ Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npx semantic-release
+        continue-on-error: true
+
+  # 📬 Notification & Reporting
+  notification:
+    name: 📬 Notification & Reporting
+    runs-on: ubuntu-latest
+    needs: [security, quality, test, build, e2e, performance, release]
+    if: always()
+    steps:
+      - name: 📊 Collect job statuses
+        id: status
+        run: |
+          echo "security=${{ needs.security.result }}" >> $GITHUB_OUTPUT
+          echo "quality=${{ needs.quality.result }}" >> $GITHUB_OUTPUT
+          echo "test=${{ needs.test.result }}" >> $GITHUB_OUTPUT
+          echo "build=${{ needs.build.result }}" >> $GITHUB_OUTPUT
+          echo "e2e=${{ needs.e2e.result }}" >> $GITHUB_OUTPUT
+          echo "performance=${{ needs.performance.result }}" >> $GITHUB_OUTPUT
+          echo "release=${{ needs.release.result }}" >> $GITHUB_OUTPUT
+
+      - name: 📝 Generate summary report
+        run: |
+          echo "## 🚀 Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | ${{ steps.status.outputs.security }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Quality | ${{ steps.status.outputs.quality }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests | ${{ steps.status.outputs.test }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build | ${{ steps.status.outputs.build }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| E2E | ${{ steps.status.outputs.e2e }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Performance | ${{ steps.status.outputs.performance }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release | ${{ steps.status.outputs.release }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: 💬 Slack notification
+        uses: 8398a7/action-slack@v3
+        if: github.event_name == 'push'
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          text: |
+            🚀 Deployment pipeline completed for ${{ github.repository }}
+            📋 Branch: ${{ github.ref }}
+            👤 Author: ${{ github.actor }}
+            📊 Results: Security:${{ steps.status.outputs.security }} | Tests:${{ steps.status.outputs.test }} | Build:${{ steps.status.outputs.build }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        continue-on-error: true
