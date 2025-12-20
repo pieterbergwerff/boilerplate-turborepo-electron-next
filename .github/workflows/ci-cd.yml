@@ -265,7 +265,7 @@ jobs:
       - name: 📋 List build artifacts
         run: |
           echo "📁 Build directory contents:"
-          find apps/desktop/dist -type f -name "*.app" -o -name "*.exe" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" | head -20
+          find apps/desktop/dist -name "*.app" -o -name "*.exe" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" | head -20
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
