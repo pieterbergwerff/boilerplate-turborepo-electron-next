@@ -5,23 +5,23 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
   // IPC communication methods
   ping: () => ipcRenderer.invoke('ping'),
-  
+
   // App info
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
-  
+
   // Window controls
   minimizeWindow: () => ipcRenderer.send('window-minimize'),
   maximizeWindow: () => ipcRenderer.send('window-maximize'),
   closeWindow: () => ipcRenderer.send('window-close'),
-  
+
   // Development helpers
   openDevTools: () => ipcRenderer.send('open-dev-tools'),
-  
+
   // Event listeners
   onUpdateAvailable: (callback: () => void) => {
     ipcRenderer.on('update-available', callback);
   },
-  
+
   // Remove listeners
   removeAllListeners: (channel: string) => {
     ipcRenderer.removeAllListeners(channel);
