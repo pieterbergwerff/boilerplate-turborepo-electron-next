@@ -279,6 +279,7 @@ jobs:
             dist/*.rpm
             dist/*.AppImage
             dist/mac*/*.app
+            dist/linux*/**/*
           retention-days: 30
 
   # 🔄 End-to-End Testing
