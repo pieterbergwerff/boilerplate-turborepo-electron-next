@@ -1,23 +1,23 @@
 {
-  "name": "@packages/ui",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "lint": "echo \"Lint UI package - skipped for now\"",
-    "type-check": "tsc --noEmit",
-    "test": "echo \"No tests in UI package - skipped\""
-  },
-  "peerDependencies": {
-    "react": "^19.1.0"
-  },
-  "devDependencies": {
-    "@config/typescript": "*",
-    "@types/react": "19.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3"
-  }
+    "name": "@packages/ui",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "scripts": {
+        "lint": "echo \"Lint UI package - skipped for now\"",
+        "type-check": "tsc --noEmit",
+        "test": "echo \"No tests in UI package - skipped\""
+    },
+    "peerDependencies": {
+        "react": "^19.1.0"
+    },
+    "devDependencies": {
+        "@config/typescript": "*",
+        "@types/react": "19.2.7",
+        "@typescript-eslint/eslint-plugin": "^6.16.0",
+        "@typescript-eslint/parser": "^6.16.0",
+        "eslint": "^8.56.0",
+        "typescript": "^5.3.3"
+    }
 }
