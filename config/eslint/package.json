@@ -1,8 +1,8 @@
 {
-    "name": "@config/eslint",
-    "version": "0.0.0",
-    "private": true,
-    "files": [
-        "eslint.config.js"
-    ]
+  "name": "@config/eslint",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "eslint.config.js"
+  ]
 }

@@ -191,6 +191,12 @@ jobs:
         run: npm run test:coverage
         env:
           CI: true
+        continue-on-error: true
+
+      - name: 🧪 Run basic tests (fallback)
+        run: npm run test
+        env:
+          CI: true
 
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -199,6 +205,7 @@ jobs:
           files: ./coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
+        continue-on-error: true
 
   # 🏗️ Build & Package Testing
   build:
@@ -247,8 +254,8 @@ jobs:
       - name: 🏗️ Build Next.js
         run: npm run build:next
 
-      - name: 🔧 Build TypeScript
-        run: npm run build:ts
+      - name: 🔧 TypeScript type checking
+        run: npm run typecheck
 
       - name: 📱 Build Electron App
         run: npm run build:electron

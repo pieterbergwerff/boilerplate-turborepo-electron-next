@@ -1,9 +1,9 @@
 {
-    "name": "@config/prettier",
-    "version": "0.0.0",
-    "private": true,
-    "files": [
-        ".prettierrc",
-        ".prettierignore"
-    ]
+  "name": "@config/prettier",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    ".prettierrc",
+    ".prettierignore"
+  ]
 }
