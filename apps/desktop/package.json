@@ -15,7 +15,8 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "echo \"No tests in desktop package - skipped\""
   },
   "dependencies": {
     "electron-default-menu": "^1.0.2",

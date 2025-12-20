@@ -6,7 +6,8 @@
   "types": "./index.ts",
   "scripts": {
     "lint": "echo \"Lint UI package - skipped for now\"",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "echo \"No tests in UI package - skipped\""
   },
   "peerDependencies": {
     "react": "^19.1.0"

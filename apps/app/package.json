@@ -12,7 +12,8 @@
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "echo \"No tests in app package - skipped\""
   },
   "dependencies": {
     "iron-session": "^8.0.4",
