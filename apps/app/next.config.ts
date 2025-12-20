@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ hostname: 'picsum.photos' }],
   },
-  transpilePackages: ['@repo/ui'],
+  transpilePackages: ['@packages/ui'],
 };
 
 if (process.env.NODE_ENV === 'development') delete nextConfig.output; // for HMR

@@ -1,5 +1,5 @@
 {
-    "name": "@repo/tests",
+    "name": "@packages/tests",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -9,7 +9,6 @@
         "test:coverage": "vitest --coverage"
     },
     "devDependencies": {
-        "@repo/app": "*",
         "@config/typescript": "*",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.1",

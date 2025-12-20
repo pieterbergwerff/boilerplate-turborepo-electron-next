@@ -1,5 +1,5 @@
 {
-    "name": "@repo/desktop",
+    "name": "@apps/desktop",
     "version": "1.0.0",
     "description": "Electron desktop app for the boilerplate project",
     "author": "Pieter Bergwerff",

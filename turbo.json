@@ -1,52 +1,72 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
-  "tasks": {
-    "clean": {
-      "cache": false
-    },
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
-    },
-    "build:electron": {
-      "dependsOn": ["build"],
-      "outputs": ["dist/**"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "start": {
-      "cache": false,
-      "persistent": true
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "lint:fix": {
-      "cache": false
-    },
-    "test": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
-    "test:ui": {
-      "cache": false,
-      "persistent": true
-    },
-    "test:coverage": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
-    "type-check": {
-      "dependsOn": ["^type-check"]
-    },
-    "format": {
-      "cache": false
-    },
-    "format:check": {
-      "cache": false
+    "$schema": "https://turbo.build/schema.json",
+    "ui": "tui",
+    "tasks": {
+        "clean": {
+            "cache": false
+        },
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                ".next/**",
+                "!.next/cache/**",
+                "dist/**",
+                "build/**"
+            ]
+        },
+        "build:electron": {
+            "dependsOn": [
+                "build"
+            ],
+            "outputs": [
+                "dist/**"
+            ]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "start": {
+            "cache": false,
+            "persistent": true
+        },
+        "lint": {
+            "dependsOn": [
+                "^lint"
+            ]
+        },
+        "lint:fix": {
+            "cache": false
+        },
+        "test": {
+            "dependsOn": [
+                "^build"
+            ]
+        },
+        "test:ui": {
+            "cache": false,
+            "persistent": true
+        },
+        "test:coverage": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                "coverage/**"
+            ]
+        },
+        "type-check": {
+            "dependsOn": [
+                "^type-check"
+            ]
+        },
+        "format": {
+            "cache": false
+        },
+        "format:check": {
+            "cache": false
+        }
     }
-  }
 }

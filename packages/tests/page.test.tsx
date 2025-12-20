@@ -13,8 +13,8 @@ beforeEach(() => {
 
 describe('HomePage Component', () => {
   it('renders the home page component successfully', async () => {
-    // Import the component dynamically
-    const HomePage = (await import('@repo/app/src/app/page')).default;
+    // Import the component dynamically using relative path
+    const HomePage = (await import('../../apps/app/src/app/page')).default;
 
     render(<HomePage />);
 
@@ -26,7 +26,7 @@ describe('HomePage Component', () => {
   });
 
   it('detects Electron environment', async () => {
-    const HomePage = (await import('@repo/app/src/app/page')).default;
+    const HomePage = (await import('../../apps/app/src/app/page')).default;
 
     render(<HomePage />);
 
@@ -37,7 +37,7 @@ describe('HomePage Component', () => {
   });
 
   it('renders test communication button', async () => {
-    const HomePage = (await import('@repo/app/src/app/page')).default;
+    const HomePage = (await import('../../apps/app/src/app/page')).default;
 
     render(<HomePage />);
 
