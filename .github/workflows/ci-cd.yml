@@ -265,7 +265,7 @@ jobs:
       - name: 📋 List build artifacts
         run: |
           echo "📁 Build directory contents:"
-          find dist -type f -name "*.app" -o -name "*.exe" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" | head -20
+          find apps/desktop/dist -type f -name "*.app" -o -name "*.exe" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" | head -20
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -273,13 +273,13 @@ jobs:
         with:
           name: electron-app-${{ matrix.os }}
           path: |
-            dist/*.exe
-            dist/*.dmg
-            dist/*.deb
-            dist/*.rpm
-            dist/*.AppImage
-            dist/mac*/*.app
-            dist/linux*/**/*
+            apps/desktop/dist/*.exe
+            apps/desktop/dist/*.dmg
+            apps/desktop/dist/*.deb
+            apps/desktop/dist/*.rpm
+            apps/desktop/dist/*.AppImage
+            apps/desktop/dist/mac*/*.app
+            apps/desktop/dist/linux*/**/*
           retention-days: 30
 
   # 🔄 End-to-End Testing
@@ -308,7 +308,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: electron-app-${{ matrix.os }}
-          path: dist/
+          path: apps/desktop/dist/
 
       - name: 🖥️ Setup display (Linux only)
         if: matrix.os == 'ubuntu-latest'
