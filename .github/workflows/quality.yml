@@ -12,6 +12,7 @@ jobs:
           node-version: '24'
           cache: 'npm'
       - run: npm ci
+      - run: npm run build
       - run: npm run typecheck
       - run: npm run lint
       - run: npx eslint . --max-warnings=0
