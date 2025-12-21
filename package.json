@@ -13,7 +13,7 @@
     "clean": "turbo clean",
     "build": "turbo build",
     "build:next": "turbo build --filter=@apps/app",
-    "build:electron": "turbo build --filter=@apps/desktop && turbo build:electron --filter=@apps/desktop",
+    "build:electron": "npm run build:next && turbo build --filter=@apps/desktop && turbo build:electron --filter=@apps/desktop",
     "dev": "turbo dev",
     "dev:app": "turbo dev --filter=@apps/app",
     "dev:desktop": "turbo dev --filter=@apps/desktop",

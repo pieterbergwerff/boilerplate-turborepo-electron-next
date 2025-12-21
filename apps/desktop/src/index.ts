@@ -47,9 +47,66 @@ process.on('unhandledRejection', (reason, promise) => {
   );
 });
 
-// Configuration for connecting to external Next.js server
-const NEXT_SERVER_URL = 'http://localhost:3000';
+// Configuration for connecting to Next.js
 const isDevelopment = !app.isPackaged;
+const NEXT_SERVER_URL = isDevelopment 
+  ? 'http://localhost:3000'
+  : 'http://localhost:3001'; // Use different port for production server
+
+// Helper function to start the Next.js standalone server in production
+const startNextServer = async (): Promise<void> => {
+  if (isDevelopment) return; // Don't start server in development
+  
+  const { spawn } = require('child_process');
+  const nextServerPath = path.join(__dirname, '../nextjs-standalone/apps/app/server.js');
+  
+  return new Promise((resolve, reject) => {
+    console.log('[DESKTOP] Starting Next.js standalone server...');
+    
+    const serverProcess = spawn('node', [nextServerPath], {
+      env: { ...process.env, PORT: '3001' },
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+    
+    let serverStarted = false;
+    
+    serverProcess.stdout.on('data', (data: Buffer) => {
+      const output = data.toString();
+      console.log('[NEXT] ', output);
+      
+      if (output.includes('ready') || output.includes('started server') || output.includes('listening')) {
+        if (!serverStarted) {
+          serverStarted = true;
+          resolve();
+        }
+      }
+    });
+    
+    serverProcess.stderr.on('data', (data: Buffer) => {
+      console.error('[NEXT ERROR] ', data.toString());
+    });
+    
+    serverProcess.on('error', (error: Error) => {
+      console.error('[DESKTOP] Failed to start Next.js server:', error);
+      reject(error);
+    });
+    
+    serverProcess.on('exit', (code: number | null) => {
+      console.log('[DESKTOP] Next.js server exited with code:', code);
+    });
+    
+    // Auto-resolve after timeout if we don't get explicit ready signal
+    setTimeout(() => {
+      if (!serverStarted) {
+        serverStarted = true;
+        resolve();
+      }
+    }, 5000);
+    
+    // Store process reference for cleanup
+    (app as any).nextServerProcess = serverProcess;
+  });
+};
 
 // Helper function to check if Next.js server is running
 const waitForServer = async (
@@ -137,6 +194,22 @@ const createWindow = async () => {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(defaultMenu(app, shell)));
 
+    // In production, start the Next.js standalone server
+    if (!isDevelopment) {
+      try {
+        await startNextServer();
+        console.log('[DESKTOP] Next.js standalone server started');
+      } catch (error) {
+        console.error('[DESKTOP] Failed to start Next.js server:', error);
+        dialog.showErrorBox(
+          'Server Error',
+          'Failed to start the application server. Please try again.'
+        );
+        app.quit();
+        return;
+      }
+    }
+
     // Wait for Next.js server to be ready before loading
     console.log('[DESKTOP] Waiting for Next.js server at', NEXT_SERVER_URL);
     const serverReady = await waitForServer(NEXT_SERVER_URL);
@@ -208,9 +281,23 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
+  // Cleanup Next.js server process
+  if ((app as any).nextServerProcess) {
+    console.log('[DESKTOP] Stopping Next.js server...');
+    (app as any).nextServerProcess.kill();
+  }
+  
   // On macOS, keep the app running even when all windows are closed
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+app.on('before-quit', () => {
+  // Cleanup Next.js server process when app is about to quit
+  if ((app as any).nextServerProcess) {
+    console.log('[DESKTOP] Stopping Next.js server before quit...');
+    (app as any).nextServerProcess.kill();
   }
 });
 

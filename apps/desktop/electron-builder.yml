@@ -19,6 +19,7 @@ files:
   - dist
   - 'package.json'
   - 'node_modules/**/*'
+  - 'nextjs-standalone/**/*'
   - '!node_modules/electron'
   - '!src/**/*'
   - '!tsconfig.json'
