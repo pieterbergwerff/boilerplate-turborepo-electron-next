@@ -30,9 +30,9 @@ export default function HomePage(): React.JSX.Element {
 
       <div style={{ marginTop: 16 }}>
         <h2>🚀 Welcome to the App</h2>
-        <p>
-          A modern development setup with hot reload, TypeScript, and shared
-          packages.
+        <p className="text-red-500">
+          Tailwind: A modern development setup with hot reload, TypeScript, and
+          shared packages.
         </p>
       </div>
 
