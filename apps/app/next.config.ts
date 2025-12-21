@@ -1,17 +1,40 @@
+// import utils
+// (none)
+// import constants
+// (none)
+// import components
+// (none)
+// import types
 import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
+const base: NextConfig = {
   output: 'standalone',
-  outputFileTracingIncludes: {
-    '*': ['public/**/*', '.next/static/**/*'],
-  },
-  serverExternalPackages: ['electron'],
-  images: {
-    remotePatterns: [{ hostname: 'picsum.photos' }],
-  },
-  transpilePackages: ['@packages/ui'],
+  reactCompiler: true,
+  transpilePackages: ['@packages/ui', '@packages/validators'],
+  headers: async () => [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Content-Security-Policy',
+          value: [
+            "default-src 'self'",
+            "script-src 'self'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data:",
+            "font-src 'self' data:",
+            "connect-src 'self'",
+            "frame-ancestors 'none'",
+          ].join('; '),
+        },
+      ],
+    },
+  ],
 };
 
-if (process.env.NODE_ENV === 'development') delete nextConfig.output; // for HMR
+// Remove standalone output in dev for HMR
+if (process.env.NODE_ENV === 'development') {
+  delete base.output;
+}
 
-export default nextConfig;
+export default base;

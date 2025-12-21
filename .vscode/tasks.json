@@ -1,0 +1,7 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "dev", "type": "shell", "command": "npm run dev" },
+    { "label": "build", "type": "shell", "command": "npm run build" }
+  ]
+}

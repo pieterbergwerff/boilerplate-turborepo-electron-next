@@ -1,47 +1,51 @@
-const { contextBridge, ipcRenderer } = require('electron');
+// import utils
+// (none)
+// import constants
+// (none)
+// import components
+// (none)
+// import types
+import { contextBridge, ipcRenderer } from 'electron';
+import type {
+  AppInfo,
+  OpenDialogOptions,
+  OpenDialogResult,
+  Settings,
+  Theme,
+} from '@packages/validators';
 
-// Expose protected methods that allow the renderer process to use
-// the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld('electronAPI', {
-  // IPC communication methods
-  ping: () => ipcRenderer.invoke('ping'),
+/**
+ * Expose a minimal, typed API to the renderer.
+ * @returns {void}
+ */
+function exposeApi(): void {
+  contextBridge.exposeInMainWorld('api', {
+    /** Get current settings. */
+    getSettings: (): Promise<Settings> => ipcRenderer.invoke('settings:get'),
+    /** Update theme. */
+    setTheme: (theme: Theme): Promise<Settings> =>
+      ipcRenderer.invoke('settings:update', { theme }),
+    /** Get app info. */
+    getAppInfo: (): Promise<AppInfo> => ipcRenderer.invoke('app:get-info'),
+    /** Open OS file dialog. */
+    openDialog: (opts?: OpenDialogOptions): Promise<OpenDialogResult> =>
+      ipcRenderer.invoke('fs:openDialog', opts),
+  });
 
-  // App info
-  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
-
-  // Window controls
-  minimizeWindow: () => ipcRenderer.send('window-minimize'),
-  maximizeWindow: () => ipcRenderer.send('window-maximize'),
-  closeWindow: () => ipcRenderer.send('window-close'),
-
-  // Development helpers
-  openDevTools: () => ipcRenderer.send('open-dev-tools'),
-
-  // Event listeners
-  onUpdateAvailable: (callback: () => void) => {
-    ipcRenderer.on('update-available', callback);
-  },
-
-  // Remove listeners
-  removeAllListeners: (channel: string) => {
-    ipcRenderer.removeAllListeners(channel);
-  },
-});
-
-// TypeScript declarations for the exposed API
-export interface ElectronAPI {
-  ping: () => Promise<string>;
-  getAppVersion: () => Promise<string>;
-  minimizeWindow: () => void;
-  maximizeWindow: () => void;
-  closeWindow: () => void;
-  openDevTools: () => void;
-  onUpdateAvailable: (callback: () => void) => void;
-  removeAllListeners: (channel: string) => void;
+  // Menu → Renderer theme bridge keeps UI in sync.
+  ipcRenderer.on('menu:theme', (_e, theme: Theme) => {
+    void ipcRenderer.invoke('settings:update', { theme });
+  });
 }
 
+exposeApi();
+
 declare global {
-  interface Window {
-    electronAPI: ElectronAPI;
-  }
+  // eslint-disable-next-line no-var
+  var api: {
+    getSettings: () => Promise<Settings>;
+    setTheme: (theme: Theme) => Promise<Settings>;
+    getAppInfo: () => Promise<AppInfo>;
+    openDialog: (opts?: OpenDialogOptions) => Promise<OpenDialogResult>;
+  };
 }

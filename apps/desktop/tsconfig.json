@@ -4,16 +4,28 @@
     "tsBuildInfoFile": ".tscache/cache-electron",
     "esModuleInterop": true,
     "jsx": "react",
-    "moduleResolution": "node",
-    "target": "es2020",
-    "module": "commonjs",
+    "moduleResolution": "nodenext",
+    "target": "es2022",
+    "module": "nodenext",
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "exactOptionalPropertyTypes": false,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitOverride": false,
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.json"],
-  "exclude": ["node_modules", "dist", "build"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "../../node_modules/next-electron-rsc/lib/src/**/*"
+  ]
 }

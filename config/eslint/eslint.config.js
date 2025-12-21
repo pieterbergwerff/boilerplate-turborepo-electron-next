@@ -1,9 +1,12 @@
 // @ts-check
+// import utils
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+// import components
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -14,6 +17,7 @@ export default tseslint.config(
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
       'jsx-a11y': jsxA11y,
+      'react-compiler': reactCompiler,
     },
     languageOptions: {
       parser: tseslint.parser,
@@ -38,15 +42,15 @@ export default tseslint.config(
       ],
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      'react/react-in-jsx-scope': 'off', // Not needed in Next.js 13+
-      'react/prop-types': 'off', // Using TypeScript for prop validation
+      '@typescript-eslint/no-explicit-any': 'error',
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react-compiler/react-compiler': 'error',
     },
   },
   {
     files: ['apps/desktop/**/*.{ts,js}'],
     rules: {
-      // Electron specific rules
       '@typescript-eslint/no-var-requires': 'off',
       'no-console': 'off',
     },

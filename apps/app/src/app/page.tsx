@@ -1,45 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+// import utils
+import { useState } from 'react';
+// import constants
+// (none)
+// import components
+import { Button } from '@packages/ui';
+// import types
+// (none)
 
-export default function HomePage() {
-  const [environment, setEnvironment] = useState<string>('Loading...');
-  const [isClient, setIsClient] = useState(false);
+/**
+ * Home page for the application.
+ * @returns {JSX.Element} Home page content
+ */
+export default function HomePage(): JSX.Element {
+  const [environment, setEnvironment] = useState('unknown');
 
-  useEffect(() => {
-    // This runs only on the client side, after hydration
-    setIsClient(true);
-
-    const isElectron =
-      typeof navigator !== 'undefined' &&
-      navigator.userAgent.toLowerCase().indexOf('electron') > -1;
-
-    setEnvironment(isElectron ? 'Electron' : 'Browser');
-  }, []);
-
-  const handleButtonClick = () => {
-    if (!isClient) return;
-
-    const isElectron =
-      typeof navigator !== 'undefined' &&
-      navigator.userAgent.toLowerCase().indexOf('electron') > -1;
-
-    if (
-      isElectron &&
-      typeof window !== 'undefined' &&
-      (window as any).electronAPI
-    ) {
-      console.log('Running in Electron context');
-    } else {
-      console.log('Running in browser context');
-    }
-  };
+  /**
+   * Handle button click to test IPC communication.
+   */
+  function handleButtonClick(): void {
+    console.log('Button clicked');
+    setEnvironment('development');
+  }
 
   return (
-    <div>
+    <div style={{ padding: 24 }}>
       <h1>Turborepo Electron + Next.js Boilerplate</h1>
 
-      <div>
+      <div style={{ marginTop: 16 }}>
         <h2>🚀 Welcome to the App</h2>
         <p>
           A modern development setup with hot reload, TypeScript, and shared
@@ -47,7 +36,11 @@ export default function HomePage() {
         </p>
       </div>
 
-      <div>
+      <div style={{ marginTop: 16 }}>
+        <Button onClick={handleButtonClick}>Example Button</Button>
+      </div>
+
+      <div style={{ marginTop: 16, display: 'flex', gap: 24 }}>
         <div>
           <h3>⚡ Fast Development</h3>
           <p>Hot reload for both Next.js and Electron processes</p>
@@ -59,9 +52,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div>
-        <button onClick={handleButtonClick}>Test Communication</button>
-
+      <div style={{ marginTop: 16 }}>
         <div>Environment: {environment}</div>
       </div>
     </div>

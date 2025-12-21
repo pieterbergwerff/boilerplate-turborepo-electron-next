@@ -1,47 +1,32 @@
-appId: com.translations-app.desktop
-productName: Translations App
-copyright: 'Copyright © 2025 Pieter Bergwerff'
+appId: ${env.APP_ID}
+productName: ${env.PRODUCT_NAME}
+asar: false
 
-directories:
-  output: dist
-  buildResources: assets
-
-# Enable ASAR packaging for better security and performance
-asar: true
-asarUnpack:
-  - '**/node_modules/next-electron-rsc/**/*'
-  - '**/.next/**/*'
-  - 'nextjs-standalone/apps/app/server.js'
-  - 'nextjs-standalone/apps/app/.next/**/*'
-
-# App icon configuration
-icon: assets/icon.png
-
+# Include Electron build + Next standalone app; exclude electron from Next tree
 files:
-  - dist
-  - 'package.json'
-  - 'node_modules/**/*'
-  - 'nextjs-standalone/**/*'
-  - '!node_modules/electron'
-  - '!src/**/*'
-  - '!tsconfig.json'
-  - '!**/*.test.*'
-  - '!**/*.spec.*'
-  - '!coverage/**/*'
-  - '!.env*'
-  - '!vitest.config.ts'
+  - 'apps/desktop/dist/**'
+  - 'apps/app/.next/standalone/**'
+  - 'apps/app/public/**'
+  - '!apps/app/.next/standalone/**/node_modules/electron/**'
+
+extraResources:
+  - from: packages/database/seed/app.sqlite
+    to: app.sqlite
+
+afterSign: 'scripts/afterSign.mjs'
 
 mac:
-  category: public.app-category.developer-tools
-  target:
-    target: dir
-    arch:
-      - arm64
-#      - x64
+  category: public.app-category.productivity
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  target: [dmg]
+  artifactName: '${env.PRODUCT_NAME}-${version}-${arch}.dmg'
+
+win:
+  target: [nsis]
+  artifactName: '${env.PRODUCT_NAME}-${version}-x64.exe'
 
 linux:
-  category: Development
-  target:
-    - target: dir
-      arch:
-        - x64
+  target: [AppImage, deb]
+  category: Utility
+  artifactName: '${env.PRODUCT_NAME}-${version}-${arch}.${ext}'

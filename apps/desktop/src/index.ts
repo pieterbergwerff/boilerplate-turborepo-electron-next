@@ -77,15 +77,18 @@ const startStaticServer = async (): Promise<void> => {
       const server = http.createServer((req: any, res: any) => {
         const parsedUrl = url.parse(req.url, true);
         let pathname = parsedUrl.pathname;
-        
+
         console.log('[DESKTOP] Serving request for:', pathname);
-        
+
         let filePath = null;
         let contentType = mime.lookup(pathname) || 'text/html';
-        
+
         if (pathname === '/') {
           // Serve the actual Next.js index.html
-          filePath = path.join(__dirname, '../nextjs-standalone/apps/app/.next/server/app/index.html');
+          filePath = path.join(
+            __dirname,
+            '../nextjs-standalone/apps/app/.next/server/app/index.html'
+          );
           contentType = 'text/html';
         } else if (pathname.startsWith('/_next/static/')) {
           // Serve static assets from the correct location
@@ -96,7 +99,7 @@ const startStaticServer = async (): Promise<void> => {
           const staticFile = pathname.substring(1); // Remove leading slash
           filePath = path.join(staticPath, staticFile);
         }
-        
+
         if (filePath && fs.existsSync(filePath)) {
           fs.readFile(filePath, (err: Error | null, data: Buffer) => {
             if (err) {
@@ -105,9 +108,9 @@ const startStaticServer = async (): Promise<void> => {
               res.end('File not found');
             } else {
               console.log('[DESKTOP] Successfully served:', filePath);
-              res.writeHead(200, { 
+              res.writeHead(200, {
                 'Content-Type': contentType,
-                'Cache-Control': 'no-cache' // Disable caching for development
+                'Cache-Control': 'no-cache', // Disable caching for development
               });
               res.end(data);
             }
@@ -206,7 +209,7 @@ const createWindow = async () => {
       });
 
       // Handle window crashes - using render-process-gone instead of crashed
-      mainWindow.webContents.on('render-process-gone', (event, details) => {
+      mainWindow.webContents.on('render-process-gone', (_event, details) => {
         console.error('[DESKTOP] Render process gone:', details);
         mainWindow = null;
         // Optionally restart the window

@@ -1,9 +1,10 @@
 {
-  "name": "@config/prettier",
-  "version": "0.0.0",
-  "private": true,
-  "files": [
-    ".prettierrc",
-    ".prettierignore"
-  ]
+    "name": "@config/prettier",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": ".prettierrc",
+    "dependencies": {
+        "prettier": "^3.7.4"
+    }
 }
