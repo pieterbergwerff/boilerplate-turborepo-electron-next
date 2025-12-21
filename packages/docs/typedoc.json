@@ -1,0 +1,68 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "../../apps/app/src",
+    "../../apps/desktop/src",
+    "../../packages/ui",
+    "../../packages/database",
+    "../../packages/validators",
+    "../../utils/common",
+    "../../utils/client",
+    "../../utils/server"
+  ],
+  "entryPointStrategy": "packages",
+  "out": "html",
+  "name": "Turborepo Electron Next.js Boilerplate",
+  "includeVersion": true,
+  "readme": "README.md",
+  "theme": "default",
+  "includeHierarchySummary": true,
+  "media": [
+    "./ARCHITECTURE.md",
+    "./CONTRIBUTING.md",
+    "./DEPLOYMENT.md",
+    "./TROUBLESHOOTING.md"
+  ],
+  "excludePrivate": false,
+  "excludeProtected": false,
+  "excludeExternals": true,
+  "excludeInternal": false,
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
+  "sort": ["source-order"],
+  "kindSortOrder": [
+    "Project",
+    "Module",
+    "Namespace",
+    "Enum",
+    "EnumMember",
+    "Class",
+    "Interface",
+    "TypeAlias",
+    "Constructor",
+    "Property",
+    "Variable",
+    "Function",
+    "Accessor",
+    "Method",
+    "Parameter",
+    "TypeParameter",
+    "TypeLiteral",
+    "CallSignature",
+    "ConstructorSignature",
+    "IndexSignature",
+    "GetSignature",
+    "SetSignature"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/dist/**",
+    "**/.next/**",
+    "**/build/**"
+  ]
+}

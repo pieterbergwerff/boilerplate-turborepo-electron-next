@@ -225,10 +225,10 @@ NEXT_TELEMETRY_DISABLED=1
 
 ## Documentation
 
-- [CONTRIBUTING.md](docs/CONTRIBUTING.md) - Development guidelines
-- [DEPLOYMENT.md](docs/DEPLOYMENT.md) - Build and release process
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - System design and patterns
-- [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) - Common issues
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Development guidelines
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Build and release process
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System design and patterns
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Common issues
 
 ## License
 

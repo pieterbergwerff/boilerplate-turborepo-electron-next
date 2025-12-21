@@ -107,6 +107,9 @@ dist
 # Docusaurus cache and generated files
 .docusaurus
 
+# TypeDoc output
+packages/docs/html/
+
 # Serverless directories
 .serverless/
 
