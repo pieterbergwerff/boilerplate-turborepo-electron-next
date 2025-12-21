@@ -41,7 +41,6 @@ function exposeApi(): void {
 exposeApi();
 
 declare global {
-  // eslint-disable-next-line no-var
   var api: {
     getSettings: () => Promise<Settings>;
     setTheme: (theme: Theme) => Promise<Settings>;

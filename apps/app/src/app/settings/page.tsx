@@ -15,9 +15,9 @@ import type {
 
 /**
  * Settings page showing example IPC calls.
- * @returns {JSX.Element} Settings UI with actions
+ * @returns {React.JSX.Element} Settings UI with actions
  */
-export default function SettingsPage(): JSX.Element {
+export default function SettingsPage(): React.JSX.Element {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [info, setInfo] = useState<AppInfo | null>(null);
   const [dialogRes, setDialogRes] = useState<OpenDialogResult | null>(null);
@@ -27,6 +27,7 @@ export default function SettingsPage(): JSX.Element {
    * @returns {Promise<void>}
    */
   async function loadInitial(): Promise<void> {
+    if (!window.api) return;
     const [s, i] = await Promise.all([
       window.api.getSettings(),
       window.api.getAppInfo(),
@@ -36,7 +37,8 @@ export default function SettingsPage(): JSX.Element {
   }
 
   useEffect(() => {
-    void loadInitial();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Initial data load on mount is intentional
+    loadInitial().catch(console.error);
   }, []);
 
   /**
@@ -45,6 +47,7 @@ export default function SettingsPage(): JSX.Element {
    * @returns {Promise<void>}
    */
   async function onToggle(nextTheme: Theme): Promise<void> {
+    if (!window.api) return;
     const updated = await window.api.setTheme(nextTheme);
     setSettings(updated);
   }
@@ -54,6 +57,7 @@ export default function SettingsPage(): JSX.Element {
    * @returns {Promise<void>}
    */
   async function onOpenDialog(): Promise<void> {
+    if (!window.api) return;
     const res = await window.api.openDialog({
       filters: [{ name: 'Text', extensions: ['txt', 'md'] }],
     });

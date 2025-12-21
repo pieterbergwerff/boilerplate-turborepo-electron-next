@@ -11,9 +11,9 @@ import { Button } from '@packages/ui';
 
 /**
  * Home page for the application.
- * @returns {JSX.Element} Home page content
+ * @returns {React.JSX.Element} Home page content
  */
-export default function HomePage(): JSX.Element {
+export default function HomePage(): React.JSX.Element {
   const [environment, setEnvironment] = useState('unknown');
 
   /**

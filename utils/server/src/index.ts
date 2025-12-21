@@ -12,8 +12,9 @@ export async function readFile(path: string): Promise<string> {
 
 /**
  * Check if code is running on server.
- * @returns {boolean} True if running on server
+ * Server-only package - always returns true.
+ * @returns {boolean} True (always server context)
  */
 export function isServer(): boolean {
-  return typeof window === 'undefined';
+  return true;
 }

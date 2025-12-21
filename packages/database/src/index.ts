@@ -28,7 +28,10 @@ export function createDb(dbPath: string): Knex {
  * @param {string} _dbPath Absolute path to SQLite file (for clarity in logs)
  * @returns {Promise<void>} Resolves when migrations complete
  */
-export async function runMigrations(knex: Knex, _dbPath: string): Promise<void> {
+export async function runMigrations(
+  knex: Knex,
+  _dbPath: string
+): Promise<void> {
   const hasSettings = await knex.schema.hasTable('settings');
   if (!hasSettings) {
     await knex.schema.createTable('settings', t => {

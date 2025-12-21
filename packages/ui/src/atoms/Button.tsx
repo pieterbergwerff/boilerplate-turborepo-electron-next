@@ -15,14 +15,14 @@ export interface ButtonProps {
 /**
  * Reusable button component with variants.
  * @param {ButtonProps} props Component props
- * @returns {JSX.Element} Rendered button
+ * @returns {React.JSX.Element} Rendered button
  */
 export function Button({
   children,
   variant = 'primary',
   onClick,
   disabled = false,
-}: ButtonProps): JSX.Element {
+}: ButtonProps): React.JSX.Element {
   return (
     <button onClick={onClick} disabled={disabled} data-variant={variant}>
       {children}

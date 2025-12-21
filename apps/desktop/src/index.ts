@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+// NOTE: Electron main process requires CommonJS at runtime
+// TypeScript source is ESM but compiles to CommonJS for Electron compatibility
 const path = require('path');
 const {
   app,
@@ -12,6 +15,7 @@ const { config } = require('dotenv');
 
 // TypeScript type imports for CommonJS
 import type { BrowserWindow as BrowserWindowType } from 'electron';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 // Load environment variables
 config();
@@ -74,53 +78,55 @@ const startStaticServer = async (): Promise<void> => {
       console.log('[DESKTOP] Looking for Next.js build at:', nextBuildPath);
       console.log('[DESKTOP] Looking for static files at:', staticPath);
 
-      const server = http.createServer((req: any, res: any) => {
-        const parsedUrl = url.parse(req.url, true);
-        let pathname = parsedUrl.pathname;
+      const server = http.createServer(
+        (req: IncomingMessage, res: ServerResponse) => {
+          const parsedUrl = url.parse(req.url ?? '', true);
+          const pathname = parsedUrl.pathname ?? '/';
 
-        console.log('[DESKTOP] Serving request for:', pathname);
+          console.log('[DESKTOP] Serving request for:', pathname);
 
-        let filePath = null;
-        let contentType = mime.lookup(pathname) || 'text/html';
+          let filePath = null;
+          let contentType = mime.lookup(pathname) || 'text/html';
 
-        if (pathname === '/') {
-          // Serve the actual Next.js index.html
-          filePath = path.join(
-            __dirname,
-            '../nextjs-standalone/apps/app/.next/server/app/index.html'
-          );
-          contentType = 'text/html';
-        } else if (pathname.startsWith('/_next/static/')) {
-          // Serve static assets from the correct location
-          const staticFile = pathname.replace('/_next/static/', '');
-          filePath = path.join(staticPath, staticFile);
-        } else {
-          // Try to serve as a static file
-          const staticFile = pathname.substring(1); // Remove leading slash
-          filePath = path.join(staticPath, staticFile);
+          if (pathname === '/') {
+            // Serve the actual Next.js index.html
+            filePath = path.join(
+              __dirname,
+              '../nextjs-standalone/apps/app/.next/server/app/index.html'
+            );
+            contentType = 'text/html';
+          } else if (pathname.startsWith('/_next/static/')) {
+            // Serve static assets from the correct location
+            const staticFile = pathname.replace('/_next/static/', '');
+            filePath = path.join(staticPath, staticFile);
+          } else {
+            // Try to serve as a static file
+            const staticFile = pathname.substring(1); // Remove leading slash
+            filePath = path.join(staticPath, staticFile);
+          }
+
+          if (filePath && fs.existsSync(filePath)) {
+            fs.readFile(filePath, (err: Error | null, data: Buffer) => {
+              if (err) {
+                console.error('[DESKTOP] Error reading file:', filePath, err);
+                res.writeHead(404);
+                res.end('File not found');
+              } else {
+                console.log('[DESKTOP] Successfully served:', filePath);
+                res.writeHead(200, {
+                  'Content-Type': contentType,
+                  'Cache-Control': 'no-cache', // Disable caching for development
+                });
+                res.end(data);
+              }
+            });
+          } else {
+            console.log('[DESKTOP] File not found:', filePath);
+            res.writeHead(404);
+            res.end('File not found');
+          }
         }
-
-        if (filePath && fs.existsSync(filePath)) {
-          fs.readFile(filePath, (err: Error | null, data: Buffer) => {
-            if (err) {
-              console.error('[DESKTOP] Error reading file:', filePath, err);
-              res.writeHead(404);
-              res.end('File not found');
-            } else {
-              console.log('[DESKTOP] Successfully served:', filePath);
-              res.writeHead(200, {
-                'Content-Type': contentType,
-                'Cache-Control': 'no-cache', // Disable caching for development
-              });
-              res.end(data);
-            }
-          });
-        } else {
-          console.log('[DESKTOP] File not found:', filePath);
-          res.writeHead(404);
-          res.end('File not found');
-        }
-      });
+      );
 
       server.listen(3001, () => {
         console.log('[DESKTOP] Static server started on http://localhost:3001');
@@ -133,6 +139,7 @@ const startStaticServer = async (): Promise<void> => {
       });
 
       // Store server reference for cleanup
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Need to store server reference on app instance
       (app as any).staticServer = server;
     } catch (error) {
       console.error('[DESKTOP] Failed to start static server:', error);
@@ -153,7 +160,7 @@ const waitForServer = async (
       if (response.ok) {
         return true;
       }
-    } catch (error) {
+    } catch {
       // Server not ready yet, wait and try again
     }
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -311,8 +318,10 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
   // Cleanup static server
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Accessing stored server reference
   if ((app as any).staticServer) {
     console.log('[DESKTOP] Stopping static server...');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Accessing stored server reference
     (app as any).staticServer.close();
   }
 
@@ -324,8 +333,10 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', () => {
   // Cleanup static server when app is about to quit
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Accessing stored server reference
   if ((app as any).staticServer) {
     console.log('[DESKTOP] Stopping static server before quit...');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Accessing stored server reference
     (app as any).staticServer.close();
   }
 });

@@ -11,3 +11,8 @@ coverage
 .DS_Store
 *.log
 .env*
+*.asar
+**/dist/**
+**/.next/**
+**/build/**
+**/out/**

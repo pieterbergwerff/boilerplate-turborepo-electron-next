@@ -14,7 +14,9 @@ declare module 'next-electron-rsc' {
     electronUrl: string;
   }
 
-  export function createHandler(options: CreateHandlerOptions): Promise<Handler>;
+  export function createHandler(
+    options: CreateHandlerOptions
+  ): Promise<Handler>;
 
   export function createInterceptor(protocol: Protocol, handler: Handler): void;
 }

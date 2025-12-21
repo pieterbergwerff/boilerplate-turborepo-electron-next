@@ -11,7 +11,11 @@ import { app, BrowserWindow, protocol, Menu } from 'electron';
 import type { Knex } from 'knex';
 
 // @ts-expect-error - next-electron-rsc is a monorepo with the lib in a subfolder
-import { createHandler, createInterceptor } from '../../../node_modules/next-electron-rsc/lib/build/index.js';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- createInterceptor used in production mode
+import {
+  createHandler,
+  createInterceptor,
+} from '../../../node_modules/next-electron-rsc/lib/build/index.js';
 import { createDb, runMigrations } from '@packages/database';
 import { registerIpcHandlers } from './ipc.js';
 
@@ -26,7 +30,15 @@ function ensureDb(isDev: boolean): string {
   const dest = path.join(app.getPath('userData'), DB_FILE);
   if (!existsSync(dest)) {
     const src = isDev
-      ? path.join(process.cwd(), '..', '..', 'packages', 'database', 'seed', DB_FILE)
+      ? path.join(
+          process.cwd(),
+          '..',
+          '..',
+          'packages',
+          'database',
+          'seed',
+          DB_FILE
+        )
       : path.join(process.resourcesPath, DB_FILE);
     mkdirSync(path.dirname(dest), { recursive: true });
     copyFileSync(src, dest);
@@ -95,7 +107,9 @@ async function createWindow(): Promise<{ knex: Knex }> {
       dir: path.join(process.resourcesPath, 'apps', 'app'),
       dev: false,
     });
-    const interceptor = await createInterceptor({ session: win.webContents.session });
+    const interceptor = await createInterceptor({
+      session: win.webContents.session,
+    });
     app.on('quit', interceptor);
     url = localhostUrl;
   }
