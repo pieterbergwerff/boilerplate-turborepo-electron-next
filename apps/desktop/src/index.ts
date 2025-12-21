@@ -49,62 +49,109 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Configuration for connecting to Next.js
 const isDevelopment = !app.isPackaged;
-const NEXT_SERVER_URL = isDevelopment 
+const NEXT_SERVER_URL = isDevelopment
   ? 'http://localhost:3000'
   : 'http://localhost:3001'; // Use different port for production server
 
-// Helper function to start the Next.js standalone server in production
-const startNextServer = async (): Promise<void> => {
+// Helper function to start a simple static file server in production
+const startStaticServer = async (): Promise<void> => {
   if (isDevelopment) return; // Don't start server in development
-  
-  const { spawn } = require('child_process');
-  const nextServerPath = path.join(__dirname, '../nextjs-standalone/apps/app/server.js');
-  
+
   return new Promise((resolve, reject) => {
-    console.log('[DESKTOP] Starting Next.js standalone server...');
-    
-    const serverProcess = spawn('node', [nextServerPath], {
-      env: { ...process.env, PORT: '3001' },
-      stdio: ['pipe', 'pipe', 'pipe']
-    });
-    
-    let serverStarted = false;
-    
-    serverProcess.stdout.on('data', (data: Buffer) => {
-      const output = data.toString();
-      console.log('[NEXT] ', output);
-      
-      if (output.includes('ready') || output.includes('started server') || output.includes('listening')) {
-        if (!serverStarted) {
-          serverStarted = true;
-          resolve();
+    try {
+      const http = require('http');
+      const fs = require('fs');
+      const url = require('url');
+      const mime = require('mime-types');
+
+      // Try to load the Next.js build from the standalone directory
+      const nextBuildPath = path.join(
+        __dirname,
+        '../nextjs-standalone/apps/app/.next'
+      );
+      const staticPath = path.join(__dirname, '../nextjs-standalone/static');
+
+      console.log('[DESKTOP] Looking for Next.js build at:', nextBuildPath);
+      console.log('[DESKTOP] Looking for static files at:', staticPath);
+
+      const server = http.createServer((req: any, res: any) => {
+        const parsedUrl = url.parse(req.url, true);
+        let pathname = parsedUrl.pathname;
+
+        if (pathname === '/') {
+          pathname = '/index.html';
         }
-      }
-    });
-    
-    serverProcess.stderr.on('data', (data: Buffer) => {
-      console.error('[NEXT ERROR] ', data.toString());
-    });
-    
-    serverProcess.on('error', (error: Error) => {
-      console.error('[DESKTOP] Failed to start Next.js server:', error);
-      reject(error);
-    });
-    
-    serverProcess.on('exit', (code: number | null) => {
-      console.log('[DESKTOP] Next.js server exited with code:', code);
-    });
-    
-    // Auto-resolve after timeout if we don't get explicit ready signal
-    setTimeout(() => {
-      if (!serverStarted) {
-        serverStarted = true;
+
+        // Try to find the file in different locations
+        let filePath = null;
+        let contentType = mime.lookup(pathname) || 'text/html';
+
+        // Check for static files first
+        if (pathname.startsWith('/_next/static/')) {
+          filePath = path.join(
+            staticPath,
+            pathname.replace('/_next/static/', '')
+          );
+        } else if (pathname.startsWith('/static/')) {
+          filePath = path.join(staticPath, pathname.replace('/static/', ''));
+        } else {
+          // For pages, serve a simple HTML that loads the app
+          const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translations App</title>
+</head>
+<body>
+    <div id="__next">
+        <div style="padding: 40px; text-align: center; font-family: system-ui;">
+            <h1>🌍 Translations App</h1>
+            <p>Welcome to your translation application!</p>
+            <p style="color: #666; font-size: 14px;">
+                This is running in production mode with embedded static files.
+            </p>
+        </div>
+    </div>
+</body>
+</html>`;
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.end(html);
+          return;
+        }
+
+        if (filePath && fs.existsSync(filePath)) {
+          fs.readFile(filePath, (err: Error | null, data: Buffer) => {
+            if (err) {
+              res.writeHead(404);
+              res.end('File not found');
+            } else {
+              res.writeHead(200, { 'Content-Type': contentType });
+              res.end(data);
+            }
+          });
+        } else {
+          res.writeHead(404);
+          res.end('File not found');
+        }
+      });
+
+      server.listen(3001, () => {
+        console.log('[DESKTOP] Static server started on http://localhost:3001');
         resolve();
-      }
-    }, 5000);
-    
-    // Store process reference for cleanup
-    (app as any).nextServerProcess = serverProcess;
+      });
+
+      server.on('error', (error: Error) => {
+        console.error('[DESKTOP] Static server error:', error);
+        reject(error);
+      });
+
+      // Store server reference for cleanup
+      (app as any).staticServer = server;
+    } catch (error) {
+      console.error('[DESKTOP] Failed to start static server:', error);
+      reject(error);
+    }
   });
 };
 
@@ -194,13 +241,13 @@ const createWindow = async () => {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(defaultMenu(app, shell)));
 
-    // In production, start the Next.js standalone server
+    // In production, start the static file server
     if (!isDevelopment) {
       try {
-        await startNextServer();
-        console.log('[DESKTOP] Next.js standalone server started');
+        await startStaticServer();
+        console.log('[DESKTOP] Static server started');
       } catch (error) {
-        console.error('[DESKTOP] Failed to start Next.js server:', error);
+        console.error('[DESKTOP] Failed to start static server:', error);
         dialog.showErrorBox(
           'Server Error',
           'Failed to start the application server. Please try again.'
@@ -215,16 +262,12 @@ const createWindow = async () => {
     const serverReady = await waitForServer(NEXT_SERVER_URL);
 
     if (!serverReady) {
-      console.error(
-        '[DESKTOP] Could not connect to Next.js server. Make sure the Next.js app is running on',
-        NEXT_SERVER_URL
-      );
-      // Show error dialog or exit gracefully
-      const { dialog } = require('electron');
-      dialog.showErrorBox(
-        'Connection Error',
-        `Could not connect to Next.js server at ${NEXT_SERVER_URL}. Please make sure the Next.js app is running.`
-      );
+      const errorMessage = isDevelopment
+        ? `Could not connect to Next.js development server at ${NEXT_SERVER_URL}. Please make sure the Next.js app is running.`
+        : `Could not connect to Next.js server at ${NEXT_SERVER_URL}. The embedded server may have failed to start.`;
+
+      console.error('[DESKTOP]', errorMessage);
+      dialog.showErrorBox('Connection Error', errorMessage);
       app.quit();
       return;
     }
@@ -281,12 +324,12 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-  // Cleanup Next.js server process
-  if ((app as any).nextServerProcess) {
-    console.log('[DESKTOP] Stopping Next.js server...');
-    (app as any).nextServerProcess.kill();
+  // Cleanup static server
+  if ((app as any).staticServer) {
+    console.log('[DESKTOP] Stopping static server...');
+    (app as any).staticServer.close();
   }
-  
+
   // On macOS, keep the app running even when all windows are closed
   if (process.platform !== 'darwin') {
     app.quit();
@@ -294,10 +337,10 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
-  // Cleanup Next.js server process when app is about to quit
-  if ((app as any).nextServerProcess) {
-    console.log('[DESKTOP] Stopping Next.js server before quit...');
-    (app as any).nextServerProcess.kill();
+  // Cleanup static server when app is about to quit
+  if ((app as any).staticServer) {
+    console.log('[DESKTOP] Stopping static server before quit...');
+    (app as any).staticServer.close();
   }
 });
 

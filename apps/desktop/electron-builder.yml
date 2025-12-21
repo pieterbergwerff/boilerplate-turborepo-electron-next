@@ -11,6 +11,8 @@ asar: true
 asarUnpack:
   - '**/node_modules/next-electron-rsc/**/*'
   - '**/.next/**/*'
+  - 'nextjs-standalone/apps/app/server.js'
+  - 'nextjs-standalone/apps/app/.next/**/*'
 
 # App icon configuration
 icon: assets/icon.png
