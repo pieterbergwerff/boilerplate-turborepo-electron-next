@@ -6,7 +6,13 @@
     "scripts": {
         "test": "vitest run",
         "test:coverage": "vitest run --coverage",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "build": "echo 'No build needed for Vitest tests'",
+        "clean": "echo 'No clean needed for Vitest tests'",
+        "typecheck": "echo 'No typecheck needed for Vitest tests'",
+        "lint": "echo 'No lint needed for Vitest tests'",
+        "format": "echo 'No format needed for Vitest tests'",
+        "format:check": "echo 'No format check needed for Vitest tests'"
     },
     "dependencies": {
         "@packages/ui": "*",
