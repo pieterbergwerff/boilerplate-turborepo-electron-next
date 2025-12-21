@@ -83,8 +83,15 @@ export async function updateSettings(
 ) {
   const { theme } = input;
   const updatedAt = new Date().toISOString();
-  await knex('settings')
+  const updatedRows = await knex('settings')
     .update({ theme, updated_at: updatedAt })
     .where({ id: 1 });
+  if (updatedRows === 0) {
+    await knex('settings').insert({
+      id: 1,
+      theme,
+      updated_at: updatedAt,
+    });
+  }
   return { theme, updatedAt };
 }

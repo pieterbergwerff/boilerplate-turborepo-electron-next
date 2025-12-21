@@ -10,11 +10,15 @@ import { app, BrowserWindow, protocol, Menu } from 'electron';
 // import types
 import type { Knex } from 'knex';
 
-import { createHandler } from '../../../node_modules/next-electron-rsc/lib/build/index.js';
+import { createHandler } from 'next-electron-rsc/lib/build/index.js';
 import { createDb, runMigrations } from '@packages/database';
 import { registerIpcHandlers } from './ipc.js';
 
 let win: BrowserWindow | undefined;
+let knexInstance: Knex | undefined;
+let ipcRegistered = false;
+let interceptorStop: (() => void) | undefined;
+let nextUrl: string | undefined;
 
 /**
  * Ensure runtime SQLite exists and is seeded.
@@ -26,7 +30,7 @@ function ensureDb(isDev: boolean): string {
   if (!existsSync(dest)) {
     const src = isDev
       ? path.join(
-          process.cwd(),
+          app.getAppPath(),
           '..',
           '..',
           'packages',
@@ -39,6 +43,18 @@ function ensureDb(isDev: boolean): string {
     copyFileSync(src, dest);
   }
   return dest;
+}
+
+/**
+ * Initialize and reuse a single Knex instance.
+ * @returns {Promise<Knex>} Knex instance
+ */
+async function getKnex(): Promise<Knex> {
+  if (knexInstance) return knexInstance;
+  const dbPath = ensureDb(!app.isPackaged);
+  knexInstance = createDb(dbPath);
+  await runMigrations(knexInstance, dbPath);
+  return knexInstance;
 }
 
 /**
@@ -72,13 +88,17 @@ function buildMenu(): void {
 
 /**
  * Create the main BrowserWindow and wire Next handler.
- * @returns {Promise<{ knex: Knex }>} Dependencies created for later use
+ * @returns {Promise<void>} Resolves when window is ready
  */
-async function createWindow(): Promise<{ knex: Knex }> {
-  const isDev = !app.isPackaged;
-  const dbPath = ensureDb(isDev);
-  const knex = createDb(dbPath);
-  await runMigrations(knex, dbPath);
+async function createWindow(): Promise<void> {
+  const isPackaged = app.isPackaged;
+  const useStandalone =
+    isPackaged || process.env.ELECTRON_USE_STANDALONE === 'true';
+  const knex = await getKnex();
+  if (!ipcRegistered) {
+    registerIpcHandlers({ app, knex });
+    ipcRegistered = true;
+  }
 
   win = new BrowserWindow({
     width: 1280,
@@ -92,27 +112,30 @@ async function createWindow(): Promise<{ knex: Knex }> {
   });
 
   let url: string;
-  if (isDev) {
+  if (!useStandalone) {
     // In dev mode, use the existing Next.js dev server
     url = 'http://localhost:3000';
   } else {
-    // In production, use next-electron-rsc to serve the standalone build
-    const { localhostUrl, createInterceptor } = createHandler({
-      protocol,
-      dir: path.join(process.resourcesPath, 'apps', 'app'),
-      dev: false,
-    });
-    const interceptor = await createInterceptor({
-      session: win.webContents.session,
-    });
-    app.on('quit', interceptor);
-    url = localhostUrl;
+    // Use next-electron-rsc with the built output
+    if (!interceptorStop || !nextUrl) {
+      const appDir = isPackaged
+        ? path.join(process.resourcesPath, 'apps', 'app')
+        : path.join(app.getAppPath(), '..', 'app');
+      const { localhostUrl, createInterceptor } = createHandler({
+        protocol,
+        dir: appDir,
+        dev: false,
+      });
+      nextUrl = localhostUrl;
+      interceptorStop = await createInterceptor({
+        session: win.webContents.session,
+      });
+    }
+    url = nextUrl ?? 'http://localhost:3000';
   }
 
   buildMenu();
   await win.loadURL(url);
-
-  return { knex };
 }
 
 /**
@@ -136,8 +159,7 @@ function bootstrap(): void {
   app
     .whenReady()
     .then(async () => {
-      const { knex } = await createWindow();
-      registerIpcHandlers({ app, knex });
+      await createWindow();
     })
     .catch(e => {
       console.error(e);
@@ -150,9 +172,20 @@ function bootstrap(): void {
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      void createWindow().then(({ knex }) =>
-        registerIpcHandlers({ app, knex })
-      );
+      void createWindow();
+    }
+  });
+
+  app.on('before-quit', () => {
+    if (interceptorStop) {
+      interceptorStop();
+      interceptorStop = undefined;
+    }
+    if (knexInstance) {
+      void knexInstance
+        .destroy()
+        .catch(err => console.error('[DESKTOP] Failed to close DB:', err));
+      knexInstance = undefined;
     }
   });
 }

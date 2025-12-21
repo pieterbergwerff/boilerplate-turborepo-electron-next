@@ -4,10 +4,17 @@ asar: false
 
 # Include Electron build + Next standalone app; exclude electron from Next tree
 files:
-  - 'apps/desktop/dist/**'
-  - 'apps/app/.next/standalone/**'
-  - 'apps/app/public/**'
-  - '!apps/app/.next/standalone/**/node_modules/electron/**'
+  - from: 'apps/desktop/dist'
+    to: 'apps/desktop/dist'
+  - from: 'apps/app/.next/standalone/apps/app'
+    to: 'apps/app'
+  - from: 'apps/app/.next/standalone/node_modules'
+    to: 'apps/app/node_modules'
+  - from: 'apps/app/.next/static'
+    to: 'apps/app/.next/static'
+  - from: 'apps/app/public'
+    to: 'apps/app/public'
+  - '!apps/app/node_modules/electron/**'
 
 extraResources:
   - from: packages/database/seed/app.sqlite
