@@ -24,7 +24,12 @@ export function Button({
   disabled = false,
 }: ButtonProps): React.JSX.Element {
   return (
-    <button onClick={onClick} disabled={disabled} data-variant={variant}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      data-variant={variant}
+      className="text-green-500 text-bold"
+    >
       {children}
     </button>
   );
