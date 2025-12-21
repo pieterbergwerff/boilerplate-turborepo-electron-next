@@ -108,7 +108,7 @@ dist
 .docusaurus
 
 # TypeDoc output
-packages/docs/html/
+apps/docs/html/
 
 # Serverless directories
 .serverless/
