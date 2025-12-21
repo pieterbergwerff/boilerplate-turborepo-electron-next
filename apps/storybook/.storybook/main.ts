@@ -8,6 +8,9 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: [],
+  core: {
+    disableTelemetry: true,
+  },
   docs: {
     disable: true,
   },
