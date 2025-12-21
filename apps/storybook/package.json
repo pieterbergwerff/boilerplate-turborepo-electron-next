@@ -19,13 +19,16 @@
         "react-dom": "^19.1.0"
     },
     "devDependencies": {
+        "@config/tailwind": "*",
         "@config/typescript": "*",
         "@storybook/react": "^10.1.10",
         "@storybook/react-vite": "^10.1.10",
+        "@tailwindcss/postcss": "^4.1.0",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.1.6",
         "eslint-plugin-storybook": "^10.1.10",
         "storybook": "^10.1.10",
+        "tailwindcss": "^4.1.0",
         "typescript": "^5.8.3",
         "vite": "^6.0.11"
     }

@@ -23,10 +23,13 @@
         "react": "^19.1.0"
     },
     "devDependencies": {
+        "@config/tailwind": "*",
         "@config/typescript": "*",
+        "@tailwindcss/postcss": "^4.1.0",
         "@types/react": "^19.2.0",
         "babel-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
         "eslint-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
+        "tailwindcss": "^4.1.0",
         "typescript": "^5.8.3"
     }
 }

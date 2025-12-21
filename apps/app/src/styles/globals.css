@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Custom styles for the app */
 :root {
   --foreground: #1a1a1a;
