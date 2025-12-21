@@ -110,6 +110,9 @@ dist
 # TypeDoc output
 apps/docs/html/
 
+# Storybook build output
+storybook-static/
+
 # Serverless directories
 .serverless/
 
@@ -154,3 +157,6 @@ coverage/
 
 # Turborepo
 .turbo
+
+*storybook.log
+storybook-static
