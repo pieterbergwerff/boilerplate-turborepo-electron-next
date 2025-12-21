@@ -28,6 +28,8 @@ export default function HomePage(): React.JSX.Element {
     <div style={{ padding: 24 }}>
       <h1>Turborepo Electron + Next.js Boilerplate</h1>
 
+      <a href="/components">click</a>
+
       <div style={{ marginTop: 16 }}>
         <h2>🚀 Welcome to the App</h2>
         <p className="text-red-500">

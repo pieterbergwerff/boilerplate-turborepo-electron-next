@@ -1,9 +1,9 @@
 {
-    "extends": "@config/typescript/react-library.json",
-    "compilerOptions": {
-        "outDir": "./dist",
-        "rootDir": "./"
-    },
-    "include": [".storybook", "src"],
-    "exclude": ["node_modules", "dist", "storybook-static"]
+  "extends": "@config/typescript/react-library.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+  "include": [".storybook", "src"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
 }

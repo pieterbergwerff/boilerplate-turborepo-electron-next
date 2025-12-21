@@ -9,16 +9,23 @@ const DB_FILE = 'app.sqlite';
 import { app, BrowserWindow, protocol, Menu } from 'electron';
 // import types
 import type { Knex } from 'knex';
+import type { OSTheme } from '@packages/validators';
 
 import { createHandler } from 'next-electron-rsc/lib/build/index.js';
 import { createDb, runMigrations } from '@packages/database';
 import { registerIpcHandlers } from './ipc.js';
+import { loadEnv, detectOSTheme } from './theme.js';
 
 let win: BrowserWindow | undefined;
 let knexInstance: Knex | undefined;
 let ipcRegistered = false;
 let interceptorStop: (() => void) | undefined;
 let nextUrl: string | undefined;
+let osTheme: OSTheme;
+
+// Load .env file and detect OS theme
+loadEnv(app.getAppPath());
+osTheme = detectOSTheme(process.platform);
 
 /**
  * Ensure runtime SQLite exists and is seeded.
@@ -96,7 +103,7 @@ async function createWindow(): Promise<void> {
     isPackaged || process.env.ELECTRON_USE_STANDALONE === 'true';
   const knex = await getKnex();
   if (!ipcRegistered) {
-    registerIpcHandlers({ app, knex });
+    registerIpcHandlers({ app, knex, osTheme });
     ipcRegistered = true;
   }
 

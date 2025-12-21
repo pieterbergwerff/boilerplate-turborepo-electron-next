@@ -8,6 +8,7 @@
 import type { App } from 'electron';
 import { ipcMain, dialog } from 'electron';
 import type { Knex } from 'knex';
+import type { OSTheme } from '@packages/validators';
 import {
   AppInfo,
   OpenDialogOptions,
@@ -21,17 +22,22 @@ import { getSettings, updateSettings } from '@packages/database';
 
 /**
  * Register all IPC handlers with Zod validation.
- * @param {{ app: App; knex: Knex }} deps Electron app + Knex instance
+ * @param {{ app: App; knex: Knex; osTheme: OSTheme }} deps Electron app + Knex instance + OS theme
  * @returns {void}
  */
-export function registerIpcHandlers(deps: { app: App; knex: Knex }): void {
-  const { app, knex } = deps;
+export function registerIpcHandlers(deps: {
+  app: App;
+  knex: Knex;
+  osTheme: OSTheme;
+}): void {
+  const { app, knex, osTheme } = deps;
 
   ipcMain.handle('app:get-info', async () => {
     return AppInfo.parse({
       version: app.getVersion(),
       platform: process.platform,
       arch: process.arch,
+      osTheme,
     });
   });
 
