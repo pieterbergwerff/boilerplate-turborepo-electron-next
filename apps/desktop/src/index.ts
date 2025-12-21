@@ -77,60 +77,43 @@ const startStaticServer = async (): Promise<void> => {
       const server = http.createServer((req: any, res: any) => {
         const parsedUrl = url.parse(req.url, true);
         let pathname = parsedUrl.pathname;
-
-        if (pathname === '/') {
-          pathname = '/index.html';
-        }
-
-        // Try to find the file in different locations
+        
+        console.log('[DESKTOP] Serving request for:', pathname);
+        
         let filePath = null;
         let contentType = mime.lookup(pathname) || 'text/html';
-
-        // Check for static files first
-        if (pathname.startsWith('/_next/static/')) {
-          filePath = path.join(
-            staticPath,
-            pathname.replace('/_next/static/', '')
-          );
-        } else if (pathname.startsWith('/static/')) {
-          filePath = path.join(staticPath, pathname.replace('/static/', ''));
+        
+        if (pathname === '/') {
+          // Serve the actual Next.js index.html
+          filePath = path.join(__dirname, '../nextjs-standalone/apps/app/.next/server/app/index.html');
+          contentType = 'text/html';
+        } else if (pathname.startsWith('/_next/static/')) {
+          // Serve static assets from the correct location
+          const staticFile = pathname.replace('/_next/static/', '');
+          filePath = path.join(staticPath, staticFile);
         } else {
-          // For pages, serve a simple HTML that loads the app
-          const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Translations App</title>
-</head>
-<body>
-    <div id="__next">
-        <div style="padding: 40px; text-align: center; font-family: system-ui;">
-            <h1>🌍 Translations App</h1>
-            <p>Welcome to your translation application!</p>
-            <p style="color: #666; font-size: 14px;">
-                This is running in production mode with embedded static files.
-            </p>
-        </div>
-    </div>
-</body>
-</html>`;
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(html);
-          return;
+          // Try to serve as a static file
+          const staticFile = pathname.substring(1); // Remove leading slash
+          filePath = path.join(staticPath, staticFile);
         }
-
+        
         if (filePath && fs.existsSync(filePath)) {
           fs.readFile(filePath, (err: Error | null, data: Buffer) => {
             if (err) {
+              console.error('[DESKTOP] Error reading file:', filePath, err);
               res.writeHead(404);
               res.end('File not found');
             } else {
-              res.writeHead(200, { 'Content-Type': contentType });
+              console.log('[DESKTOP] Successfully served:', filePath);
+              res.writeHead(200, { 
+                'Content-Type': contentType,
+                'Cache-Control': 'no-cache' // Disable caching for development
+              });
               res.end(data);
             }
           });
         } else {
+          console.log('[DESKTOP] File not found:', filePath);
           res.writeHead(404);
           res.end('File not found');
         }
