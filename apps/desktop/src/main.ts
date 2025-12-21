@@ -10,12 +10,7 @@ import { app, BrowserWindow, protocol, Menu } from 'electron';
 // import types
 import type { Knex } from 'knex';
 
-// @ts-expect-error - next-electron-rsc is a monorepo with the lib in a subfolder
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- createInterceptor used in production mode
-import {
-  createHandler,
-  createInterceptor,
-} from '../../../node_modules/next-electron-rsc/lib/build/index.js';
+import { createHandler } from '../../../node_modules/next-electron-rsc/lib/build/index.js';
 import { createDb, runMigrations } from '@packages/database';
 import { registerIpcHandlers } from './ipc.js';
 
