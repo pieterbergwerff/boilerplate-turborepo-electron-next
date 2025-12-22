@@ -49,7 +49,7 @@ Setup:
 2. Get Team ID from Apple Developer portal
 3. Add to CI secrets or local `.env`
 
-The `scripts/afterSign.mjs` hook handles notarization automatically when credentials are present.
+The `packages/scripts/afterSign.mjs` hook handles notarization automatically when credentials are present.
 
 ### Windows Signing
 

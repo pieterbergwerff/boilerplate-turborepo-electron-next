@@ -99,7 +99,6 @@ Use `quality` before commits. CI enforces these checks plus `audit-ci` security 
 - `@apps/storybook` - Storybook workspace
 - `@apps/tests` - Vitest UI runner (legacy)
 - `@packages/ui` - UI component library
-- `@packages/tests` - Shared test utilities
 - `@packages/database` - SQLite + Knex
 - `@packages/validators` - Zod schemas/types
 - `@config/typescript` - Shared TypeScript configs

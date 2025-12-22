@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 // import constants
 // (none)
 // import components
-import { Button } from '@packages/ui';
+import { ButtonAtom as Button } from '@packages/ui';
 // import types
 // (none)
 

@@ -16,8 +16,7 @@
     },
     "dependencies": {
         "@packages/ui": "*",
-        "@packages/validators": "*",
-        "@packages/tests": "*"
+        "@packages/validators": "*"
     },
     "devDependencies": {
         "@vitejs/plugin-react": "^5.1.0",

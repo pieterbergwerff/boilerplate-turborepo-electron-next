@@ -36,7 +36,7 @@
     "docs:watch": "npm run docs:watch --workspace=@apps/docs",
     "storybook": "turbo dev --filter=@apps/storybook",
     "build:storybook": "turbo build --filter=@apps/storybook",
-    "repo:check": "node scripts/check-workspace-names.mjs",
+    "repo:check": "node packages/scripts/check-workspace-names.mjs",
     "quality": "npm run typecheck && npm run lint && npm run format:check",
     "quality:fix": "npm run format && npm run lint && npm run typecheck",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"

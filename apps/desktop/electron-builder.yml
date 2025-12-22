@@ -20,7 +20,7 @@ extraResources:
   - from: packages/database/seed/app.sqlite
     to: app.sqlite
 
-afterSign: 'scripts/afterSign.mjs'
+afterSign: 'packages/scripts/afterSign.mjs'
 
 mac:
   category: public.app-category.productivity
