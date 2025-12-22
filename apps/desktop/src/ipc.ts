@@ -6,7 +6,6 @@ import { getSettings, updateSettings } from '@packages/database';
 import {
   AppInfoValidator,
   OpenDialogOptionsValidator,
-  OpenDialogResult,
   OpenDialogResultValidator,
   SettingsValidator,
   SettingsUpdateInputValidator,
@@ -19,6 +18,7 @@ import type {
   OsThemeValidatorType,
   SettingsValidatorType,
   SettingsUpdateInputValidatorType,
+  OpenDialogResultType,
 } from '@packages/validators';
 
 /**
@@ -59,7 +59,7 @@ export function registerIpcHandlers(deps: {
 
   ipcMain.handle(
     'fs:openDialog',
-    async (_evt, payload: unknown): Promise<OpenDialogResult> => {
+    async (_evt, payload: unknown): Promise<OpenDialogResultType> => {
       const opts = OpenDialogOptionsValidator.parse(payload);
       const res = await dialog.showOpenDialog({
         properties: ['openFile'],
