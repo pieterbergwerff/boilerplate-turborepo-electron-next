@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@packages/types": "*",
+        "@packages/validators": "*",
         "react-icons": "^5.5.0"
     },
     "devDependencies": {
