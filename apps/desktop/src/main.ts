@@ -32,17 +32,21 @@ const osTheme: OsThemeValidatorType = detectOSTheme(process.platform);
 function ensureDb(isDev: boolean): string {
   const dest = path.join(app.getPath('userData'), DB_FILE);
   if (!existsSync(dest)) {
-    const src = isDev
-      ? path.join(
-          app.getAppPath(),
-          '..',
-          '..',
-          'packages',
-          'database',
-          'seed',
-          DB_FILE
-        )
-      : path.join(process.resourcesPath, DB_FILE);
+    let src: string;
+    if (isDev) {
+      // In development/test, look for seed DB in packages/database/seed
+      // app.getAppPath() returns apps/desktop, so go up to workspace root
+      const workspaceRoot = path.join(app.getAppPath(), '..', '..');
+      src = path.join(workspaceRoot, 'packages', 'database', 'seed', DB_FILE);
+    } else {
+      // In production (packaged), seed DB is in resources folder
+      src = path.join(process.resourcesPath, DB_FILE);
+    }
+    
+    if (!existsSync(src)) {
+      throw new Error(`Seed database not found at: ${src}`);
+    }
+    
     mkdirSync(path.dirname(dest), { recursive: true });
     copyFileSync(src, dest);
   }
