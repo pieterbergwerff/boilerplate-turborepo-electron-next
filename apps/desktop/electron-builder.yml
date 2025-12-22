@@ -3,19 +3,12 @@ productName: TurborepoElectronNext
 asar: false
 electronVersion: 39.2.0
 
-# Include Electron build + Next standalone app; exclude electron from Next tree
+# Include Electron build + Next standalone app
 files:
-  - from: 'dist'
-    to: 'apps/desktop/dist'
-  - from: 'nextjs-standalone/apps/app'
-    to: 'apps/app'
-  - from: 'nextjs-standalone/node_modules'
-    to: 'apps/app/node_modules'
-  - from: 'nextjs-standalone/.next/static'
-    to: 'apps/app/.next/static'
-  - from: '../app/public'
-    to: 'apps/app/public'
-  - '!**/node_modules/electron/**'
+  - dist/**/*
+  - nextjs-standalone/**/*
+  - '!nextjs-standalone/node_modules/electron'
+  - '!nextjs-standalone/node_modules/electron/**'
 
 extraResources:
   - from: ../../packages/database/seed/app.sqlite

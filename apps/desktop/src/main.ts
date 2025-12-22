@@ -122,9 +122,11 @@ async function createWindow(): Promise<void> {
   } else {
     // Use next-electron-rsc with the built output
     if (!interceptorStop || !nextUrl) {
+      // With asar: false, app files are in Contents/Resources/app/
+      // In packaged mode: process.resourcesPath points to Contents/Resources/
       const appDir = isPackaged
-        ? path.join(process.resourcesPath, 'apps', 'app')
-        : path.join(app.getAppPath(), '..', 'app');
+        ? path.join(process.resourcesPath, 'app', 'nextjs-standalone', 'apps', 'app')
+        : path.join(app.getAppPath(), 'nextjs-standalone', 'apps', 'app');
       const { localhostUrl, createInterceptor } = createHandler({
         protocol,
         dir: appDir,
