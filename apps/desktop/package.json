@@ -8,11 +8,13 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc-watch --noClear --onSuccess 'electron .' --project tsconfig.json",
+    "copy-nextjs": "node scripts/copy-nextjs.mjs",
+    "build:electron": "npm run copy-nextjs && electron-builder --config electron-builder.yml",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "clean": "rm -rf dist build",
+    "clean": "rm -rf dist build nextjs-standalone",
     "prepare": "node electron/install.js"
   },
   "dependencies": {

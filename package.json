@@ -20,7 +20,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "build:next": "turbo build --filter=@apps/app",
-    "build:electron": "npm run build:next && turbo build --filter=@apps/desktop",
+    "build:electron": "npm run build:next && turbo build --filter=@apps/desktop && cd apps/desktop && npm run build:electron",
     "dev:app": "turbo dev --filter=@apps/app",
     "dev:desktop": "turbo dev --filter=@apps/desktop",
     "test": "turbo test",
