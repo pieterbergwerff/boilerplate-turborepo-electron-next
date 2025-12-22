@@ -1,41 +1,41 @@
 {
-    "name": "@packages/ui",
-    "version": "1.0.0",
-    "private": true,
-    "type": "module",
-    "main": "./src/index.ts",
-    "types": "./src/index.ts",
-    "exports": {
-        ".": {
-            "types": "./src/index.ts",
-            "default": "./src/index.ts"
-        },
-        "./styles.css": "./src/styles.css"
+  "name": "@packages/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
-    "scripts": {
-        "build": "tsc",
-        "typecheck": "tsc --noEmit",
-        "lint": "eslint src",
-        "format": "prettier --write src",
-        "format:check": "prettier --check src",
-        "clean": "rm -rf dist"
-    },
-    "peerDependencies": {
-        "react": "^19.1.0"
-    },
-    "dependencies": {
-        "@packages/types": "*",
-        "@packages/validators": "*",
-        "react-icons": "^5.5.0"
-    },
-    "devDependencies": {
-        "@config/tailwind": "*",
-        "@config/typescript": "*",
-        "@tailwindcss/postcss": "^4.1.0",
-        "@types/react": "^19.2.0",
-        "babel-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
-        "eslint-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
-        "tailwindcss": "^4.1.0",
-        "typescript": "^5.8.3"
-    }
+    "./styles.css": "./src/styles.css"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
+  },
+  "dependencies": {
+    "@packages/types": "*",
+    "@packages/validators": "*",
+    "react-icons": "^5.5.0"
+  },
+  "devDependencies": {
+    "@config/tailwind": "*",
+    "@config/typescript": "*",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/react": "^19.2.0",
+    "babel-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
+    "eslint-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.3"
+  }
 }
