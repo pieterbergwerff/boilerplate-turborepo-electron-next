@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-This is a **Turborepo v2.3.4 monorepo** for cross-platform Electron desktop apps (Windows/macOS/Linux) powered by Next.js 16+ with App Router and Server Components:
+This is a **Turborepo v2.7.0 monorepo** for cross-platform Electron desktop apps (Windows/macOS/Linux) powered by Next.js 16+ with App Router and Server Components:
 
 ### Core Structure
 
@@ -11,9 +11,13 @@ This is a **Turborepo v2.3.4 monorepo** for cross-platform Electron desktop apps
 - `apps/storybook/` - Storybook for component development
 - `apps/tests/` - Vitest UI runner (legacy, being phased out)
 - `packages/ui/` - Shared React component library (atoms/molecules/organisms/pages/templates)
+- `packages/hooks/` - Shared React hooks (e.g., useTheme, useSettings)
 - `packages/tests/` - Shared Vitest test utilities
 - `packages/database/` - SQLite3 + Knex migrations, seeds, typed repositories
 - `packages/validators/` - Zod schemas/types shared across main/preload/renderer/Next
+- `packages/fonts/` - Font files bundled in UI (Cantarell, IBM Plex, Inter, Roboto)
+- `packages/types/` - Shared TypeScript types/interfaces
+- `packages/scripts/` - Build scripts (afterSign for macOS notarization, workspace name validation)
 - `config/` - Shared ESLint, Prettier, TypeScript configurations (consumed via package exports)
 - `utils/` - Shared utilities (common/client/server) with strict typing
 - `tests/` - Centralized testing workspaces (vitest unit/integration, playwright E2E)
@@ -99,8 +103,12 @@ Use `quality` before commits. CI enforces these checks plus `audit-ci` security 
 - `@apps/storybook` - Storybook workspace
 - `@apps/tests` - Vitest UI runner (legacy)
 - `@packages/ui` - UI component library
+- `@packages/hooks` - Shared React hooks
 - `@packages/database` - SQLite + Knex
 - `@packages/validators` - Zod schemas/types
+- `@packages/fonts` - Font files (Cantarell, IBM, Inter, Roboto)
+- `@packages/types` - Shared TypeScript types
+- `@packages/scripts` - Build/automation scripts (afterSign.mjs, workspace name validation)
 - `@config/typescript` - Shared TypeScript configs
 - `@config/eslint` - Shared ESLint configs
 - `@config/prettier` - Shared Prettier configs
@@ -114,14 +122,27 @@ Use `quality` before commits. CI enforces these checks plus `audit-ci` security 
 
 Reference packages in dependencies: `"@packages/ui": "*"`
 
-### Module System: ESM-Only
+### Module System: Hybrid ESM/CommonJS
 
-**Critical**: Entire repo is ESM (`"type": "module"`):
+**Critical**: Most of the repo is ESM (`"type": "module"`), but **Electron desktop app (`apps/desktop/`) is CommonJS**:
 
-- TypeScript: `moduleResolution: "nodenext"`, `module: "nodenext"`
-- Import syntax: Always `.js` extensions in TypeScript imports (e.g., `import { foo } from './bar.js'`)
-- No CommonJS except where Electron requires it (main process uses `require` at runtime while TS source is ESM)
-- Config files: `.mjs` preferred or `.js` with `type: module`
+- **Next.js & packages**: ESM - TypeScript with `moduleResolution: "nodenext"`, `module: "nodenext"`, always `.js` extensions in imports
+- **Electron (`apps/desktop/`)**: **CommonJS** - No `"type": "module"` in package.json, `tsconfig.json` has `"module": "commonjs"`, uses `require()`/`module.exports`
+- **Reason**: Electron's preload scripts **require** CommonJS at runtime - ESM breaks context bridge and IPC
+- **Source code**: All `apps/desktop/src/*.ts` files use CommonJS syntax (`const foo = require('bar')`, `module.exports = ...`)
+- Config files (root): `.mjs` preferred or `.js` with `type: module`
+
+**Converting Electron files to CommonJS**:
+
+```typescript
+// ❌ ESM (breaks preload):
+import { app } from 'electron';
+export const foo = 'bar';
+
+// ✅ CommonJS (works):
+const { app } = require('electron');
+module.exports = { foo: 'bar' };
+```
 
 ### TypeScript Configuration Inheritance
 
@@ -255,7 +276,7 @@ export function Button({
 
 **No default exports** - always use named exports for tree-shaking.
 
-**No styling frameworks by default** - no Tailwind/Radix/shadcn included in boilerplate.
+**Styling**: Tailwind CSS 4.1.0 is configured across Next.js, Storybook, and UI package. Use Tailwind utility classes for styling components.
 
 ## Environment & Tooling
 
@@ -352,7 +373,7 @@ export type SettingsUpdateInput = z.infer<typeof SettingsUpdateInput>;
 10. **DB access**: SQLite only from main process - renderer must use IPC
 11. **JSDoc required**: Every function needs JSDoc with description/params/return
 12. **Import order**: Follow utils → constants → components → types → other pattern
-13. **No styling frameworks**: No Tailwind/Radix/shadcn by default in boilerplate
+13. **Styling**: Tailwind CSS 4.1.0 configured - use utility classes for styling components
 14. **Dynamic routes**: Mark Next.js routes using Electron/Node APIs as `export const dynamic = 'force-dynamic'`
 15. **Turborepo cache**: Run `clean` task if builds behave strangely after major changes
 
@@ -387,6 +408,12 @@ Pre-commit (Husky + lint-staged):
 }
 ```
 
+Pre-push (Husky):
+
+```bash
+npm run docs:build  # Generates TypeDoc documentation to /docs folder
+```
+
 CI pipeline enforces:
 
 - `typecheck` - All workspaces
@@ -405,6 +432,13 @@ Comprehensive docs in `docs/` directory:
 - `DEPLOYMENT.md` - Build/release process, signing, notarization setup
 - `ARCHITECTURE.md` - System design, rationale, diagrams, IPC patterns, data model
 - `TROUBLESHOOTING.md` - Common issues and solutions
+
+TypeDoc API documentation:
+
+```bash
+npm run docs:build   # Generates TypeDoc HTML to /docs folder (runs on pre-push hook)
+npm run docs:serve   # Serves docs locally for preview
+```
 
 CHANGELOG automation:
 
