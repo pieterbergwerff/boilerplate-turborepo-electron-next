@@ -1,1 +1,1 @@
-export { default, ButtonAtomComponent } from './Button.atom.js';
+export { default, ButtonAtomComponent as Button } from './Button.atom.js';

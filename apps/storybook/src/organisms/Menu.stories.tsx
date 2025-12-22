@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { MenuOrganism as Menu } from '@packages/ui';
+import { Menu } from '@packages/ui';
 
 /**
  * Menu component for navigation.

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Preview } from '@storybook/react';
 import '@packages/fonts/fonts.css';
 import '@packages/ui/styles.css';

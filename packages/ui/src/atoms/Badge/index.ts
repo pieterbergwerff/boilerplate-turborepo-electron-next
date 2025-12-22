@@ -1,1 +1,1 @@
-export { default, BadgeAtomComponent } from './Badge.atom.js';
+export { default, BadgeAtomComponent as Badge } from './Badge.atom.js';

@@ -11,18 +11,12 @@
     "../../utils/server"
   ],
   "entryPointStrategy": "packages",
-  "out": "html",
+  "out": "../../docs",
   "name": "Turborepo Electron Next.js Boilerplate",
   "includeVersion": true,
   "readme": "README.md",
   "theme": "default",
   "includeHierarchySummary": true,
-  "media": [
-    "./ARCHITECTURE.md",
-    "./CONTRIBUTING.md",
-    "./DEPLOYMENT.md",
-    "./TROUBLESHOOTING.md"
-  ],
   "excludePrivate": false,
   "excludeProtected": false,
   "excludeExternals": true,

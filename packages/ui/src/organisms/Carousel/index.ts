@@ -1,1 +1,4 @@
-export { default, CarouselOrganismComponent } from './Carousel.organism.js';
+export {
+  default,
+  CarouselOrganismComponent as Carousel,
+} from './Carousel.organism.js';

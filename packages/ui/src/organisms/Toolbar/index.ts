@@ -1,1 +1,4 @@
-export { default, ToolbarOrganismComponent } from './Toolbar.organism.js';
+export {
+  default,
+  ToolbarOrganismComponent as Toolbar,
+} from './Toolbar.organism.js';

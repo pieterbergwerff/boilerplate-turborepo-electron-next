@@ -1,1 +1,4 @@
-export { default, DropdownOrganismComponent } from './Dropdown.organism.js';
+export {
+  default,
+  DropdownOrganismComponent as Dropdown,
+} from './Dropdown.organism.js';

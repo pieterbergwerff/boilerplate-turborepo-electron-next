@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ToolbarOrganism as Toolbar } from '@packages/ui';
+import { Toolbar } from '@packages/ui';
 
 /**
  * Toolbar component for action buttons.

@@ -1,1 +1,1 @@
-export { default, TextareaAtomComponent } from './Textarea.atom.js';
+export { default, TextareaAtomComponent as Textarea } from './Textarea.atom.js';

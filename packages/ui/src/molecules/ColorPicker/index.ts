@@ -1,4 +1,4 @@
 export {
   default,
-  ColorPickerMoleculeComponent,
+  ColorPickerMoleculeComponent as ColorPicker,
 } from './ColorPicker.molecule.js';

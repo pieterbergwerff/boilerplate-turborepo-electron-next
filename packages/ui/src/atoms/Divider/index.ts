@@ -1,1 +1,1 @@
-export { default, DividerAtomComponent } from './Divider.atom.js';
+export { default, DividerAtomComponent as Divider } from './Divider.atom.js';

@@ -1,1 +1,1 @@
-export { default, ImageAtomComponent } from './Image.atom.js';
+export { default, ImageAtomComponent as Image } from './Image.atom.js';

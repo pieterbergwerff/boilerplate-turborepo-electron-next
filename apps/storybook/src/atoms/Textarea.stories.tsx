@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { TextareaAtom as Textarea } from '@packages/ui';
+import { Textarea } from '@packages/ui';
 
 /**
  * Textarea component for multi-line text input.

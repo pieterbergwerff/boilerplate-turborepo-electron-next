@@ -1,1 +1,1 @@
-export { default, ToastMoleculeComponent } from './Toast.molecule.js';
+export { default, ToastMoleculeComponent as Toast } from './Toast.molecule.js';

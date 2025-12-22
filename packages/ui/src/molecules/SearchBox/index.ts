@@ -1,1 +1,4 @@
-export { default, SearchBoxMoleculeComponent } from './SearchBox.molecule.js';
+export {
+  default,
+  SearchBoxMoleculeComponent as SearchBox,
+} from './SearchBox.molecule.js';

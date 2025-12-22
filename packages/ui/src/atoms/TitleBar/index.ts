@@ -1,1 +1,1 @@
-export { default, TitleBarAtomComponent } from './TitleBar.atom.js';
+export { default, TitleBarAtomComponent as TitleBar } from './TitleBar.atom.js';

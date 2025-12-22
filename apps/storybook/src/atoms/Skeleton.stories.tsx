@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { SkeletonAtom as Skeleton } from '@packages/ui';
+import { Skeleton } from '@packages/ui';
 
 /**
  * Skeleton component for loading states.

@@ -1,1 +1,1 @@
-export { default, CheckboxAtomComponent } from './Checkbox.atom.js';
+export { default, CheckboxAtomComponent as Checkbox } from './Checkbox.atom.js';

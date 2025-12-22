@@ -1,1 +1,4 @@
-export { default, BreadcrumbMoleculeComponent } from './Breadcrumb.molecule.js';
+export {
+  default,
+  BreadcrumbMoleculeComponent as Breadcrumb,
+} from './Breadcrumb.molecule.js';

@@ -1,5 +1,5 @@
 // import components
-import { ClientProviders } from '../components/ClientProviders.js';
+import { AppProvider } from '@packages/ui';
 
 // import styles
 import '@packages/fonts/fonts.css';
@@ -16,7 +16,7 @@ const RootLayout: FC<RootLayoutPropTypes> = ({ children }) => {
     <html lang="en">
       <head></head>
       <body className="bg-gray-50">
-        <ClientProviders>{children}</ClientProviders>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

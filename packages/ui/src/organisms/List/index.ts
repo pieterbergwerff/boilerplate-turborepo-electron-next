@@ -1,1 +1,1 @@
-export { default, ListOrganismComponent } from './List.organism.js';
+export { default, ListOrganismComponent as List } from './List.organism.js';

@@ -1,1 +1,1 @@
-export { default, LabelAtomComponent } from './Label.atom.js';
+export { default, LabelAtomComponent as Label } from './Label.atom.js';

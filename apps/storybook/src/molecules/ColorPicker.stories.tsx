@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ColorPickerMolecule as ColorPicker } from '@packages/ui';
+import { ColorPicker } from '@packages/ui';
 
 /**
  * ColorPicker component for selecting colors.

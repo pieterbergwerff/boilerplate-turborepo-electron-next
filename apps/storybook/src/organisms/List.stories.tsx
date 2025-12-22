@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ListOrganism as List } from '@packages/ui';
+import { List } from '@packages/ui';
 
 /**
  * List component for ordered and unordered lists.

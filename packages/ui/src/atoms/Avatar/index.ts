@@ -1,1 +1,1 @@
-export { default, AvatarAtomComponent } from './Avatar.atom.js';
+export { default, AvatarAtomComponent as Avatar } from './Avatar.atom.js';

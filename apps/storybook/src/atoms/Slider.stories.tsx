@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { SliderAtom as Slider } from '@packages/ui';
+import { Slider } from '@packages/ui';
 
 /**
  * Slider component for range input.

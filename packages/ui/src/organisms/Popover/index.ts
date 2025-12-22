@@ -1,1 +1,4 @@
-export { default, PopoverOrganismComponent } from './Popover.organism.js';
+export {
+  default,
+  PopoverOrganismComponent as Popover,
+} from './Popover.organism.js';

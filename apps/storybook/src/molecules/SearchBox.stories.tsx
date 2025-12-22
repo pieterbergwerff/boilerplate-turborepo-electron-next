@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { SearchBoxMolecule as SearchBox } from '@packages/ui';
+import { SearchBox } from '@packages/ui';
 
 /**
  * SearchBox component with search icon.

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { PopoverOrganism as Popover } from '@packages/ui';
+import { Popover } from '@packages/ui';
 
 /**
  * Popover component for contextual content.

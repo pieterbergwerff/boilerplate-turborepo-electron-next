@@ -1,1 +1,1 @@
-export { default, MenuOrganismComponent } from './Menu.organism.js';
+export { default, MenuOrganismComponent as Menu } from './Menu.organism.js';

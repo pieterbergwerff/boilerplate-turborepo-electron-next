@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { LabelAtom as Label } from '@packages/ui';
+import { Label } from '@packages/ui';
 
 /**
  * Label component for form fields.

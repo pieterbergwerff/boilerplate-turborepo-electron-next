@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ToastMolecule as Toast } from '@packages/ui';
+import { Toast } from '@packages/ui';
 
 /**
  * Toast component for notifications.

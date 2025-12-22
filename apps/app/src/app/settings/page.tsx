@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 
 // import components
-import { IconMoleculeComponent as Icon } from '@packages/ui';
+import { Icon } from '@packages/ui';
 
 // import types
 import type {

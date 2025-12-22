@@ -12,6 +12,12 @@ export interface ThemeProviderProps {
   defaultOSTheme?: OSTheme;
 }
 
+export interface UseThemeProviderReturnType {
+  loading: boolean;
+  osTheme: OSTheme;
+  colorScheme: 'light' | 'dark';
+}
+
 // OSTheme type (used by ThemeProvider) - should match @packages/validators but include unknown for fallback
 export type OSTheme = 'windows' | 'osx' | 'linux';
 

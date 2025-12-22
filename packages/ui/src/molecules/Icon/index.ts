@@ -1,1 +1,1 @@
-export { default, IconMoleculeComponent } from './Icon.molecule.js';
+export { default, IconMoleculeComponent as Icon } from './Icon.molecule.js';

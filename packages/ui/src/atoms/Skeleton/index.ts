@@ -1,1 +1,1 @@
-export { default, SkeletonAtomComponent } from './Skeleton.atom.js';
+export { default, SkeletonAtomComponent as Skeleton } from './Skeleton.atom.js';

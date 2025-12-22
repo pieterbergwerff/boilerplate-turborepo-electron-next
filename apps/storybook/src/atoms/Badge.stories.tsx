@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { BadgeAtom as Badge } from '@packages/ui';
+import { Badge } from '@packages/ui';
 
 /**
  * Badge component for labels and tags with various styles.

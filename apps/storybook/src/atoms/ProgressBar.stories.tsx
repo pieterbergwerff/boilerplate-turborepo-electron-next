@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ProgressBarAtom as ProgressBar } from '@packages/ui';
+import { ProgressBar } from '@packages/ui';
 
 /**
  * ProgressBar component for displaying progress.

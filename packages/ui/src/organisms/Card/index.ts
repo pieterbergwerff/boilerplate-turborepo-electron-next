@@ -1,1 +1,1 @@
-export { default, CardOrganismComponent } from './Card.organism.js';
+export { default, CardOrganismComponent as Card } from './Card.organism.js';

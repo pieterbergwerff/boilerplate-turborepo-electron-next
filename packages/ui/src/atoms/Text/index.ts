@@ -1,1 +1,1 @@
-export { default, TextAtomComponent } from './Text.atom.js';
+export { default, TextAtomComponent as Text } from './Text.atom.js';

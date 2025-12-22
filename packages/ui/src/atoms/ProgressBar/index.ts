@@ -1,1 +1,4 @@
-export { default, ProgressBarAtomComponent } from './ProgressBar.atom.js';
+export {
+  default,
+  ProgressBarAtomComponent as ProgressBar,
+} from './ProgressBar.atom.js';

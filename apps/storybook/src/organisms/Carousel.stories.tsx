@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { CarouselOrganism as Carousel } from '@packages/ui';
+import { Carousel } from '@packages/ui';
 
 /**
  * Carousel component for sliding content.

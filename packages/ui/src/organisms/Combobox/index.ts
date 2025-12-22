@@ -1,1 +1,4 @@
-export { default, ComboboxOrganismComponent } from './Combobox.organism.js';
+export {
+  default,
+  ComboboxOrganismComponent as Combobox,
+} from './Combobox.organism.js';

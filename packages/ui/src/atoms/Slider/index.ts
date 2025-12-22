@@ -1,1 +1,1 @@
-export { default, SliderAtomComponent } from './Slider.atom.js';
+export { default, SliderAtomComponent as Slider } from './Slider.atom.js';

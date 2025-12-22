@@ -12,7 +12,7 @@ import type {
 } from '@packages/validators';
 
 // import components
-import { TitleBarAtomComponent as TitleBar } from '@packages/ui';
+import { TitleBar } from '@packages/ui';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';

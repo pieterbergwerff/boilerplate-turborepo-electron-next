@@ -1,1 +1,4 @@
-export { default, AccordionOrganismComponent } from './Accordion.organism.js';
+export {
+  default,
+  AccordionOrganismComponent as Accordion,
+} from './Accordion.organism.js';

@@ -1,1 +1,4 @@
-export { default, DialogOrganismComponent } from './Dialog.organism.js';
+export {
+  default,
+  DialogOrganismComponent as Dialog,
+} from './Dialog.organism.js';

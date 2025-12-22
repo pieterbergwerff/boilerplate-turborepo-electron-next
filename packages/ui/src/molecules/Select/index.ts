@@ -1,1 +1,4 @@
-export { default, SelectMoleculeComponent } from './Select.molecule.js';
+export {
+  default,
+  SelectMoleculeComponent as Select,
+} from './Select.molecule.js';

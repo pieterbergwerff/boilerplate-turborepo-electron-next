@@ -1,4 +1,4 @@
 export {
   default,
-  AvatarGroupMoleculeComponent,
+  AvatarGroupMoleculeComponent as AvatarGroup,
 } from './AvatarGroup.molecule.js';

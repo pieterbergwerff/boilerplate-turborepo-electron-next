@@ -1,1 +1,1 @@
-export { default, InputAtomComponent } from './Input.atom.js';
+export { default, InputAtomComponent as Input } from './Input.atom.js';
