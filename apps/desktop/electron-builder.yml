@@ -1,39 +1,40 @@
-appId: ${env.APP_ID}
-productName: ${env.PRODUCT_NAME}
+appId: com.pieterbergwerff.turborepo-electron-nextjs
+productName: TurborepoElectronNext
 asar: false
+electronVersion: 39.2.0
 
 # Include Electron build + Next standalone app; exclude electron from Next tree
 files:
-  - from: 'apps/desktop/dist'
+  - from: 'dist'
     to: 'apps/desktop/dist'
-  - from: 'apps/app/.next/standalone/apps/app'
+  - from: 'nextjs-standalone/apps/app'
     to: 'apps/app'
-  - from: 'apps/app/.next/standalone/node_modules'
+  - from: 'nextjs-standalone/node_modules'
     to: 'apps/app/node_modules'
-  - from: 'apps/app/.next/static'
+  - from: 'nextjs-standalone/.next/static'
     to: 'apps/app/.next/static'
-  - from: 'apps/app/public'
+  - from: '../app/public'
     to: 'apps/app/public'
-  - '!apps/app/node_modules/electron/**'
+  - '!**/node_modules/electron/**'
 
 extraResources:
-  - from: packages/database/seed/app.sqlite
+  - from: ../../packages/database/seed/app.sqlite
     to: app.sqlite
 
-afterSign: 'packages/scripts/afterSign.mjs'
+afterSign: '../../packages/scripts/afterSign.mjs'
 
 mac:
   category: public.app-category.productivity
   hardenedRuntime: true
   gatekeeperAssess: false
   target: [dmg]
-  artifactName: '${env.PRODUCT_NAME}-${version}-${arch}.dmg'
+  artifactName: '${productName}-${version}-${arch}.dmg'
 
 win:
   target: [nsis]
-  artifactName: '${env.PRODUCT_NAME}-${version}-x64.exe'
+  artifactName: '${productName}-${version}-x64.exe'
 
 linux:
   target: [AppImage, deb]
   category: Utility
-  artifactName: '${env.PRODUCT_NAME}-${version}-${arch}.${ext}'
+  artifactName: '${productName}-${version}-${arch}.${ext}'

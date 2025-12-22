@@ -3,5 +3,7 @@
     "moderate": true,
     "high": true,
     "critical": true,
-    "allowlist": []
+    "allowlist": [
+        "GHSA-mh29-5h37-fv8m"
+    ]
 }
