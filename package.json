@@ -1,69 +1,69 @@
 {
-  "name": "turborepo-electron-nextjs",
-  "version": "1.0.0",
-  "description": "A Turborepo-based monorepo boilerplate that ships a cross-platform Electron desktop application powered by Next.js",
-  "author": "Pieter Bergwerff",
-  "private": true,
-  "type": "module",
-  "packageManager": "npm@11.6.2",
-  "engines": {
-    "node": ">=24 <25"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "config/*",
-    "utils/*",
-    "tests/*"
-  ],
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "build:next": "turbo build --filter=@apps/app",
-    "build:electron": "npm run build:next && turbo build --filter=@apps/desktop && cd apps/desktop && npm run build:electron",
-    "dev:app": "turbo dev --filter=@apps/app",
-    "dev:desktop": "turbo dev --filter=@apps/desktop",
-    "test": "turbo test",
-    "test:coverage": "turbo test -- --coverage",
-    "test:unit": "turbo run test --filter=@tests/vitest -- --coverage",
-    "test:e2e": "turbo run test:e2e --filter=@tests/playwright",
-    "typecheck": "turbo typecheck",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "format:check": "turbo format:check",
-    "clean": "turbo clean",
-    "docs": "npm run docs --workspace=@apps/docs",
-    "docs:watch": "npm run docs:watch --workspace=@apps/docs",
-    "storybook": "turbo dev --filter=@apps/storybook",
-    "build:storybook": "turbo build --filter=@apps/storybook",
-    "repo:check": "node packages/scripts/check-workspace-names.mjs",
-    "quality": "npm run typecheck && npm run lint && npm run format:check",
-    "quality:fix": "npm run format && npm run lint && npm run typecheck",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+    "name": "turborepo-electron-nextjs",
+    "version": "1.0.0",
+    "description": "A Turborepo-based monorepo boilerplate that ships a cross-platform Electron desktop application powered by Next.js",
+    "author": "Pieter Bergwerff",
+    "private": true,
+    "type": "module",
+    "packageManager": "npm@11.6.2",
+    "engines": {
+        "node": ">=24 <25"
+    },
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "config/*",
+        "utils/*",
+        "tests/*"
     ],
-    "*.{json,md}": [
-      "prettier --write"
-    ]
-  },
-  "devDependencies": {
-    "turbo": "^2.0.0",
-    "husky": "^9.0.0",
-    "lint-staged": "^15.0.0",
-    "conventional-changelog-cli": "^4.0.0",
-    "audit-ci": "^6.0.0",
-    "@eslint/js": "^9.39.2",
-    "@types/eslint__js": "^8.42.3",
-    "@types/node": "^25.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.50.0",
-    "@typescript-eslint/parser": "^8.50.0",
-    "eslint": "^9.39.2",
-    "prettier": "^3.7.4",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.50.0"
-  }
+    "scripts": {
+        "dev": "turbo dev",
+        "build": "turbo build",
+        "build:next": "turbo build --filter=@apps/app",
+        "build:electron": "npm run build:next && turbo build --filter=@apps/desktop && cd apps/desktop && npm run build:electron",
+        "dev:app": "turbo dev --filter=@apps/app",
+        "dev:desktop": "turbo dev --filter=@apps/desktop",
+        "test": "turbo test",
+        "test:coverage": "turbo test -- --coverage",
+        "test:unit": "turbo run test --filter=@tests/vitest -- --coverage",
+        "test:e2e": "turbo run test:e2e --filter=@tests/playwright",
+        "typecheck": "turbo typecheck",
+        "lint": "turbo lint",
+        "format": "turbo format",
+        "format:check": "turbo format:check",
+        "clean": "turbo clean",
+        "docs": "npm run docs --workspace=@apps/docs",
+        "docs:watch": "npm run docs:watch --workspace=@apps/docs",
+        "storybook": "turbo dev --filter=@apps/storybook",
+        "build:storybook": "turbo build --filter=@apps/storybook",
+        "repo:check": "node packages/scripts/check-workspace-names.mjs",
+        "quality": "npm run typecheck && npm run lint && npm run format:check",
+        "quality:fix": "npm run format && npm run lint && npm run typecheck",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{json,md}": [
+            "prettier --write"
+        ]
+    },
+    "devDependencies": {
+        "turbo": "^2.0.0",
+        "husky": "^9.0.0",
+        "lint-staged": "^15.0.0",
+        "conventional-changelog-cli": "^4.0.0",
+        "audit-ci": "^6.0.0",
+        "@eslint/js": "^9.39.2",
+        "@types/eslint__js": "^8.42.3",
+        "@types/node": "^25.0.3",
+        "@typescript-eslint/eslint-plugin": "^8.50.0",
+        "@typescript-eslint/parser": "^8.50.0",
+        "eslint": "^9.39.2",
+        "prettier": "^3.7.4",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.50.0"
+    }
 }
