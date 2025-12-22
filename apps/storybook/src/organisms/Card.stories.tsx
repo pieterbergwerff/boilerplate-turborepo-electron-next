@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Card } from '@packages/ui';
+import { CardOrganism as Card } from '@packages/ui';
 
 /**
  * Card component for content containers.
@@ -29,7 +29,7 @@ export const Default: Story = {
     children: 'This is the card content. It can contain any React elements.',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -40,11 +40,12 @@ export const Default: Story = {
 export const WithFooter: Story = {
   args: {
     title: 'Product Card',
-    children: 'This card has a footer section for actions or additional information.',
+    children:
+      'This card has a footer section for actions or additional information.',
     footer: 'Footer content',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -57,7 +58,7 @@ export const NoTitle: Story = {
     children: 'A card without a title, just content.',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -68,11 +69,12 @@ export const NoTitle: Story = {
 export const LongContent: Story = {
   args: {
     title: 'Article Card',
-    children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    children:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     footer: 'Read more →',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '500px' }}>
         <Story />
       </div>

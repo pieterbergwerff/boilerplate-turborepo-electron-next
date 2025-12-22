@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Toolbar } from '@packages/ui';
+import { ToolbarOrganism as Toolbar } from '@packages/ui';
 
 /**
  * Toolbar component for action buttons.
@@ -30,7 +30,7 @@ export const Default: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -47,7 +47,7 @@ export const WithDisabled: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -67,7 +67,7 @@ export const ManyActions: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '600px' }}>
         <Story />
       </div>
@@ -83,7 +83,7 @@ export const FewActions: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>

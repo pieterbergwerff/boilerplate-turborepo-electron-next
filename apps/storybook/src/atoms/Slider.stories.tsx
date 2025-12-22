@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Slider } from '@packages/ui';
+import { SliderAtom as Slider } from '@packages/ui';
 
 /**
  * Slider component for range input.
@@ -30,7 +30,7 @@ export const Default: Story = {
     value: 50,
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -45,7 +45,7 @@ export const CustomRange: Story = {
     max: 50,
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -61,7 +61,7 @@ export const WithStep: Story = {
     step: 10,
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>

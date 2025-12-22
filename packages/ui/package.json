@@ -23,6 +23,9 @@
     "peerDependencies": {
         "react": "^19.1.0"
     },
+    "dependencies": {
+        "@packages/types": "*"
+    },
     "devDependencies": {
         "@config/tailwind": "*",
         "@config/typescript": "*",

@@ -1,17 +1,13 @@
 // import utils
-// (none)
-// import constants
-// (none)
-// import components
-// (none)
-// import types
 import { contextBridge, ipcRenderer } from 'electron';
+
+// import types
 import type {
-  AppInfo,
-  OpenDialogOptions,
-  OpenDialogResult,
-  Settings,
-  Theme,
+  AppInfoValidatorType,
+  OpenDialogOptionsType,
+  OpenDialogResultType,
+  SettingsValidatorType,
+  ThemeValidatorType,
 } from '@packages/validators';
 
 /**
@@ -21,19 +17,21 @@ import type {
 function exposeApi(): void {
   contextBridge.exposeInMainWorld('api', {
     /** Get current settings. */
-    getSettings: (): Promise<Settings> => ipcRenderer.invoke('settings:get'),
+    getSettings: (): Promise<SettingsValidatorType> =>
+      ipcRenderer.invoke('settings:get'),
     /** Update theme. */
-    setTheme: (theme: Theme): Promise<Settings> =>
+    setTheme: (theme: ThemeValidatorType): Promise<SettingsValidatorType> =>
       ipcRenderer.invoke('settings:update', { theme }),
     /** Get app info. */
-    getAppInfo: (): Promise<AppInfo> => ipcRenderer.invoke('app:get-info'),
+    getAppInfo: (): Promise<AppInfoValidatorType> =>
+      ipcRenderer.invoke('app:get-info'),
     /** Open OS file dialog. */
-    openDialog: (opts?: OpenDialogOptions): Promise<OpenDialogResult> =>
+    openDialog: (opts?: OpenDialogOptionsType): Promise<OpenDialogResultType> =>
       ipcRenderer.invoke('fs:openDialog', opts),
   });
 
   // Menu → Renderer theme bridge keeps UI in sync.
-  ipcRenderer.on('menu:theme', (_e, theme: Theme) => {
+  ipcRenderer.on('menu:theme', (_e, theme: ThemeValidatorType) => {
     void ipcRenderer.invoke('settings:update', { theme });
   });
 }
@@ -42,9 +40,9 @@ exposeApi();
 
 declare global {
   var api: {
-    getSettings: () => Promise<Settings>;
-    setTheme: (theme: Theme) => Promise<Settings>;
-    getAppInfo: () => Promise<AppInfo>;
-    openDialog: (opts?: OpenDialogOptions) => Promise<OpenDialogResult>;
+    getSettings: () => Promise<SettingsValidatorType>;
+    setTheme: (theme: ThemeValidatorType) => Promise<SettingsValidatorType>;
+    getAppInfo: () => Promise<AppInfoValidatorType>;
+    openDialog: (opts?: OpenDialogOptionsType) => Promise<OpenDialogResultType>;
   };
 }

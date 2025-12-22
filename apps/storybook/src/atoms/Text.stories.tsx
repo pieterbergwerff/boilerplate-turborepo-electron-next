@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Text } from '@packages/ui';
+import { TextAtom as Text } from '@packages/ui';
 
 /**
  * Text component for typography.
@@ -14,9 +14,18 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    as: { control: 'select', options: ['p', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] },
-    size: { control: 'select', options: ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl'] },
-    weight: { control: 'select', options: ['normal', 'medium', 'semibold', 'bold'] },
+    as: {
+      control: 'select',
+      options: ['p', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl'],
+    },
+    weight: {
+      control: 'select',
+      options: ['normal', 'medium', 'semibold', 'bold'],
+    },
     children: { control: 'text' },
   },
 } satisfies Meta<typeof Text>;

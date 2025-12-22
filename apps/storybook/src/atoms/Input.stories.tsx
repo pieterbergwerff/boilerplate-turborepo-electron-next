@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Input } from '@packages/ui';
+import { InputAtom as Input } from '@packages/ui';
 
 /**
  * Input component for text entry.
@@ -14,7 +14,10 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    type: { control: 'select', options: ['text', 'email', 'password', 'number'] },
+    type: {
+      control: 'select',
+      options: ['text', 'email', 'password', 'number'],
+    },
     value: { control: 'text' },
     onChange: { action: 'changed' },
     placeholder: { control: 'text' },

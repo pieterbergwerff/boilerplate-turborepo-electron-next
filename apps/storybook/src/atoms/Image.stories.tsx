@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Image } from '@packages/ui';
+import { ImageAtom as Image } from '@packages/ui';
 
 /**
  * Image component with Tailwind styling.

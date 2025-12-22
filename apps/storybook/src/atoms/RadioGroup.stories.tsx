@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { RadioGroup } from '@packages/ui';
+import { RadioGroupAtom as RadioGroup } from '@packages/ui';
 
 /**
  * RadioGroup component for single selection from multiple options.

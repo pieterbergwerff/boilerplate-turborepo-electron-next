@@ -1,12 +1,28 @@
 // import types
-import type { AppInfo, Settings } from '@packages/validators';
+import type {
+  AppInfoValidatorType,
+  SettingsValidatorType,
+} from '@packages/validators';
 
-// Extend Window interface for Electron IPC
+/**
+ * Global window interface extension for Electron API.
+ */
 declare global {
   interface Window {
+    /**
+     * Electron API exposed via preload script.
+     */
     api?: {
-      getAppInfo: () => Promise<AppInfo>;
-      getSettings: () => Promise<Settings>;
+      /**
+       * Get application info including OS theme.
+       * @returns {Promise<AppInfoValidatorType>} Application information
+       */
+      getAppInfo: () => Promise<AppInfoValidatorType>;
+      /**
+       * Get current settings.
+       * @returns {Promise<SettingsValidatorType>} Current settings
+       */
+      getSettings: () => Promise<SettingsValidatorType>;
     };
   }
 }

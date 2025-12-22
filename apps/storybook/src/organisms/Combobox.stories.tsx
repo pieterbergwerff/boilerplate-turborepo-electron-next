@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Combobox } from '@packages/ui';
+import { ComboboxOrganism as Combobox } from '@packages/ui';
 
 /**
  * Combobox component for autocomplete input.
@@ -35,7 +35,7 @@ export const Default: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -58,7 +58,7 @@ export const Countries: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -75,7 +75,7 @@ export const ManyOptions: Story = {
     })),
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Switch } from '@packages/ui';
+import { SwitchAtom as Switch } from '@packages/ui';
 
 /**
  * Switch component for toggle input.

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { List } from '@packages/ui';
+import { ListOrganism as List } from '@packages/ui';
 
 /**
  * List component for ordered and unordered lists.
@@ -27,7 +27,7 @@ export const Unordered: Story = {
     items: ['First item', 'Second item', 'Third item'],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -41,7 +41,7 @@ export const Ordered: Story = {
     items: ['First step', 'Second step', 'Third step'],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -60,7 +60,7 @@ export const TodoList: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '400px' }}>
         <Story />
       </div>
@@ -73,7 +73,7 @@ export const ShoppingList: Story = {
     items: ['Milk', 'Bread', 'Eggs', 'Butter', 'Cheese', 'Apples', 'Bananas'],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>

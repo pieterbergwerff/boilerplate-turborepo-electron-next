@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Tooltip } from '@packages/ui';
+import { TooltipMolecule as Tooltip } from '@packages/ui';
 
 /**
  * Tooltip component for contextual information.
@@ -16,7 +16,10 @@ const meta = {
   argTypes: {
     content: { control: 'text' },
     children: { control: 'text' },
-    position: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    position: {
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right'],
+    },
   },
 } satisfies Meta<typeof Tooltip>;
 
@@ -57,7 +60,8 @@ export const Right: Story = {
 
 export const LongContent: Story = {
   args: {
-    content: 'This is a longer tooltip with more detailed information about the element',
+    content:
+      'This is a longer tooltip with more detailed information about the element',
     position: 'top',
     children: 'Hover for more info',
   },

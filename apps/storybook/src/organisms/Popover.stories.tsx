@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Popover } from '@packages/ui';
+import { PopoverOrganism as Popover } from '@packages/ui';
 
 /**
  * Popover component for contextual content.
@@ -16,7 +16,10 @@ const meta = {
   argTypes: {
     trigger: { control: 'text' },
     content: { control: 'text' },
-    position: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    position: {
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right'],
+    },
   },
 } satisfies Meta<typeof Popover>;
 
@@ -58,7 +61,8 @@ export const Right: Story = {
 export const LongContent: Story = {
   args: {
     trigger: 'More info',
-    content: 'This is a popover with longer content that provides more detailed information about the element.',
+    content:
+      'This is a popover with longer content that provides more detailed information about the element.',
     position: 'bottom',
   },
 };

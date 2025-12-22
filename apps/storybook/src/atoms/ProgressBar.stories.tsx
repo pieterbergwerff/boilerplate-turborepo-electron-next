@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { ProgressBar } from '@packages/ui';
+import { ProgressBarAtom as ProgressBar } from '@packages/ui';
 
 /**
  * ProgressBar component for displaying progress.
@@ -28,7 +28,7 @@ export const Default: Story = {
     value: 50,
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -42,7 +42,7 @@ export const Blue: Story = {
     color: 'blue',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -56,7 +56,7 @@ export const Green: Story = {
     color: 'green',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -70,7 +70,7 @@ export const Red: Story = {
     color: 'red',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -84,7 +84,7 @@ export const Complete: Story = {
     color: 'green',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>

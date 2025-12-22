@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Carousel } from '@packages/ui';
+import { CarouselOrganism as Carousel } from '@packages/ui';
 
 /**
  * Carousel component for sliding content.
@@ -28,7 +28,7 @@ export const Default: Story = {
     items: ['Slide 1', 'Slide 2', 'Slide 3'],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '500px' }}>
         <Story />
       </div>
@@ -43,7 +43,7 @@ export const AutoPlay: Story = {
     interval: 3000,
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '500px' }}>
         <Story />
       </div>
@@ -56,7 +56,7 @@ export const ManySlides: Story = {
     items: Array.from({ length: 8 }, (_, i) => `Slide ${i + 1}`),
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '500px' }}>
         <Story />
       </div>

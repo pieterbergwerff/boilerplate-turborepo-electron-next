@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Divider } from '@packages/ui';
+import { DividerAtom as Divider } from '@packages/ui';
 
 /**
  * Divider component for visual separation.
@@ -26,7 +26,7 @@ export const Horizontal: Story = {
     orientation: 'horizontal',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '300px' }}>
         <Story />
       </div>
@@ -39,7 +39,7 @@ export const Vertical: Story = {
     orientation: 'vertical',
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ height: '100px', display: 'flex', alignItems: 'center' }}>
         <Story />
       </div>

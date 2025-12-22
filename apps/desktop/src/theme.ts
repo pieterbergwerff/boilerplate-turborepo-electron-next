@@ -2,12 +2,9 @@
 import { config } from 'dotenv';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-// import constants
-// (none)
-// import components
-// (none)
+
 // import types
-import type { OSTheme } from '@packages/validators';
+import type { OsThemeValidatorType } from '@packages/validators';
 
 /**
  * Load environment variables from .env file if it exists.
@@ -25,9 +22,9 @@ export function loadEnv(appPath: string): void {
  * Detect OS theme from environment variable or platform.
  * Priority: THEME env var -> platform detection
  * @param {NodeJS.Platform} platform Process platform (win32, darwin, linux)
- * @returns {OSTheme} OS theme identifier
+ * @returns {ThemeValidatorType} OS theme identifier
  */
-export function detectOSTheme(platform: NodeJS.Platform): OSTheme {
+export function detectOSTheme(platform: NodeJS.Platform): OsThemeValidatorType {
   // Check THEME environment variable first
   const envTheme = process.env.THEME?.toLowerCase().trim();
 

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Link } from '@packages/ui';
+import { LinkAtom as Link } from '@packages/ui';
 
 /**
  * Link component for navigation.
@@ -41,6 +41,7 @@ export const External: Story = {
 export const LongText: Story = {
   args: {
     href: '#',
-    children: 'This is a much longer link text that demonstrates how the link component handles longer content',
+    children:
+      'This is a much longer link text that demonstrates how the link component handles longer content',
   },
 };

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Toast } from '@packages/ui';
+import { ToastMolecule as Toast } from '@packages/ui';
 
 /**
  * Toast component for notifications.
@@ -15,7 +15,10 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     message: { control: 'text' },
-    type: { control: 'select', options: ['success', 'error', 'warning', 'info'] },
+    type: {
+      control: 'select',
+      options: ['success', 'error', 'warning', 'info'],
+    },
     duration: { control: 'number' },
     onClose: { action: 'closed' },
   },
@@ -54,7 +57,8 @@ export const Info: Story = {
 
 export const LongMessage: Story = {
   args: {
-    message: 'This is a much longer notification message that demonstrates how the toast component handles longer content with multiple lines of text.',
+    message:
+      'This is a much longer notification message that demonstrates how the toast component handles longer content with multiple lines of text.',
     type: 'info',
   },
 };

@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Badge } from '@packages/ui';
+import { BadgeAtom as Badge } from '@packages/ui';
 
 /**
  * Badge component for labels and tags with various styles.
@@ -15,7 +15,10 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     children: { control: 'text' },
-    variant: { control: 'select', options: ['default', 'success', 'warning', 'error'] },
+    variant: {
+      control: 'select',
+      options: ['default', 'success', 'warning', 'error'],
+    },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 } satisfies Meta<typeof Badge>;

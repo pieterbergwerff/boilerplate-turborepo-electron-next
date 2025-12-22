@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Menu } from '@packages/ui';
+import { MenuOrganism as Menu } from '@packages/ui';
 
 /**
  * Menu component for navigation.
@@ -70,7 +70,7 @@ export const Sidebar: Story = {
     ],
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ width: '200px' }}>
         <Story />
       </div>

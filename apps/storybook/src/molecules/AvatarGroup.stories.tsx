@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { AvatarGroup } from '@packages/ui';
+import { AvatarGroupMolecule as AvatarGroup } from '@packages/ui';
 
 /**
  * AvatarGroup component displays multiple avatars with overflow handling.

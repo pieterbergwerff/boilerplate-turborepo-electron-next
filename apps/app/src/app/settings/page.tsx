@@ -1,16 +1,14 @@
-// import utils
 'use client';
+
+// import utils
 import React, { useEffect, useState } from 'react';
-// import constants
-// (none)
-// import components
-// (none)
+
 // import types
 import type {
-  AppInfo,
-  OpenDialogResult,
-  Settings,
-  Theme,
+  AppInfoValidatorType,
+  OpenDialogResultType,
+  SettingsValidatorType,
+  ThemeValidatorType,
 } from '@packages/validators';
 
 /**
@@ -18,9 +16,9 @@ import type {
  * @returns {React.JSX.Element} Settings UI with actions
  */
 export default function SettingsPage(): React.JSX.Element {
-  const [settings, setSettings] = useState<Settings | null>(null);
-  const [info, setInfo] = useState<AppInfo | null>(null);
-  const [dialogRes, setDialogRes] = useState<OpenDialogResult | null>(null);
+  const [settings, setSettings] = useState<SettingsValidatorType | null>(null);
+  const [info, setInfo] = useState<AppInfoValidatorType | null>(null);
+  const [dialogRes, setDialogRes] = useState<OpenDialogResultType | null>(null);
 
   /**
    * Load initial data from Electron via preload API.
@@ -46,7 +44,7 @@ export default function SettingsPage(): React.JSX.Element {
    * @param {Theme} nextTheme Target theme
    * @returns {Promise<void>}
    */
-  async function onToggle(nextTheme: Theme): Promise<void> {
+  async function onToggle(nextTheme: ThemeValidatorType): Promise<void> {
     if (!window.api) return;
     const updated = await window.api.setTheme(nextTheme);
     setSettings(updated);
@@ -65,7 +63,7 @@ export default function SettingsPage(): React.JSX.Element {
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <h1>Settings</h1>
 
       <section style={{ marginBottom: 16 }}>

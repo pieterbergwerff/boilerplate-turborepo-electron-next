@@ -2,26 +2,25 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync, mkdirSync, copyFileSync } from 'node:fs';
-// import constants
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_FILE = 'app.sqlite';
-// import components
 import { app, BrowserWindow, protocol, Menu } from 'electron';
-// import types
-import type { Knex } from 'knex';
-import type { OSTheme } from '@packages/validators';
-
 import { createHandler } from 'next-electron-rsc/lib/build/index.js';
 import { createDb, runMigrations } from '@packages/database';
 import { registerIpcHandlers } from './ipc.js';
 import { loadEnv, detectOSTheme } from './theme.js';
+
+// import types
+import type { Knex } from 'knex';
+import type { OsThemeValidatorType } from '@packages/validators';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DB_FILE = 'app.sqlite';
 
 let win: BrowserWindow | undefined;
 let knexInstance: Knex | undefined;
 let ipcRegistered = false;
 let interceptorStop: (() => void) | undefined;
 let nextUrl: string | undefined;
-let osTheme: OSTheme;
+let osTheme: OsThemeValidatorType;
 
 // Load .env file and detect OS theme
 loadEnv(app.getAppPath());

@@ -1,20 +1,16 @@
 // import components
 import { ClientProviders } from '../components/ClientProviders.js';
-// import types
-import type { Metadata } from 'next';
+
 // import styles
 import '../styles/globals.css';
 
-export const metadata: Metadata = {
-  title: 'Electron + Next.js App',
-  description: 'A modern Electron app built with Next.js and Turborepo',
-};
+// import types
+import type { Metadata } from 'next';
+import type { FC, ReactNode } from 'react';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+type RootLayoutPropTypes = { children: ReactNode };
+
+const RootLayout: FC<RootLayoutPropTypes> = ({ children }) => {
   return (
     <html lang="en">
       <head></head>
@@ -23,4 +19,11 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
+
+export const metadata: Metadata = {
+  title: 'Electron + Next.js App',
+  description: 'A modern Electron app built with Next.js and Turborepo',
+};

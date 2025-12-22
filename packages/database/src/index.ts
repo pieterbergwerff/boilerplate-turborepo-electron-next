@@ -1,13 +1,12 @@
 // import utils
-// (none)
-// import constants
-// (none)
-// import components
-// (none)
+import knexFactory from 'knex';
+
+// import validators
+import { SettingsValidator } from '@packages/validators';
+
 // import types
 import type { Knex } from 'knex';
-import knexFactory from 'knex';
-import { Settings, type Theme } from '@packages/validators';
+import type { ThemeValidatorType } from '@packages/validators';
 
 /**
  * Create a Knex instance for a given SQLite file path.
@@ -59,12 +58,12 @@ export async function runMigrations(
 /**
  * Fetch current settings.
  * @param {Knex} knex Knex instance
- * @returns {Promise<import('@packages/validators').Settings>} Current settings object
+ * @returns {Promise<import('@packages/validators').ThemeValidatorType>} Current settings object
  */
 export async function getSettings(knex: Knex) {
   const row = await knex('settings').where({ id: 1 }).first();
-  const parsed = Settings.safeParse({
-    theme: (row?.theme as Theme) ?? 'light',
+  const parsed = SettingsValidator.safeParse({
+    theme: (row?.theme as ThemeValidatorType) ?? 'light',
     updatedAt: (row?.updated_at as string) ?? new Date().toISOString(),
   });
   if (!parsed.success) throw new Error(parsed.error.message);
@@ -75,7 +74,7 @@ export async function getSettings(knex: Knex) {
  * Update theme in settings.
  * @param {Knex} knex Knex instance
  * @param {import('@packages/validators').SettingsUpdateInput} input Parsed input (theme)
- * @returns {Promise<import('@packages/validators').Settings>} Updated settings
+ * @returns {Promise<import('@packages/validators').ThemeValidatorType>} Updated settings
  */
 export async function updateSettings(
   knex: Knex,

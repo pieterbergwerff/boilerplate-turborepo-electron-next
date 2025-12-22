@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Checkbox } from '@packages/ui';
+import { CheckboxAtom as Checkbox } from '@packages/ui';
 
 /**
  * Checkbox input component with label support.

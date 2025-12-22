@@ -1,38 +1,32 @@
 'use client';
-// import utils
-import React, { createContext, useContext, useEffect, useState } from 'react';
-// import constants
-// (none)
-// import components
-// (none)
-// import types
-import type { OSTheme, AppInfo, Settings } from '@packages/validators';
 
-export interface ThemeContextValue {
-  osTheme: OSTheme;
-  colorScheme: 'light' | 'dark';
-}
+// import hooks
+import { createContext, useContext, useEffect, useState } from 'react';
+
+// import types
+import type { JSX } from 'react';
+import type {
+  OsThemeValidatorType,
+  AppInfoValidatorType,
+  SettingsValidatorType,
+} from '@packages/validators';
+import type { ThemeContextValue, ThemeProviderProps } from '@packages/types';
 
 const ThemeContext = createContext<ThemeContextValue>({
   osTheme: 'windows',
   colorScheme: 'light',
 });
 
-export interface ThemeProviderProps {
-  children: React.ReactNode;
-  defaultOSTheme?: OSTheme;
-}
-
 /**
  * Theme provider that manages OS theme and color scheme.
  * @param {ThemeProviderProps} props Provider props
- * @returns {React.JSX.Element} Theme provider
+ * @returns {JSX.Element} Theme provider
  */
 export function ThemeProvider({
   children,
   defaultOSTheme = 'windows',
-}: ThemeProviderProps): React.JSX.Element {
-  const [osTheme, setOSTheme] = useState<OSTheme>(defaultOSTheme);
+}: ThemeProviderProps): JSX.Element {
+  const [osTheme, setOSTheme] = useState<OsThemeValidatorType>(defaultOSTheme);
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -41,7 +35,7 @@ export function ThemeProvider({
       // Get OS theme from Electron
       window.api
         .getAppInfo()
-        .then((info: AppInfo) => {
+        .then((info: AppInfoValidatorType) => {
           setOSTheme(info.osTheme);
         })
         .catch(console.error);
@@ -49,7 +43,7 @@ export function ThemeProvider({
       // Get initial color scheme (light/dark)
       window.api
         .getSettings()
-        .then((settings: Settings) => {
+        .then((settings: SettingsValidatorType) => {
           setColorScheme(settings.theme);
         })
         .catch(console.error);

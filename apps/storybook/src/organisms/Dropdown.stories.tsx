@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Dropdown } from '@packages/ui';
+import { DropdownOrganism as Dropdown } from '@packages/ui';
 
 /**
  * Dropdown component for menu actions.

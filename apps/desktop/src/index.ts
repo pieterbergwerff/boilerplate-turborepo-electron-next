@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 // NOTE: Electron main process requires CommonJS at runtime
 // TypeScript source is ESM but compiles to CommonJS for Electron compatibility
+
+// import utils
 const path = require('path');
 const {
   app,

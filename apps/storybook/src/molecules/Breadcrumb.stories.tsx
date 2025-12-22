@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Breadcrumb } from '@packages/ui';
+import { BreadcrumbMolecule as Breadcrumb } from '@packages/ui';
 
 /**
  * Breadcrumb component for navigation hierarchy.
