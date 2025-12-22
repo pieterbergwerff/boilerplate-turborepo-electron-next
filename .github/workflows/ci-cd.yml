@@ -254,17 +254,19 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.ELECTRON_CACHE }}
-          key: ${{ runner.os }}-electron-cache-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-electron-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-electron-cache-
+            ${{ runner.os }}-electron-${{ steps.setup-node.outputs.node-version }}-
+            ${{ runner.os }}-electron-
 
       - name: 🗂️ Cache Electron Builder
         uses: actions/cache@v4
         with:
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-          key: ${{ runner.os }}-electron-builder-cache-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-electron-builder-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-electron-builder-cache-
+            ${{ runner.os }}-electron-builder-${{ steps.setup-node.outputs.node-version }}-
+            ${{ runner.os }}-electron-builder-
 
       - name: 📦 Install dependencies
         run: npm ci

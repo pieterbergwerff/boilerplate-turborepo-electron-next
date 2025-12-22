@@ -42,11 +42,11 @@ function ensureDb(isDev: boolean): string {
       // In production (packaged), seed DB is in resources folder
       src = path.join(process.resourcesPath, DB_FILE);
     }
-    
+
     if (!existsSync(src)) {
       throw new Error(`Seed database not found at: ${src}`);
     }
-    
+
     mkdirSync(path.dirname(dest), { recursive: true });
     copyFileSync(src, dest);
   }

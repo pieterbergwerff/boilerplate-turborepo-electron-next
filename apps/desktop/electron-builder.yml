@@ -2,6 +2,7 @@ appId: com.pieterbergwerff.turborepo-electron-nextjs
 productName: TurborepoElectronNext
 asar: false
 electronVersion: 39.2.0
+npmRebuild: true
 
 # Include Electron build + Next standalone app
 files:
