@@ -49,26 +49,42 @@ export default tseslint.config(
   {
     files: ['apps/desktop/**/*.{ts,js}'],
     rules: {
-      // Electron specific rules
+      // Electron specific rules - desktop app uses CommonJS for preload scripts
       '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       'no-console': 'off',
     },
   },
   {
     ignores: [
-      'dist/',
-      'build/',
-      '.next/',
-      'out/',
-      'node_modules/',
-      '.tscache/',
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/out/**',
+      '**/node_modules/**',
+      '**/.tscache/**',
+      '**/storybook-static/**',
+      '**/nextjs-standalone/**',
+      '**/docs/assets/**',
+      '**/docs/html/**',
+      '**/electron/**',
       '*.min.js',
       '*.min.css',
-      '*.config.js',
-      'lighthouserc.js',
-      '.bundlewatch.config.js',
-      '.turbo/',
+      '**/*.config.{js,mjs,cjs}',
+      '**/.eslintrc.{js,cjs}',
+      '**/lighthouserc.js',
+      '**/.bundlewatch.config.js',
+      '**/.turbo/**',
+      '**/scripts/**/*.mjs',
     ],
   },
-  storybook.configs['flat/recommended']
+  storybook.configs['flat/recommended'],
+  {
+    files: ['**/*.stories.{ts,tsx}'],
+    rules: {
+      // Allow direct @storybook/react imports in story files
+      // This can be removed when migrating all stories to use @storybook/react-vite
+      'storybook/no-renderer-packages': 'off',
+    },
+  }
 );

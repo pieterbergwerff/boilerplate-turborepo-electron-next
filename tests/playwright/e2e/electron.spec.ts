@@ -1,7 +1,10 @@
 // import utils
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { test, expect } from '@playwright/test';
 import { _electron as electron } from 'playwright';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('launches Electron and loads Settings', async () => {
   const appPath = path.resolve(__dirname, '../../../apps/desktop');
