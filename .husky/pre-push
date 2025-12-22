@@ -1,2 +1,7 @@
+# Quality checks: typecheck + lint + format:check
+
+npm run quality
+
+# Generate TypeDoc documentation
+
 npm run docs
-npm run format

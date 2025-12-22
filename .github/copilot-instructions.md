@@ -399,19 +399,19 @@ export type SettingsUpdateInput = z.infer<typeof SettingsUpdateInput>;
 
 Pre-commit (Husky + lint-staged):
 
-```jsonc
-{
-  "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,md}": ["prettier --write"],
-  },
-}
+```bash
+# .husky/pre-commit
+npx lint-staged              # prettier + eslint on staged files
+npm run repo:check           # Validate workspace naming
+# Prevent console.log/debug  # grep check for debugging statements
 ```
 
 Pre-push (Husky):
 
 ```bash
-npm run docs:build  # Generates TypeDoc documentation to /docs folder
+# .husky/pre-push
+npm run quality  # typecheck + lint + format:check
+npm run docs     # Generate TypeDoc documentation
 ```
 
 CI pipeline enforces:

@@ -1,1 +1,8 @@
+# prettier + eslint on staged files
 npx lint-staged
+
+# Validate workspace naming convention
+npm run repo:check
+
+# Prevent debugging code from being committed
+git diff --cached --name-only | grep -E '\.(ts|tsx)$' | xargs grep -l 'console\.\(log\|debug\)' && exit 1 || exit 0
