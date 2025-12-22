@@ -171,3 +171,5 @@ coverage/
 
 *storybook.log
 storybook-static
+
+.tmp

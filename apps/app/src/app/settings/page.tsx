@@ -1,71 +1,19 @@
 'use client';
 
 // import utils
-import React, { useEffect, useState } from 'react';
-
+// (none)
+// import constants
+// (none)
 // import components
 import { Icon } from '@packages/ui';
-
 // import types
-import type {
-  AppInfoValidatorType,
-  OpenDialogResultType,
-  SettingsValidatorType,
-  ThemeValidatorType,
-} from '@packages/validators';
+// (none)
 
 /**
  * Settings page showing example IPC calls.
  * @returns {React.JSX.Element} Settings UI with actions
  */
 export default function SettingsPage(): React.JSX.Element {
-  const [settings, setSettings] = useState<SettingsValidatorType | null>(null);
-  const [info, setInfo] = useState<AppInfoValidatorType | null>(null);
-  const [dialogRes, setDialogRes] = useState<OpenDialogResultType | null>(null);
-
-  /**
-   * Load initial data from Electron via preload API.
-   * @returns {Promise<void>}
-   */
-  async function loadInitial(): Promise<void> {
-    if (!window.api) return;
-    const [s, i] = await Promise.all([
-      window.api.getSettings(),
-      window.api.getAppInfo(),
-    ]);
-    console.log(s, i);
-    setSettings(s);
-    setInfo(i);
-  }
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- Initial data load on mount is intentional
-    loadInitial().catch(console.error);
-  }, []);
-
-  /**
-   * Toggle theme and persist via IPC.
-   * @param {Theme} nextTheme Target theme
-   * @returns {Promise<void>}
-   */
-  async function onToggle(nextTheme: ThemeValidatorType): Promise<void> {
-    if (!window.api) return;
-    const updated = await window.api.setTheme(nextTheme);
-    setSettings(updated);
-  }
-
-  /**
-   * Open a file dialog (example IPC).
-   * @returns {Promise<void>}
-   */
-  async function onOpenDialog(): Promise<void> {
-    if (!window.api) return;
-    const res = await window.api.openDialog({
-      filters: [{ name: 'Text', extensions: ['txt', 'md'] }],
-    });
-    setDialogRes(res);
-  }
-
   return (
     <div className="grid grid-cols-[260px_1fr] h-full w-full overflow-hidden text-black">
       <aside className="border-r border-gray-200 bg-[rgb(238,238,238)] h-full overflow-y-auto">

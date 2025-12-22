@@ -4,12 +4,7 @@
 import React, { useEffect, useState } from 'react';
 
 // import types
-import type {
-  AppInfoValidatorType,
-  OpenDialogResultType,
-  SettingsValidatorType,
-  ThemeValidatorType,
-} from '@packages/validators';
+import type { AppInfoValidatorType } from '@packages/validators';
 
 // import components
 import { TitleBar } from '@packages/ui';
@@ -18,7 +13,6 @@ import { TitleBar } from '@packages/ui';
 import type { FC, PropsWithChildren } from 'react';
 
 const Template: FC<PropsWithChildren> = ({ children }) => {
-  const [settings, setSettings] = useState<SettingsValidatorType | null>(null);
   const [info, setInfo] = useState<AppInfoValidatorType | null>(null);
 
   /**
@@ -27,11 +21,7 @@ const Template: FC<PropsWithChildren> = ({ children }) => {
    */
   async function loadInitial(): Promise<void> {
     if (!window.api) return;
-    const [s, i] = await Promise.all([
-      window.api.getSettings(),
-      window.api.getAppInfo(),
-    ]);
-    setSettings(s);
+    const i = await window.api.getAppInfo();
     setInfo(i);
   }
 
