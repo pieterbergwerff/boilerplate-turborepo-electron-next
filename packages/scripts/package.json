@@ -1,14 +1,14 @@
 {
-  "name": "@packages/scripts",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "echo 'No build needed for scripts package'",
-    "clean": "echo 'No clean needed for scripts package'",
-    "typecheck": "echo 'No typecheck needed for scripts package'",
-    "lint": "echo 'No lint needed for scripts package'",
-    "format": "echo 'No format needed for scripts package'",
-    "format:check": "echo 'No format check needed for scripts package'"
-  }
+    "name": "@packages/scripts",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "echo 'No build needed for scripts package'",
+        "clean": "echo 'No clean needed for scripts package'",
+        "typecheck": "echo 'No typecheck needed for scripts package'",
+        "lint": "echo 'No lint needed for scripts package'",
+        "format": "echo 'No format needed for scripts package'",
+        "format:check": "echo 'No format check needed for scripts package'"
+    }
 }
