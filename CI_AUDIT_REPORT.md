@@ -1,7 +1,7 @@
 # Electron GitHub Actions CI/CD Audit Report
 
-**Date:** 2024-01-XX  
-**Repository:** boilerplate-turborepo-electron-next  
+**Date:** 2024-01-XX
+**Repository:** boilerplate-turborepo-electron-next
 **Audit Scope:** Comprehensive CI/CD pipeline review against professional Electron best practices
 
 ---
@@ -26,15 +26,15 @@ The CI/CD pipeline has a **solid foundation** with good determinism and workflow
 
 **Status:** PASS (with minor improvements)
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| package-lock.json exists | ✅ PASS | Present at root | None |
-| npm ci used | ✅ PASS | All workflows use `npm ci` | None |
-| Node version pinned | ✅ PASS | `.nvmrc: 24`, `engines: ">=24 <25"` | None |
-| Package manager pinned | ✅ PASS | `packageManager: "npm@11.6.2"` | None |
-| Electron version pinned | ✅ PASS | `electron-builder.yml: 39.2.0` | None |
-| electron-builder version | ✅ PASS | `package.json: ^26.0.0` | None |
-| CI environment variables | ✅ PASS | `CI=true` set in test jobs | None |
+| Item                     | Status  | Finding                             | Fix Required |
+| ------------------------ | ------- | ----------------------------------- | ------------ |
+| package-lock.json exists | ✅ PASS | Present at root                     | None         |
+| npm ci used              | ✅ PASS | All workflows use `npm ci`          | None         |
+| Node version pinned      | ✅ PASS | `.nvmrc: 24`, `engines: ">=24 <25"` | None         |
+| Package manager pinned   | ✅ PASS | `packageManager: "npm@11.6.2"`      | None         |
+| Electron version pinned  | ✅ PASS | `electron-builder.yml: 39.2.0`      | None         |
+| electron-builder version | ✅ PASS | `package.json: ^26.0.0`             | None         |
+| CI environment variables | ✅ PASS | `CI=true` set in test jobs          | None         |
 
 **Recommendation:** Consider pinning electron-builder to exact version (`26.0.0` instead of `^26.0.0`) for complete determinism.
 
@@ -44,15 +44,16 @@ The CI/CD pipeline has a **solid foundation** with good determinism and workflow
 
 **Status:** GOOD
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| Concurrency control | ✅ PASS | `cancel-in-progress: true` configured | None |
-| Job separation | ✅ PASS | preflight → security → quality → test → build → e2e → release | None |
-| Matrix builds | ✅ PASS | ubuntu/macos/windows coverage | None |
-| Fast feedback path | ✅ PASS | Lint/typecheck in quality job before tests | None |
-| Build artifact upload | ✅ PASS | Artifacts uploaded with 30-day retention | None |
+| Item                  | Status  | Finding                                                       | Fix Required |
+| --------------------- | ------- | ------------------------------------------------------------- | ------------ |
+| Concurrency control   | ✅ PASS | `cancel-in-progress: true` configured                         | None         |
+| Job separation        | ✅ PASS | preflight → security → quality → test → build → e2e → release | None         |
+| Matrix builds         | ✅ PASS | ubuntu/macos/windows coverage                                 | None         |
+| Fast feedback path    | ✅ PASS | Lint/typecheck in quality job before tests                    | None         |
+| Build artifact upload | ✅ PASS | Artifacts uploaded with 30-day retention                      | None         |
 
 **Architecture:**
+
 ```
 preflight (5s)
   ├── security (audit-ci)
@@ -69,15 +70,16 @@ preflight (5s)
 
 **Status:** NEEDS IMPROVEMENT
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| npm cache | ✅ PASS | `actions/setup-node` with `cache: 'npm'` | None |
-| ELECTRON_CACHE defined | ✅ PASS | `~/.cache/electron` | None |
-| ELECTRON_BUILDER_CACHE | ✅ PASS | `~/.cache/electron-builder` | None |
+| Item                   | Status     | Finding                                    | Fix Required               |
+| ---------------------- | ---------- | ------------------------------------------ | -------------------------- |
+| npm cache              | ✅ PASS    | `actions/setup-node` with `cache: 'npm'`   | None                       |
+| ELECTRON_CACHE defined | ✅ PASS    | `~/.cache/electron`                        | None                       |
+| ELECTRON_BUILDER_CACHE | ✅ PASS    | `~/.cache/electron-builder`                | None                       |
 | Cache key construction | ⚠️ PARTIAL | Uses `hashFiles('package-lock.json')` only | **YES - Add Node version** |
-| Restore keys | ✅ PASS | Fallback keys configured | None |
+| Restore keys           | ✅ PASS    | Fallback keys configured                   | None                       |
 
 **Current Cache Keys:**
+
 ```yaml
 key: ${{ runner.os }}-electron-cache-${{ hashFiles('package-lock.json') }}
 ```
@@ -85,6 +87,7 @@ key: ${{ runner.os }}-electron-cache-${{ hashFiles('package-lock.json') }}
 **❌ PROBLEM:** Cache keys don't include Node.js version. If Node version changes, stale caches can cause issues.
 
 **✅ RECOMMENDED:**
+
 ```yaml
 key: ${{ runner.os }}-electron-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
 restore-keys: |
@@ -98,13 +101,13 @@ restore-keys: |
 
 **Status:** FAILING - NO REBUILD STRATEGY
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| Native modules detected | ❌ FAIL | `sqlite3@5.1.7` in dependencies | **YES - Critical** |
-| electron-rebuild configured | ❌ FAIL | Not found in any package.json | **YES - Critical** |
-| npmRebuild in electron-builder | ❌ FAIL | Not in electron-builder.yml | **YES - Critical** |
-| Prebuilt binaries strategy | ❌ FAIL | No @electron/rebuild or prebuild config | **YES - Critical** |
-| postinstall hooks | ⚠️ UNKNOWN | Only `prepare` script for electron install | Check if needed |
+| Item                           | Status     | Finding                                    | Fix Required       |
+| ------------------------------ | ---------- | ------------------------------------------ | ------------------ |
+| Native modules detected        | ❌ FAIL    | `sqlite3@5.1.7` in dependencies            | **YES - Critical** |
+| electron-rebuild configured    | ❌ FAIL    | Not found in any package.json              | **YES - Critical** |
+| npmRebuild in electron-builder | ❌ FAIL    | Not in electron-builder.yml                | **YES - Critical** |
+| Prebuilt binaries strategy     | ❌ FAIL    | No @electron/rebuild or prebuild config    | **YES - Critical** |
+| postinstall hooks              | ⚠️ UNKNOWN | Only `prepare` script for electron install | Check if needed    |
 
 **❌ CRITICAL ISSUE:**
 
@@ -115,6 +118,7 @@ Your project uses **sqlite3** (native C++ module) but has **NO rebuild strategy*
 - ❌ **ABI mismatch** - sqlite3 expects Node ABI but gets Electron ABI
 
 **Current State:**
+
 ```json
 // apps/desktop/package.json
 "dependencies": {
@@ -133,7 +137,8 @@ appId: com.pieterbergwerff.turborepo-electron-nextjs
 productName: TurborepoElectronNext
 asar: false
 electronVersion: 39.2.0
-npmRebuild: true  # ✅ ADD THIS - Rebuilds native modules for Electron ABI
+npmRebuild: true # ✅ ADD THIS - Rebuilds native modules for Electron ABI
+
 
 # Or specify explicitly:
 # npmRebuild: ['sqlite3']  # Only rebuild specific modules
@@ -164,6 +169,7 @@ npm install better-sqlite3
 ```
 
 **Verification Command:**
+
 ```bash
 # After implementing fix, verify rebuild:
 npm run build:electron
@@ -177,14 +183,14 @@ file apps/desktop/dist/node_modules/sqlite3/build/Release/node_sqlite3.node
 
 **Status:** GOOD (with notes)
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| asar configuration | ✅ PASS | `asar: false` | None |
-| Main process compilation | ✅ PASS | TypeScript → dist/main.js | None |
-| Preload script | ✅ PASS | preload.ts compiled | None |
-| Next.js standalone | ✅ PASS | `output: 'standalone'` | None |
-| extraResources | ✅ PASS | seed DB copied | None |
-| Node exclusions | ✅ PASS | `!nextjs-standalone/node_modules/electron` | None |
+| Item                     | Status  | Finding                                    | Fix Required |
+| ------------------------ | ------- | ------------------------------------------ | ------------ |
+| asar configuration       | ✅ PASS | `asar: false`                              | None         |
+| Main process compilation | ✅ PASS | TypeScript → dist/main.js                  | None         |
+| Preload script           | ✅ PASS | preload.ts compiled                        | None         |
+| Next.js standalone       | ✅ PASS | `output: 'standalone'`                     | None         |
+| extraResources           | ✅ PASS | seed DB copied                             | None         |
+| Node exclusions          | ✅ PASS | `!nextjs-standalone/node_modules/electron` | None         |
 
 **Note:** `asar: false` is intentional for Next.js standalone integration. This is correct.
 
@@ -194,13 +200,13 @@ file apps/desktop/dist/node_modules/sqlite3/build/Release/node_sqlite3.node
 
 **Status:** NEEDS IMPROVEMENT
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| Unit tests run | ✅ PASS | Vitest with coverage | None |
-| E2E tests configured | ⚠️ PARTIAL | Playwright E2E exists | **YES - Missing deps** |
-| Xvfb for Linux | ✅ PASS | `xvfb-run -a` in ci-cd.yml | None |
-| Display setup macOS | ⚠️ UNKNOWN | May need display config | Check if failing |
-| Smoke tests | ❌ MISSING | No basic smoke test before full E2E | Consider adding |
+| Item                 | Status     | Finding                             | Fix Required           |
+| -------------------- | ---------- | ----------------------------------- | ---------------------- |
+| Unit tests run       | ✅ PASS    | Vitest with coverage                | None                   |
+| E2E tests configured | ⚠️ PARTIAL | Playwright E2E exists               | **YES - Missing deps** |
+| Xvfb for Linux       | ✅ PASS    | `xvfb-run -a` in ci-cd.yml          | None                   |
+| Display setup macOS  | ⚠️ UNKNOWN | May need display config             | Check if failing       |
+| Smoke tests          | ❌ MISSING | No basic smoke test before full E2E | Consider adding        |
 
 **❌ PROBLEM 1: Separate e2e.yml workflow missing build artifacts**
 
@@ -213,8 +219,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: npm ci
-      - run: npm run build      # ❌ This builds TypeScript, not Electron app
-      - run: npm run test:e2e   # ❌ Will fail - no packaged app exists
+      - run: npm run build # ❌ This builds TypeScript, not Electron app
+      - run: npm run test:e2e # ❌ Will fail - no packaged app exists
 ```
 
 **✅ FIX:** Either:
@@ -234,9 +240,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - run: npm run build:electron  # ✅ ADD THIS - Package Electron
+      - run: npm run build:electron # ✅ ADD THIS - Package Electron
       - name: Run E2E tests
-        run: xvfb-run -a npm run test:e2e  # ✅ ADD xvfb for Linux
+        run: xvfb-run -a npm run test:e2e # ✅ ADD xvfb for Linux
 ```
 
 **Recommendation:** Delete e2e.yml since ci-cd.yml already has comprehensive E2E testing.
@@ -247,14 +253,14 @@ jobs:
 
 **Status:** GOOD (with signing gaps)
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| electron-builder config | ✅ PASS | electron-builder.yml exists | None |
-| Target platforms | ✅ PASS | dmg, nsis, AppImage, deb | None |
-| Artifact naming | ✅ PASS | `${productName}-${version}-${arch}` | None |
-| extraResources | ✅ PASS | seed DB packaged | None |
-| File inclusions | ✅ PASS | dist, nextjs-standalone | None |
-| afterSign hook | ⚠️ CONFIGURED | Script exists, needs secrets | **YES - See section 8** |
+| Item                    | Status        | Finding                             | Fix Required            |
+| ----------------------- | ------------- | ----------------------------------- | ----------------------- |
+| electron-builder config | ✅ PASS       | electron-builder.yml exists         | None                    |
+| Target platforms        | ✅ PASS       | dmg, nsis, AppImage, deb            | None                    |
+| Artifact naming         | ✅ PASS       | `${productName}-${version}-${arch}` | None                    |
+| extraResources          | ✅ PASS       | seed DB packaged                    | None                    |
+| File inclusions         | ✅ PASS       | dist, nextjs-standalone             | None                    |
+| afterSign hook          | ⚠️ CONFIGURED | Script exists, needs secrets        | **YES - See section 8** |
 
 ---
 
@@ -262,19 +268,20 @@ jobs:
 
 **Status:** PARTIALLY CONFIGURED
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| macOS hardenedRuntime | ✅ PASS | `hardenedRuntime: true` | None |
-| macOS afterSign hook | ✅ PASS | `afterSign.mjs` configured | None |
-| macOS secrets defined | ⚠️ PARTIAL | APPLE_ID/APPLE_APP_SPECIFIC_PASSWORD/APPLE_TEAM_ID referenced | **YES - Ensure secrets set** |
-| Windows signing | ❌ MISSING | No WIN_CSC_* configuration | **YES - Add if deploying to Windows** |
-| Certificate import | ⚠️ PLACEHOLDER | "macOS certificate setup would go here" | **YES - Implement** |
+| Item                  | Status         | Finding                                                       | Fix Required                          |
+| --------------------- | -------------- | ------------------------------------------------------------- | ------------------------------------- |
+| macOS hardenedRuntime | ✅ PASS        | `hardenedRuntime: true`                                       | None                                  |
+| macOS afterSign hook  | ✅ PASS        | `afterSign.mjs` configured                                    | None                                  |
+| macOS secrets defined | ⚠️ PARTIAL     | APPLE_ID/APPLE_APP_SPECIFIC_PASSWORD/APPLE_TEAM_ID referenced | **YES - Ensure secrets set**          |
+| Windows signing       | ❌ MISSING     | No WIN*CSC*\* configuration                                   | **YES - Add if deploying to Windows** |
+| Certificate import    | ⚠️ PLACEHOLDER | "macOS certificate setup would go here"                       | **YES - Implement**                   |
 
 **Current State (ci-cd.yml):**
+
 ```yaml
 - name: 🍎 Setup macOS certificate (macOS only)
   if: matrix.os == 'macos-latest'
-  run: echo "macOS certificate setup would go here"  # ❌ PLACEHOLDER
+  run: echo "macOS certificate setup would go here" # ❌ PLACEHOLDER
 ```
 
 **✅ FIX: Implement Certificate Import**
@@ -312,8 +319,8 @@ Add to [apps/desktop/electron-builder.yml](apps/desktop/electron-builder.yml):
 win:
   target: [nsis]
   artifactName: '${productName}-${version}-x64.exe'
-  certificateFile: 'certificates/windows-cert.pfx'  # Or use env var
-  certificatePassword: ''  # Read from WIN_CSC_KEY_PASSWORD env
+  certificateFile: 'certificates/windows-cert.pfx' # Or use env var
+  certificatePassword: '' # Read from WIN_CSC_KEY_PASSWORD env
   signingHashAlgorithms: ['sha256']
 ```
 
@@ -327,16 +334,16 @@ env:
 
 **Required Secrets:**
 
-| Secret Name | Purpose | Where to Get |
-|-------------|---------|--------------|
-| `MACOS_CERTIFICATE` | Base64-encoded .p12 certificate | Apple Developer Account → Certificates |
-| `MACOS_CERTIFICATE_PASSWORD` | Password for .p12 | You set this when exporting |
-| `KEYCHAIN_PASSWORD` | Temporary keychain password | Generate random string |
-| `APPLE_ID` | Apple ID for notarization | Your Apple Developer email |
-| `APPLE_APP_SPECIFIC_PASSWORD` | App-specific password | appleid.apple.com → App-Specific Passwords |
-| `APPLE_TEAM_ID` | Apple Developer Team ID | Apple Developer → Membership |
-| `WIN_CSC_LINK` | Base64-encoded .pfx (Windows) | Code signing certificate provider |
-| `WIN_CSC_KEY_PASSWORD` | Password for .pfx | Certificate provider |
+| Secret Name                   | Purpose                         | Where to Get                               |
+| ----------------------------- | ------------------------------- | ------------------------------------------ |
+| `MACOS_CERTIFICATE`           | Base64-encoded .p12 certificate | Apple Developer Account → Certificates     |
+| `MACOS_CERTIFICATE_PASSWORD`  | Password for .p12               | You set this when exporting                |
+| `KEYCHAIN_PASSWORD`           | Temporary keychain password     | Generate random string                     |
+| `APPLE_ID`                    | Apple ID for notarization       | Your Apple Developer email                 |
+| `APPLE_APP_SPECIFIC_PASSWORD` | App-specific password           | appleid.apple.com → App-Specific Passwords |
+| `APPLE_TEAM_ID`               | Apple Developer Team ID         | Apple Developer → Membership               |
+| `WIN_CSC_LINK`                | Base64-encoded .pfx (Windows)   | Code signing certificate provider          |
+| `WIN_CSC_KEY_PASSWORD`        | Password for .pfx               | Certificate provider                       |
 
 ---
 
@@ -344,20 +351,20 @@ env:
 
 **Status:** CONFIGURED (with recommendations)
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| Release job gating | ✅ PASS | `if: github.ref == 'refs/heads/main'` | None |
-| Permissions set | ✅ PASS | `contents: write` for releases | None |
-| Semantic release | ✅ CONFIGURED | `npx semantic-release` | None |
-| Changelog generation | ✅ PASS | conventional-changelog-cli | None |
-| Artifact download | ✅ PASS | All build artifacts downloaded | None |
+| Item                 | Status        | Finding                               | Fix Required |
+| -------------------- | ------------- | ------------------------------------- | ------------ |
+| Release job gating   | ✅ PASS       | `if: github.ref == 'refs/heads/main'` | None         |
+| Permissions set      | ✅ PASS       | `contents: write` for releases        | None         |
+| Semantic release     | ✅ CONFIGURED | `npx semantic-release`                | None         |
+| Changelog generation | ✅ PASS       | conventional-changelog-cli            | None         |
+| Artifact download    | ✅ PASS       | All build artifacts downloaded        | None         |
 
 **Recommendation:** Consider gating release on successful E2E tests:
 
 ```yaml
 release:
   name: 🚀 Release & Deployment
-  needs: [security, quality, test, build, e2e]  # ✅ Already has e2e dependency
+  needs: [security, quality, test, build, e2e] # ✅ Already has e2e dependency
   # Additional check: ensure all tests passed
   if: |
     github.ref == 'refs/heads/main' &&
@@ -370,13 +377,13 @@ release:
 
 **Status:** GOOD (with enhancements recommended)
 
-| Item | Status | Finding | Fix Required |
-|------|--------|---------|--------------|
-| Build artifacts uploaded | ✅ PASS | 30-day retention | None |
-| Artifact listing step | ✅ PASS | Lists dist/ contents | None |
-| continue-on-error usage | ⚠️ MIXED | Used for tests, performance | Review case-by-case |
-| Summary report | ✅ PASS | Job status summary generated | None |
-| Slack notifications | ✅ CONFIGURED | On push to main | None |
+| Item                     | Status        | Finding                      | Fix Required        |
+| ------------------------ | ------------- | ---------------------------- | ------------------- |
+| Build artifacts uploaded | ✅ PASS       | 30-day retention             | None                |
+| Artifact listing step    | ✅ PASS       | Lists dist/ contents         | None                |
+| continue-on-error usage  | ⚠️ MIXED      | Used for tests, performance  | Review case-by-case |
+| Summary report           | ✅ PASS       | Job status summary generated | None                |
+| Slack notifications      | ✅ CONFIGURED | On push to main              | None                |
 
 **Recommendations:**
 
@@ -443,7 +450,7 @@ release:
 
 5. **Windows Code Signing** ⚠️
    - **Impact:** Windows SmartScreen warnings for unsigned apps
-   - **Fix:** Add WIN_CSC_* configuration and secrets
+   - **Fix:** Add WIN*CSC*\* configuration and secrets
    - **Priority:** MEDIUM (if deploying to Windows)
    - **Effort:** 1 hour
 
@@ -460,11 +467,13 @@ release:
 ### Immediate Actions (< 1 day)
 
 - [ ] **Add npmRebuild to electron-builder.yml** (CRITICAL)
+
   ```yaml
   npmRebuild: true
   ```
 
 - [ ] **Fix cache keys in ci-cd.yml** (HIGH)
+
   ```yaml
   key: ${{ runner.os }}-electron-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
   ```
@@ -500,16 +509,19 @@ release:
 ## Platform-Specific Notes
 
 ### macOS
+
 - ✅ hardenedRuntime enabled
 - ⚠️ Certificate import needs implementation
 - ⚠️ Notarization configured but needs secrets
 
 ### Windows
+
 - ⚠️ No code signing configured
 - ✅ Line ending configuration present (CRLF → LF)
-- ℹ️ Consider adding WIN_CSC_* for production
+- ℹ️ Consider adding WIN*CSC*\* for production
 
 ### Linux
+
 - ✅ Xvfb configured for headless E2E
 - ✅ Both AppImage and DEB targets
 - ✅ No signing issues (Linux doesn't require)
@@ -559,11 +571,13 @@ open apps/desktop/dist/mac-arm64/*.app  # macOS
 ## Conclusion
 
 Your CI/CD pipeline has a **strong foundation** with:
+
 - ✅ Excellent determinism (pinned versions, lockfile, npm ci)
 - ✅ Good workflow architecture (job separation, matrix builds)
 - ✅ Comprehensive testing (unit, integration, E2E)
 
 **Critical Fixes Required:**
+
 - ❌ **Native module rebuild** (will cause production crashes)
 - ⚠️ **Cache key improvements** (prevent stale cache issues)
 - ⚠️ **Certificate import** (for signed macOS builds)
@@ -571,6 +585,7 @@ Your CI/CD pipeline has a **strong foundation** with:
 **Estimated Total Effort:** 2-3 hours to fix all critical and high-priority issues.
 
 **Next Steps:**
+
 1. Fix native module rebuild (5 min)
 2. Update cache keys (10 min)
 3. Delete redundant e2e.yml (1 min)
@@ -579,5 +594,5 @@ Your CI/CD pipeline has a **strong foundation** with:
 
 ---
 
-**Audit performed by:** GitHub Copilot  
+**Audit performed by:** GitHub Copilot
 **Review recommended by:** Senior DevOps Engineer (before production deployment)

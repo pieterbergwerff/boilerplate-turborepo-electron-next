@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 test('launches Electron and loads Settings', async () => {
   const appPath = path.resolve(__dirname, '../../../apps/desktop');
   const mainPath = path.join(appPath, 'dist', 'main.js');
-  
+
   // Launch Electron app in standalone mode (uses built Next.js)
   const app = await electron.launch({
     args: [mainPath],
