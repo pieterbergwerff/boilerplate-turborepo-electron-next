@@ -6,7 +6,11 @@ import type { FC } from 'react';
  * @returns {React.JSX.Element} Home page content
  */
 const HomePage: FC = () => {
-  return <div>Hello world</div>;
+  return (
+    <div className="h-full w-full">
+      Hello world <a href="/settings">settings</a>
+    </div>
+  );
 };
 
 export default HomePage;

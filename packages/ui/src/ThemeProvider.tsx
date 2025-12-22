@@ -85,6 +85,7 @@ export function ThemeProvider({
   return (
     <ThemeContext.Provider value={{ osTheme, colorScheme }}>
       <div
+        style={{ height: '100vh', width: '100vw' }}
         {...(mounted
           ? { 'data-os-theme': osTheme, 'data-color-scheme': colorScheme }
           : {})}

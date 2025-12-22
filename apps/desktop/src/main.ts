@@ -1,21 +1,20 @@
 // import utils
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { existsSync, mkdirSync, copyFileSync } from 'node:fs';
-import { app, BrowserWindow, protocol, Menu } from 'electron';
-import { createHandler } from 'next-electron-rsc/lib/build/index.js';
-import { createDb, runMigrations } from '@packages/database';
-import { registerIpcHandlers } from './ipc.js';
-import { loadEnv, detectOSTheme } from './theme.js';
+const path = require('path');
+const { existsSync, mkdirSync, copyFileSync } = require('fs');
+const { app, BrowserWindow, protocol, Menu } = require('electron');
+const { createHandler } = require('next-electron-rsc/lib/build/index.js');
+const { createDb, runMigrations } = require('@packages/database');
+const { registerIpcHandlers } = require('./ipc.js');
+const { loadEnv, detectOSTheme } = require('./theme.js');
 
 // import types
 import type { Knex } from 'knex';
 import type { OsThemeValidatorType } from '@packages/validators';
+import type { BrowserWindow as BrowserWindowType } from 'electron';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_FILE = 'app.sqlite';
 
-let win: BrowserWindow | undefined;
+let win: BrowserWindowType | undefined;
 let knexInstance: Knex | undefined;
 let ipcRegistered = false;
 let interceptorStop: (() => void) | undefined;

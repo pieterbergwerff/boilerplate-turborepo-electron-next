@@ -1,5 +1,5 @@
 // import utils
-import { contextBridge, ipcRenderer } from 'electron';
+const { contextBridge, ipcRenderer } = require('electron');
 
 // import types
 import type {

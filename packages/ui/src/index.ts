@@ -62,6 +62,10 @@ export {
   default as TextareaAtom,
   TextareaAtomComponent,
 } from './atoms/Textarea/index.js';
+export {
+  default as TitleBarAtom,
+  TitleBarAtomComponent,
+} from './atoms/TitleBar/index.js';
 
 // Molecules
 export {
@@ -76,6 +80,10 @@ export {
   default as ColorPickerMolecule,
   ColorPickerMoleculeComponent,
 } from './molecules/ColorPicker/index.js';
+export {
+  default as IconMolecule,
+  IconMoleculeComponent,
+} from './molecules/Icon/index.js';
 export {
   default as SearchBoxMolecule,
   SearchBoxMoleculeComponent,

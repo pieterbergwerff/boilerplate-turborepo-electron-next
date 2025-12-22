@@ -1,43 +1,42 @@
 {
-  "name": "@apps/desktop",
-  "version": "1.0.0",
-  "description": "Electron desktop app powered by Next.js",
-  "author": "Pieter Bergwerff",
-  "private": true,
-  "type": "module",
-  "main": "dist/main.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc-watch --noClear --onSuccess 'electron .' --project tsconfig.json",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "clean": "rm -rf dist build",
-    "prepare": "node electron/install.js"
-  },
-  "dependencies": {
-    "@packages/database": "*",
-    "@packages/validators": "*",
-    "cookie": "^1.0.2",
-    "dotenv": "^17.2.3",
-    "electron": "^39.2.0",
-    "knex": "^3.1.0",
-    "next": "^16.1.0",
-    "next-electron-rsc": "github:kirill-konshin/next-electron-rsc",
-    "resolve": "^1.22.10",
-    "set-cookie-parser": "^2.7.1",
-    "sqlite3": "^5.1.7",
-    "wait-on": "^8.0.3"
-  },
-  "devDependencies": {
-    "@config/typescript": "*",
-    "@types/cookie": "^0.6.0",
-    "@types/node": "^25.0.0",
-    "@types/resolve": "^1.20.0",
-    "@types/set-cookie-parser": "^2.4.0",
-    "electron-builder": "^26.0.0",
-    "tsc-watch": "^7.2.0",
-    "typescript": "^5.8.3"
-  }
+    "name": "@apps/desktop",
+    "version": "1.0.0",
+    "description": "Electron desktop app powered by Next.js",
+    "author": "Pieter Bergwerff",
+    "private": true,
+    "main": "dist/main.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc-watch --noClear --onSuccess 'electron .' --project tsconfig.json",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "clean": "rm -rf dist build",
+        "prepare": "node electron/install.js"
+    },
+    "dependencies": {
+        "@packages/database": "*",
+        "@packages/validators": "*",
+        "cookie": "^1.0.2",
+        "dotenv": "^17.2.3",
+        "electron": "^39.2.0",
+        "knex": "^3.1.0",
+        "next": "^16.1.0",
+        "next-electron-rsc": "github:kirill-konshin/next-electron-rsc",
+        "resolve": "^1.22.10",
+        "set-cookie-parser": "^2.7.1",
+        "sqlite3": "^5.1.7",
+        "wait-on": "^8.0.3"
+    },
+    "devDependencies": {
+        "@config/typescript": "*",
+        "@types/cookie": "^0.6.0",
+        "@types/node": "^25.0.0",
+        "@types/resolve": "^1.20.0",
+        "@types/set-cookie-parser": "^2.4.0",
+        "electron-builder": "^26.0.0",
+        "tsc-watch": "^7.2.0",
+        "typescript": "^5.8.3"
+    }
 }

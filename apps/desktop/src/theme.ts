@@ -1,7 +1,7 @@
 // import utils
-import { config } from 'dotenv';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
+const { config } = require('dotenv');
+const { existsSync } = require('fs');
+const { join } = require('path');
 
 // import types
 import type { OsThemeValidatorType } from '@packages/validators';
@@ -11,7 +11,7 @@ import type { OsThemeValidatorType } from '@packages/validators';
  * @param {string} appPath Application root path
  * @returns {void}
  */
-export function loadEnv(appPath: string): void {
+function loadEnv(appPath: string): void {
   const envPath = join(appPath, '.env');
   if (existsSync(envPath)) {
     config({ path: envPath });
@@ -24,7 +24,7 @@ export function loadEnv(appPath: string): void {
  * @param {NodeJS.Platform} platform Process platform (win32, darwin, linux)
  * @returns {ThemeValidatorType} OS theme identifier
  */
-export function detectOSTheme(platform: NodeJS.Platform): OsThemeValidatorType {
+function detectOSTheme(platform: NodeJS.Platform): OsThemeValidatorType {
   // Check THEME environment variable first
   const envTheme = process.env.THEME?.toLowerCase().trim();
 
@@ -44,3 +44,5 @@ export function detectOSTheme(platform: NodeJS.Platform): OsThemeValidatorType {
       return 'windows'; // Default fallback
   }
 }
+
+module.exports = { loadEnv, detectOSTheme };

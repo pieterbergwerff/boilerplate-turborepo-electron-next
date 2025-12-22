@@ -24,7 +24,8 @@
         "react": "^19.1.0"
     },
     "dependencies": {
-        "@packages/types": "*"
+        "@packages/types": "*",
+        "react-icons": "^5.5.0"
     },
     "devDependencies": {
         "@config/tailwind": "*",

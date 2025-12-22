@@ -1,6 +1,8 @@
 'use client';
+
 // import components
 import { ThemeProvider } from '@packages/ui';
+
 // import types
 import type { ReactNode } from 'react';
 
@@ -16,5 +18,9 @@ export interface ClientProvidersProps {
 export function ClientProviders({
   children,
 }: ClientProvidersProps): React.JSX.Element {
-  return <ThemeProvider>{children}</ThemeProvider>;
+  return (
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <ThemeProvider>{children}</ThemeProvider>
+    </div>
+  );
 }

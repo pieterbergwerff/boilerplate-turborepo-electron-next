@@ -1,6 +1,6 @@
 // import utils
-import { ipcMain, dialog } from 'electron';
-import { getSettings, updateSettings } from '@packages/database';
+const { ipcMain, dialog } = require('electron');
+const { getSettings, updateSettings } = require('@packages/database');
 
 // import validators
 import {
@@ -26,7 +26,7 @@ import type {
  * @param {{ app: App; knex: Knex; osTheme: OsThemeValidatorType }} deps Electron app + Knex instance + OS theme
  * @returns {void}
  */
-export function registerIpcHandlers(deps: {
+function registerIpcHandlers(deps: {
   app: App;
   knex: Knex;
   osTheme: OsThemeValidatorType;
@@ -52,6 +52,7 @@ export function registerIpcHandlers(deps: {
     async (_evt, payload: unknown): Promise<SettingsValidatorType> => {
       const input: SettingsUpdateInputValidatorType =
         SettingsUpdateInputValidator.parse(payload);
+      console.log('Updating settings with input:', input);
       const updated = await updateSettings(knex, input);
       return SettingsValidator.parse(updated);
     }
@@ -69,3 +70,5 @@ export function registerIpcHandlers(deps: {
     }
   );
 }
+
+module.exports = { registerIpcHandlers };
