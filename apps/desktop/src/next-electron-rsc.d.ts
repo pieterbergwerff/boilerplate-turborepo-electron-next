@@ -13,7 +13,7 @@ declare module 'next-electron-rsc/lib/build/index.js' {
     debug?: boolean;
     hostname?: string;
     port?: number;
-    [key: string]: any;
+    [key: string]: unknown;
   }): {
     localhostUrl: string;
     createInterceptor: (options: { session: Session }) => Promise<() => void>;

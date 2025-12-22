@@ -12,7 +12,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     width: { control: 'text' },
     height: { control: 'text' },

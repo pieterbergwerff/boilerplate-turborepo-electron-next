@@ -12,9 +12,8 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
-    items: { control: 'object' },
+    data: { control: 'object' },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
   },
 } satisfies Meta<typeof Menu>;
@@ -25,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Horizontal: Story = {
   args: {
     orientation: 'horizontal',
-    items: [
+    data: [
       { label: 'Home', href: '/' },
       { label: 'About', href: '/about' },
       { label: 'Services', href: '/services' },
@@ -37,7 +36,7 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
   args: {
     orientation: 'vertical',
-    items: [
+    data: [
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Projects', href: '/projects' },
       { label: 'Team', href: '/team' },
@@ -49,7 +48,7 @@ export const Vertical: Story = {
 export const SimpleNav: Story = {
   args: {
     orientation: 'horizontal',
-    items: [
+    data: [
       { label: 'Products', href: '/products' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'Blog', href: '/blog' },
@@ -60,7 +59,7 @@ export const SimpleNav: Story = {
 export const Sidebar: Story = {
   args: {
     orientation: 'vertical',
-    items: [
+    data: [
       { label: 'Overview', href: '/overview' },
       { label: 'Analytics', href: '/analytics' },
       { label: 'Reports', href: '/reports' },

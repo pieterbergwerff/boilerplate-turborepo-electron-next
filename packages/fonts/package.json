@@ -1,0 +1,21 @@
+{
+  "name": "@packages/fonts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./fonts.css": "./src/fonts.css",
+    "./Cantarell/*": "./src/Cantarell/*",
+    "./Inter/*": "./src/Inter/*",
+    "./IBM/*": "./src/IBM/*",
+    "./Roboto/*": "./src/Roboto/*"
+  },
+  "scripts": {
+    "build": "echo 'No build needed for fonts package'",
+    "clean": "echo 'No clean needed for fonts package'",
+    "typecheck": "echo 'No typecheck needed for fonts package'",
+    "lint": "echo 'No lint needed for fonts package'",
+    "format": "echo 'No format needed for fonts package'",
+    "format:check": "echo 'No format check needed for fonts package'"
+  }
+}

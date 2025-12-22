@@ -27,15 +27,28 @@ export const PopoverOrganismComponent = ({
 
   return (
     <div className="relative inline-block">
-      <div onClick={() => setIsOpen(!isOpen)}>{trigger}</div>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={e => e.key === 'Enter' && setIsOpen(!isOpen)}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
+        {trigger}
+      </div>
       {isOpen && (
         <>
           <div
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
+            onKeyDown={e => e.key === 'Escape' && setIsOpen(false)}
+            role="button"
+            tabIndex={0}
+            aria-label="Close popover"
           />
           <div
-            className={`absolute z-20 ${positionClasses[position]} bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-[200px]`}
+            className={`absolute z-20 ${positionClasses[position]} bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-50`}
           >
             {content}
           </div>

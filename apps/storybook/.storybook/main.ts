@@ -12,7 +12,7 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   docs: {
-    disable: true,
+    defaultName: 'docs',
   },
   typescript: {
     check: false,

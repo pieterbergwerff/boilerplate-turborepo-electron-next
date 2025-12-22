@@ -2,6 +2,7 @@
 import { ClientProviders } from '../components/ClientProviders.js';
 
 // import styles
+import '@packages/fonts/fonts.css';
 import '../styles/globals.css';
 
 // import types

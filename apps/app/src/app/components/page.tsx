@@ -538,7 +538,7 @@ export default function ComponentsPage(): React.JSX.Element {
               </Text>
               <Menu
                 orientation="horizontal"
-                items={[
+                data={[
                   { label: 'Home', href: '/' },
                   { label: 'About', href: '/about' },
                   { label: 'Contact', href: '/contact' },
@@ -551,7 +551,7 @@ export default function ComponentsPage(): React.JSX.Element {
               </Text>
               <Menu
                 orientation="vertical"
-                items={[
+                data={[
                   { label: 'Dashboard', href: '/dashboard' },
                   { label: 'Projects', href: '/projects' },
                   { label: 'Settings', href: '/settings' },

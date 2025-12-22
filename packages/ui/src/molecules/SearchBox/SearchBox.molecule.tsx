@@ -16,14 +16,14 @@ export const SearchBoxMoleculeComponent = ({
 }: SearchBoxMoleculePropTypes): JSX.Element => {
   return (
     <div className="relative">
-      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
         🔍
       </div>
       <InputAtomComponent
         value={value ?? ''}
         onChange={onChange}
         placeholder={placeholder}
-        className="pl-10"
+        className="!pl-12 pr-3 w-full"
       />
     </div>
   );

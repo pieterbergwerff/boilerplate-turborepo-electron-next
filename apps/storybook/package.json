@@ -14,6 +14,7 @@
     "clean": "rm -rf storybook-static"
   },
   "dependencies": {
+    "@packages/fonts": "*",
     "@packages/ui": "*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

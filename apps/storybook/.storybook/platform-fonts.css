@@ -1,0 +1,13 @@
+/* Platform-specific fonts for Storybook */
+
+/* Cantarell - GNOME/Linux official font (Open Source - SIL OFL) */
+@import url('https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap');
+
+/* Inter - Modern alternative for Windows/macOS (Open Source - SIL OFL) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Roboto - Alternative for general use (Open Source - Apache 2.0) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* IBM Plex Sans - Alternative that works well cross-platform (Open Source - SIL OFL) */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap');

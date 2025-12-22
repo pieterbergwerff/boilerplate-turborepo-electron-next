@@ -4,6 +4,6 @@
     "outDir": "./dist",
     "rootDir": "./"
   },
-  "include": [".storybook", "src"],
+  "include": [".storybook", "src", "../../packages/ui/src/global.d.ts"],
   "exclude": ["node_modules", "dist", "storybook-static"]
 }

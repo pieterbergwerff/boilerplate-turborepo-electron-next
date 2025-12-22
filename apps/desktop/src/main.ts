@@ -20,11 +20,10 @@ let knexInstance: Knex | undefined;
 let ipcRegistered = false;
 let interceptorStop: (() => void) | undefined;
 let nextUrl: string | undefined;
-let osTheme: OsThemeValidatorType;
 
 // Load .env file and detect OS theme
 loadEnv(app.getAppPath());
-osTheme = detectOSTheme(process.platform);
+const osTheme: OsThemeValidatorType = detectOSTheme(process.platform);
 
 /**
  * Ensure runtime SQLite exists and is seeded.

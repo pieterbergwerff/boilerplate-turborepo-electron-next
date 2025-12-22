@@ -1,0 +1,564 @@
+/* Platform-specific theme styles for Storybook */
+/* Authentic design system styling for Windows 11, macOS, and Linux (GNOME) */
+
+/* ==================== WINDOWS 11 (Fluent Design 2) ==================== */
+.platform-windows {
+  --platform-primary: #0067c0;
+  --platform-primary-hover: #005a9e;
+  --platform-primary-pressed: #004c87;
+  --platform-bg: #ffffff;
+  --platform-bg-secondary: #f9f9f9;
+  --platform-border: #e0e0e0;
+  --platform-text: #000000;
+  --platform-text-secondary: #605e5c;
+  --platform-border-radius: 4px;
+  --platform-border-radius-large: 8px;
+  --platform-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --platform-shadow-flyout: 0 8px 16px rgba(0, 0, 0, 0.14);
+  --platform-font:
+    'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui,
+    sans-serif;
+  --platform-transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 167ms;
+  font-family: var(--platform-font) !important;
+}
+
+/* Apply font to all children */
+.platform-windows * {
+  font-family: var(--platform-font) !important;
+}
+
+/* Windows 11 Buttons */
+.platform-windows button,
+.platform-windows [role='button'] {
+  font-family: var(--platform-font);
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: var(--platform-border-radius);
+  border: 1px solid transparent;
+  padding: 5px 12px;
+  background: var(--platform-bg-secondary);
+  color: var(--platform-text);
+  transition: all var(--platform-transition);
+  cursor: pointer;
+}
+
+.platform-windows button:hover:not(:disabled),
+.platform-windows [role='button']:hover:not(:disabled) {
+  background: #f3f3f3;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.platform-windows button:active:not(:disabled),
+.platform-windows [role='button']:active:not(:disabled) {
+  background: #ebebeb;
+}
+
+.platform-windows button[data-primary='true'],
+.platform-windows button.primary {
+  background: var(--platform-primary);
+  color: white;
+  border: none;
+}
+
+.platform-windows button[data-primary='true']:hover:not(:disabled),
+.platform-windows button.primary:hover:not(:disabled) {
+  background: var(--platform-primary-hover);
+}
+
+.platform-windows button[data-primary='true']:active:not(:disabled),
+.platform-windows button.primary:active:not(:disabled) {
+  background: var(--platform-primary-pressed);
+}
+
+/* Windows 11 Inputs */
+.platform-windows input[type='text'],
+.platform-windows input[type='email'],
+.platform-windows input[type='password'],
+.platform-windows input[type='search'],
+.platform-windows input[type='number'],
+.platform-windows textarea {
+  font-family: var(--platform-font);
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 1px solid var(--platform-border);
+  border-radius: var(--platform-border-radius);
+  background: var(--platform-bg);
+  transition: border-color var(--platform-transition);
+  outline: none;
+}
+
+.platform-windows input:focus,
+.platform-windows textarea:focus {
+  border-color: var(--platform-primary);
+  border-width: 2px;
+  padding: 5px 9px;
+}
+
+/* Windows 11 Checkbox */
+.platform-windows input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--platform-border-radius);
+  accent-color: var(--platform-primary);
+  cursor: pointer;
+}
+
+/* Windows 11 Toggle Switch */
+.platform-windows input[type='checkbox'][role='switch'] {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background: #e0e0e0;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--platform-transition);
+}
+
+.platform-windows input[type='checkbox'][role='switch']::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+  background: white;
+  transition: transform var(--platform-transition);
+}
+
+.platform-windows input[type='checkbox'][role='switch']:checked {
+  background: var(--platform-primary);
+}
+
+.platform-windows input[type='checkbox'][role='switch']:checked::before {
+  transform: translateX(20px);
+}
+
+/* Windows 11 Select */
+.platform-windows select {
+  font-family: var(--platform-font);
+  font-size: 14px;
+  padding: 6px 32px 6px 10px;
+  border: 1px solid var(--platform-border);
+  border-radius: var(--platform-border-radius);
+  background: var(--platform-bg);
+  cursor: pointer;
+}
+
+/* Windows 11 Cards */
+.platform-windows [class*='card'],
+.platform-windows [data-component='card'] {
+  border-radius: var(--platform-border-radius-large);
+  border: 1px solid var(--platform-border);
+  background: var(--platform-bg);
+  box-shadow: var(--platform-shadow);
+}
+
+/* ==================== macOS (Big Sur/Monterey/Ventura/Sonoma) ==================== */
+.platform-macos {
+  --platform-primary: #007aff;
+  --platform-primary-hover: #0051d5;
+  --platform-primary-pressed: #0040a8;
+  --platform-bg: #ffffff;
+  --platform-bg-secondary: #f5f5f7;
+  --platform-border: #d1d1d6;
+  --platform-text: #000000;
+  --platform-text-secondary: #86868b;
+  --platform-border-radius: 6px;
+  --platform-border-radius-large: 10px;
+  --platform-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --platform-shadow-elevated:
+    0 4px 12px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+  --platform-font:
+    'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui,
+    sans-serif;
+  --platform-transition: cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  font-family: var(--platform-font) !important;
+  letter-spacing: -0.08px;
+}
+
+/* Apply font to all children */
+.platform-macos * {
+  font-family: var(--platform-font) !important;
+  letter-spacing: -0.08px;
+}
+
+/* macOS Buttons */
+.platform-macos button,
+.platform-macos [role='button'] {
+  font-family: var(--platform-font);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.08px;
+  border-radius: var(--platform-border-radius);
+  border: 1px solid var(--platform-border);
+  padding: 6px 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 100%);
+  color: var(--platform-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all var(--platform-transition);
+  cursor: pointer;
+}
+
+.platform-macos button:hover:not(:disabled),
+.platform-macos [role='button']:hover:not(:disabled) {
+  background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
+  border-color: #b8b8b8;
+}
+
+.platform-macos button:active:not(:disabled),
+.platform-macos [role='button']:active:not(:disabled) {
+  background: linear-gradient(180deg, #e8e8e8 0%, #e0e0e0 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.platform-macos button[data-primary='true'],
+.platform-macos button.primary {
+  background: var(--platform-primary);
+  color: white;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+}
+
+.platform-macos button[data-primary='true']:hover:not(:disabled),
+.platform-macos button.primary:hover:not(:disabled) {
+  background: var(--platform-primary-hover);
+}
+
+.platform-macos button[data-primary='true']:active:not(:disabled),
+.platform-macos button.primary:active:not(:disabled) {
+  background: var(--platform-primary-pressed);
+}
+
+/* macOS Inputs */
+.platform-macos input[type='text'],
+.platform-macos input[type='email'],
+.platform-macos input[type='password'],
+.platform-macos input[type='search'],
+.platform-macos input[type='number'],
+.platform-macos textarea {
+  font-family: var(--platform-font);
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--platform-border);
+  border-radius: 5px;
+  background: var(--platform-bg);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all var(--platform-transition);
+  outline: none;
+}
+
+.platform-macos input:focus,
+.platform-macos textarea:focus {
+  border-color: var(--platform-primary);
+  box-shadow:
+    0 0 0 4px rgba(0, 122, 255, 0.1),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* macOS Checkbox */
+.platform-macos input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  accent-color: var(--platform-primary);
+  cursor: pointer;
+}
+
+/* macOS Toggle Switch */
+.platform-macos input[type='checkbox'][role='switch'] {
+  appearance: none;
+  width: 51px;
+  height: 31px;
+  border-radius: 16px;
+  background: #e5e5ea;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--platform-transition);
+  border: none;
+  outline: none;
+}
+
+.platform-macos input[type='checkbox'][role='switch']::before {
+  content: '';
+  position: absolute;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background: white;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.15),
+    0 1px 1px rgba(0, 0, 0, 0.16);
+  transition: transform var(--platform-transition);
+}
+
+.platform-macos input[type='checkbox'][role='switch']:checked {
+  background: #34c759;
+}
+
+.platform-macos input[type='checkbox'][role='switch']:checked::before {
+  transform: translateX(20px);
+}
+
+/* macOS Select */
+.platform-macos select {
+  font-family: var(--platform-font);
+  font-size: 13px;
+  padding: 6px 32px 6px 10px;
+  border: 1px solid var(--platform-border);
+  border-radius: 5px;
+  background: var(--platform-bg);
+  cursor: pointer;
+}
+
+/* macOS Cards */
+.platform-macos [class*='card'],
+.platform-macos [data-component='card'] {
+  border-radius: var(--platform-border-radius-large);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--platform-bg);
+  box-shadow: var(--platform-shadow);
+}
+
+/* ==================== Linux (GNOME/Adwaita) ==================== */
+.platform-linux {
+  --platform-primary: #3584e4;
+  --platform-primary-hover: #1c71d8;
+  --platform-primary-pressed: #1a5fb4;
+  --platform-bg: #ffffff;
+  --platform-bg-secondary: #f6f5f4;
+  --platform-border: #cdc7c2;
+  --platform-text: #2e3436;
+  --platform-text-secondary: #5e5c64;
+  --platform-border-radius: 5px;
+  --platform-border-radius-large: 8px;
+  --platform-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  --platform-shadow-elevated: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --platform-font: 'Cantarell', 'Ubuntu', system-ui, sans-serif;
+  --platform-transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 200ms;
+  font-family: var(--platform-font) !important;
+}
+
+/* Apply font to all children */
+.platform-linux * {
+  font-family: var(--platform-font) !important;
+}
+
+/* Linux Buttons */
+.platform-linux button,
+.platform-linux [role='button'] {
+  font-family: var(--platform-font);
+  font-size: 10pt;
+  font-weight: 500;
+  border-radius: var(--platform-border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+  color: var(--platform-text);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  transition: all var(--platform-transition);
+  cursor: pointer;
+}
+
+.platform-linux button:hover:not(:disabled),
+.platform-linux [role='button']:hover:not(:disabled) {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.platform-linux button:active:not(:disabled),
+.platform-linux [role='button']:active:not(:disabled) {
+  background: linear-gradient(180deg, #e0e0e0 0%, #d8d8d8 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.platform-linux button[data-primary='true'],
+.platform-linux button.primary,
+.platform-linux button.suggested-action {
+  background: var(--platform-primary);
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.platform-linux button[data-primary='true']:hover:not(:disabled),
+.platform-linux button.primary:hover:not(:disabled) {
+  background: var(--platform-primary-hover);
+}
+
+.platform-linux button[data-primary='true']:active:not(:disabled),
+.platform-linux button.primary:active:not(:disabled) {
+  background: var(--platform-primary-pressed);
+}
+
+/* Linux Inputs */
+.platform-linux input[type='text'],
+.platform-linux input[type='email'],
+.platform-linux input[type='password'],
+.platform-linux input[type='search'],
+.platform-linux input[type='number'],
+.platform-linux textarea {
+  font-family: var(--platform-font);
+  font-size: 10pt;
+  padding: 6px 8px;
+  border: 1px solid var(--platform-border);
+  border-radius: var(--platform-border-radius);
+  background: var(--platform-bg);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all var(--platform-transition);
+  outline: none;
+}
+
+.platform-linux input:focus,
+.platform-linux textarea:focus {
+  border-color: var(--platform-primary);
+  box-shadow:
+    inset 0 0 0 1px var(--platform-primary),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Linux Checkbox */
+.platform-linux input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  accent-color: var(--platform-primary);
+  cursor: pointer;
+}
+
+/* Linux Toggle Switch */
+.platform-linux input[type='checkbox'][role='switch'] {
+  appearance: none;
+  width: 52px;
+  height: 26px;
+  border-radius: 13px;
+  background: #9a9996;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--platform-transition);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.platform-linux input[type='checkbox'][role='switch']::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 1px;
+  left: 1px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform var(--platform-transition);
+}
+
+.platform-linux input[type='checkbox'][role='switch']:checked {
+  background: var(--platform-primary);
+}
+
+.platform-linux input[type='checkbox'][role='switch']:checked::before {
+  transform: translateX(26px);
+}
+
+/* Linux Select */
+.platform-linux select {
+  font-family: var(--platform-font);
+  font-size: 10pt;
+  padding: 6px 32px 6px 8px;
+  border: 1px solid var(--platform-border);
+  border-radius: var(--platform-border-radius);
+  background: var(--platform-bg);
+  cursor: pointer;
+}
+
+/* Linux Cards */
+.platform-linux [class*='card'],
+.platform-linux [data-component='card'] {
+  border-radius: var(--platform-border-radius-large);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--platform-bg);
+  box-shadow: var(--platform-shadow);
+}
+
+/* ==================== Common Enhancements ==================== */
+
+/* Disabled state for all platforms */
+[data-platform] button:disabled,
+[data-platform] input:disabled,
+[data-platform] select:disabled,
+[data-platform] textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Focus visible for keyboard navigation */
+[data-platform] *:focus-visible {
+  outline: 2px solid var(--platform-primary);
+  outline-offset: 2px;
+}
+
+/* Radio buttons */
+[data-platform] input[type='radio'] {
+  accent-color: var(--platform-primary);
+  cursor: pointer;
+}
+
+/* Badge/Tag styling */
+.platform-windows [class*='badge'],
+.platform-windows [data-component='badge'] {
+  border-radius: 2px;
+  font-family: var(--platform-font);
+  font-size: 12px;
+}
+
+.platform-macos [class*='badge'],
+.platform-macos [data-component='badge'] {
+  border-radius: 12px;
+  font-family: var(--platform-font);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.platform-linux [class*='badge'],
+.platform-linux [data-component='badge'] {
+  border-radius: 3px;
+  font-family: var(--platform-font);
+  font-size: 9pt;
+  font-weight: 500;
+}
+
+/* Avatar styling */
+.platform-windows [class*='avatar'] {
+  border-radius: 50%;
+}
+
+.platform-macos [class*='avatar'] {
+  border-radius: 50%;
+}
+
+.platform-linux [class*='avatar'] {
+  border-radius: 50%;
+}
+
+/* Progress bars */
+.platform-windows [role='progressbar'],
+.platform-windows progress {
+  height: 4px;
+  border-radius: 2px;
+}
+
+.platform-macos [role='progressbar'],
+.platform-macos progress {
+  height: 5px;
+  border-radius: 2.5px;
+}
+
+.platform-linux [role='progressbar'],
+.platform-linux progress {
+  height: 6px;
+  border-radius: 3px;
+}

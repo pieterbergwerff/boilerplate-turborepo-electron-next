@@ -12,7 +12,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
   },

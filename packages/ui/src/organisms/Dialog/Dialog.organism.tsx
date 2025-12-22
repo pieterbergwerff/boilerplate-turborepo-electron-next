@@ -27,7 +27,14 @@ export const DialogOrganismComponent = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/50"
+        onClick={onClose}
+        onKeyDown={e => e.key === 'Escape' && onClose()}
+        role="button"
+        tabIndex={0}
+        aria-label="Close dialog"
+      />
       <div className={`relative bg-white max-w-md w-full mx-4 ${osStyles}`}>
         {title && (
           <div className="px-6 py-4 border-b border-gray-200">

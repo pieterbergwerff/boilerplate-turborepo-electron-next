@@ -48,6 +48,10 @@ export const DropdownOrganismComponent = ({
           <div
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
+            onKeyDown={e => e.key === 'Escape' && setIsOpen(false)}
+            role="button"
+            tabIndex={0}
+            aria-label="Close dropdown"
           />
           <div
             className={`absolute right-0 z-20 mt-2 w-48 bg-white border ${menuStyles}`}
