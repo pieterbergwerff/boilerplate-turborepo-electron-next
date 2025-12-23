@@ -1,0 +1,34 @@
+# NPM Ignore - Controls what gets published to npm registry
+# This project is not published to npm, but .npmignore suppresses warnings
+
+# Development files
+.git/
+.github/
+.husky/
+.tmp/
+.vscode/
+node_modules/
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+.turbo/
+.next/
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+*.spec.ts
+*.test.ts
+
+# Documentation
+docs/
+README.md
+CONTRIBUTING.md
+
+# Configuration
+*.local
+.env*
+!.env.example
