@@ -4,6 +4,10 @@
   "description": "Electron desktop app powered by Next.js",
   "author": "Pieter Bergwerff",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pieterbergwerff/boilerplate-turborepo-electron-next.git"
+  },
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
