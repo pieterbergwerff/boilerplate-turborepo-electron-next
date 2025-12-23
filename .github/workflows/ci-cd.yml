@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, develop]
     tags:
-      - 'v*'  # Trigger on version tags for releases
+      - 'v*' # Trigger on version tags for releases
   pull_request:
     branches: [main, develop]
   schedule:
