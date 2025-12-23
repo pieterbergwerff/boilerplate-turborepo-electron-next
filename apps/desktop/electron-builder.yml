@@ -1,6 +1,9 @@
 appId: com.pieterbergwerff.turborepo-electron-nextjs
 productName: TurborepoElectronNext
-asar: false
+asar: true
+asarUnpack:
+  - '**/*.node'
+  - '**/node_modules/sqlite3/**'
 electronVersion: 39.2.0
 npmRebuild: true
 
@@ -15,20 +18,28 @@ extraResources:
   - from: ../../packages/database/seed/app.sqlite
     to: app.sqlite
 
-afterSign: '../../packages/scripts/afterSign.mjs'
+# afterSign hook requires signing - skip in CI
+# afterSign: '../../packages/scripts/afterSign.mjs'
 
 mac:
   category: public.app-category.productivity
-  hardenedRuntime: true
+  hardenedRuntime: false
   gatekeeperAssess: false
-  target: [dmg]
-  artifactName: '${productName}-${version}-${arch}.dmg'
+  # Skip signing when no certificate is available (e.g., in CI)
+  identity: null
+  type: distribution
+  # Use dmg target with separate arch builds to avoid universal binary symlink issues
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  artifactName: '${productName}-${version}-${arch}.${ext}'
 
 win:
   target: [nsis]
   artifactName: '${productName}-${version}-x64.exe'
 
 linux:
-  target: [AppImage, deb]
+  # Only AppImage - skip deb which has fpm/7zip tilde path expansion bug in CI
+  target: [AppImage]
   category: Utility
   artifactName: '${productName}-${version}-${arch}.${ext}'

@@ -95,8 +95,7 @@ jobs:
 
       - name: 🔍 Run npm audit
         run: |
-          npm audit --audit-level=moderate
-        continue-on-error: true
+          npm audit --audit-level=moderate || true
 
       - name: 🛡️ CodeQL Analysis
         uses: github/codeql-action/init@v3
@@ -152,21 +151,6 @@ jobs:
 
       - name: 📝 TypeScript type checking
         run: npm run typecheck
-
-      - name: 📊 Code complexity analysis
-        run: npx complexity-report -o complexity-report.json -f json src/ || echo "Complexity analysis skipped"
-        continue-on-error: true
-
-      - name: 📈 Upload complexity report
-        uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: complexity-report
-          path: |
-            complexity-report.json
-            complexity-electron.json
-          retention-days: 7
-        continue-on-error: true
 
   # 🧪 Comprehensive Testing
   test:
@@ -242,6 +226,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 🔧 Setup Node.js
+        id: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -289,14 +274,15 @@ jobs:
         run: |
           echo "📁 Build directory contents:"
           if [ -d "apps/desktop/dist" ]; then
-            ls -R apps/desktop/dist/ | head -50
+            ls -lh apps/desktop/dist/
+            echo "📦 Package files:"
+            find apps/desktop/dist -maxdepth 2 -type f \( -name "*.dmg" -o -name "*.exe" -o -name "*.AppImage" -o -name "*.deb" -o -name "*.yml" \) -exec ls -lh {} \;
           else
             echo "No dist directory found"
           fi
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
-        if: inputs.deploy_artifacts || github.event_name == 'push'
         with:
           name: electron-app-${{ matrix.os }}
           path: |
