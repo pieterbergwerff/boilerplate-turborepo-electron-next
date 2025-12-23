@@ -24,14 +24,16 @@ mac:
   gatekeeperAssess: false
   # Skip signing when no certificate is available (e.g., in CI)
   identity: null
-  target: [dmg]
-  artifactName: '${productName}-${version}-${arch}.dmg'
+  # Use 'dir' instead of 'dmg' to avoid code signing symlink issues in CI
+  target: [dir]
+  artifactName: '${productName}-${version}-${arch}.${ext}'
 
 win:
   target: [nsis]
   artifactName: '${productName}-${version}-x64.exe'
 
 linux:
-  target: [AppImage, deb]
+  # Only AppImage - skip deb which has fpm/7zip tilde path expansion bug in CI
+  target: [AppImage]
   category: Utility
   artifactName: '${productName}-${version}-${arch}.${ext}'

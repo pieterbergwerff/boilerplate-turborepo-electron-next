@@ -23,7 +23,7 @@ export const SearchBoxMoleculeComponent = ({
         value={value ?? ''}
         onChange={onChange}
         placeholder={placeholder}
-        className="!pl-12 pr-3 w-full"
+        className="pl-12! pr-3 w-full"
       />
     </div>
   );
