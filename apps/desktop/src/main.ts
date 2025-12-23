@@ -2,6 +2,7 @@
 const path = require('path');
 const { existsSync, mkdirSync, copyFileSync } = require('fs');
 const { app, BrowserWindow, protocol, Menu } = require('electron');
+// Import from the built lib workspace within the next-electron-rsc monorepo
 const { createHandler } = require('next-electron-rsc/lib/build/index.js');
 const { createDb, runMigrations } = require('@packages/database');
 const { registerIpcHandlers } = require('./ipc.js');
