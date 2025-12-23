@@ -24,8 +24,10 @@ mac:
   gatekeeperAssess: false
   # Skip signing when no certificate is available (e.g., in CI)
   identity: null
-  # Use 'dir' instead of 'dmg' to avoid code signing symlink issues in CI
-  target: [dir]
+  # Use 'zip' to create distributable without symlink issues in CI
+  target:
+    - target: zip
+      arch: [x64, arm64]
   artifactName: '${productName}-${version}-${arch}.${ext}'
 
 win:

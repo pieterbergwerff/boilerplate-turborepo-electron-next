@@ -152,21 +152,6 @@ jobs:
       - name: 📝 TypeScript type checking
         run: npm run typecheck
 
-      - name: 📊 Code complexity analysis
-        run: npx complexity-report -o complexity-report.json -f json src/ || echo "Complexity analysis skipped"
-        continue-on-error: true
-
-      - name: 📈 Upload complexity report
-        uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: complexity-report
-          path: |
-            complexity-report.json
-            complexity-electron.json
-          retention-days: 7
-        continue-on-error: true
-
   # 🧪 Comprehensive Testing
   test:
     name: 🧪 Test Suite (Node ${{ matrix.node }} on ${{ matrix.os }})
@@ -289,7 +274,9 @@ jobs:
         run: |
           echo "📁 Build directory contents:"
           if [ -d "apps/desktop/dist" ]; then
-            ls -R apps/desktop/dist/ | head -50
+            ls -lh apps/desktop/dist/
+            echo "📦 Package files:"
+            find apps/desktop/dist -maxdepth 2 -type f \( -name "*.dmg" -o -name "*.exe" -o -name "*.AppImage" -o -name "*.deb" -o -name "*.yml" \) -exec ls -lh {} \;
           else
             echo "No dist directory found"
           fi
