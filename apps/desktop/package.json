@@ -2,7 +2,10 @@
   "name": "@apps/desktop",
   "version": "1.0.0",
   "description": "Electron desktop app powered by Next.js",
-  "author": "Pieter Bergwerff",
+  "author": {
+    "name": "Pieter Bergwerff",
+    "email": "pieterbergwerff@example.com"
+  },
   "private": true,
   "repository": {
     "type": "git",
