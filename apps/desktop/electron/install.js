@@ -7,7 +7,15 @@ const fs = require('fs');
 console.log('Electron install script executed');
 
 // Build next-electron-rsc if it exists and isn't built
-const nerscLibPath = path.join(__dirname, '..', '..', '..', 'node_modules', 'next-electron-rsc', 'lib');
+const nerscLibPath = path.join(
+  __dirname,
+  '..',
+  '..',
+  '..',
+  'node_modules',
+  'next-electron-rsc',
+  'lib'
+);
 const nerscBuildPath = path.join(nerscLibPath, 'build', 'index.js');
 
 if (fs.existsSync(nerscLibPath) && !fs.existsSync(nerscBuildPath)) {
@@ -19,7 +27,7 @@ if (fs.existsSync(nerscLibPath) && !fs.existsSync(nerscBuildPath)) {
     tsconfig.compilerOptions = tsconfig.compilerOptions || {};
     tsconfig.compilerOptions.skipLibCheck = true;
     fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 2));
-    
+
     // Build the library
     execSync('npm run build', { cwd: nerscLibPath, stdio: 'inherit' });
     console.log('next-electron-rsc built successfully');
@@ -28,4 +36,3 @@ if (fs.existsSync(nerscLibPath) && !fs.existsSync(nerscBuildPath)) {
     process.exit(1);
   }
 }
-
