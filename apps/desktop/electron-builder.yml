@@ -1,6 +1,9 @@
 appId: com.pieterbergwerff.turborepo-electron-nextjs
 productName: TurborepoElectronNext
-asar: false
+asar: true
+asarUnpack:
+  - '**/*.node'
+  - '**/node_modules/sqlite3/**'
 electronVersion: 39.2.0
 npmRebuild: true
 
