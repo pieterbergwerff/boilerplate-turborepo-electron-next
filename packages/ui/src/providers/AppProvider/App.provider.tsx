@@ -1,5 +1,5 @@
 // import components
-import ThemeProvider from '../ThemeProvider/index.js';
+import { ThemeProvider } from '../ThemeProvider/index.js';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';

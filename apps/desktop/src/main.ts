@@ -2,6 +2,7 @@
 const path = require('path');
 const { existsSync, mkdirSync, copyFileSync } = require('fs');
 const { app, BrowserWindow, protocol, Menu } = require('electron');
+const waitOn = require('wait-on');
 // Import from the built lib workspace within the next-electron-rsc monorepo
 const { createHandler } = require('next-electron-rsc/lib/build/index.js');
 const { createDb, runMigrations } = require('@packages/database');
@@ -67,6 +68,27 @@ async function getKnex(): Promise<Knex> {
 }
 
 /**
+ * Wait for Next.js dev server to be ready in development mode.
+ * @param {string} url The URL to wait for
+ * @returns {Promise<void>} Resolves when server is ready
+ */
+async function waitForDevServer(url: string): Promise<void> {
+  console.log('[DESKTOP] Waiting for Next.js dev server at', url);
+  try {
+    await waitOn({
+      resources: [url],
+      timeout: 30000, // 30 seconds timeout
+      interval: 500, // Check every 500ms
+      window: 1000, // Wait 1s after resource is available
+    });
+    console.log('[DESKTOP] Next.js dev server is ready');
+  } catch (error) {
+    console.error('[DESKTOP] Failed to wait for Next.js dev server:', error);
+    throw new Error('Next.js dev server failed to start within timeout');
+  }
+}
+
+/**
  * Build the native menu and bind theme actions.
  * @returns {void}
  */
@@ -122,8 +144,10 @@ async function createWindow(): Promise<void> {
 
   let url: string;
   if (!useStandalone) {
-    // In dev mode, use the existing Next.js dev server
-    url = 'http://localhost:3000';
+    // In dev mode, wait for the Next.js dev server to be ready
+    const devUrl = 'http://localhost:3000';
+    await waitForDevServer(devUrl);
+    url = devUrl;
   } else {
     // Use next-electron-rsc with the built output
     if (!interceptorStop || !nextUrl) {

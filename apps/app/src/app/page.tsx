@@ -1,3 +1,6 @@
+// import components
+import { List } from '@packages/ui';
+
 // import types
 import type { FC } from 'react';
 
@@ -8,7 +11,20 @@ import type { FC } from 'react';
 const HomePage: FC = () => {
   return (
     <div className="h-full w-full">
-      Hello world <a href="/settings">settings</a>
+      Hello world
+      <List
+        data={[
+          <a key="home" href="/">
+            home
+          </a>,
+          <a key="ui" href="/components">
+            ui
+          </a>,
+          <a key="settings" href="/settings">
+            settings
+          </a>,
+        ]}
+      />
     </div>
   );
 };

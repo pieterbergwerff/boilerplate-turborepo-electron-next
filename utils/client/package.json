@@ -21,6 +21,8 @@
     },
     "devDependencies": {
         "@config/typescript": "*",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "@packages/types": "*",
+        "@packages/validators": "*"
     }
 }

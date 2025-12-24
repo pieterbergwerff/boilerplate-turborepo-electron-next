@@ -1,0 +1,11 @@
+{
+  "extends": "@config/typescript/react-library.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": true
+  },
+  "include": ["src", "global.d.ts"],
+  "exclude": ["dist", "build", "node_modules"]
+}

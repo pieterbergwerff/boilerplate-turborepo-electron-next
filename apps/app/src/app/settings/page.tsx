@@ -1,13 +1,5 @@
-'use client';
-
-// import utils
-// (none)
-// import constants
-// (none)
 // import components
-import { Icon } from '@packages/ui';
-// import types
-// (none)
+import { Icon, PageMeta } from '@packages/ui';
 
 /**
  * Settings page showing example IPC calls.
@@ -15,183 +7,186 @@ import { Icon } from '@packages/ui';
  */
 export default function SettingsPage(): React.JSX.Element {
   return (
-    <div className="grid grid-cols-[260px_1fr] h-full w-full overflow-hidden text-black">
-      <aside className="border-r border-gray-200 bg-[rgb(238,238,238)] h-full overflow-y-auto">
-        <nav className="py-1 text-sm text-gray-900">
-          <button className="w-full text-left">
-            <div className="row bg-[rgb(225,233,244)]">
+    <>
+      <PageMeta title="Settings" />
+      <div className="grid grid-cols-[260px_1fr] h-full w-full overflow-hidden text-black">
+        <aside className="border-r border-gray-200 bg-[rgb(238,238,238)] h-full overflow-y-auto">
+          <nav className="py-1 text-sm text-gray-900">
+            <button className="w-full text-left">
+              <div className="row bg-[rgb(225,233,244)]">
+                <div className="flex items-center gap-3">
+                  <Icon type="default" />
+                  <span className="font-medium text-[rgb(0,102,204)]">
+                    General
+                  </span>
+                </div>
+              </div>
+            </button>
+
+            <div className="row">
               <div className="flex items-center gap-3">
                 <Icon type="default" />
-                <span className="font-medium text-[rgb(0,102,204)]">
-                  General
-                </span>
+                <span className="text-gray-900">Wi-Fi</span>
               </div>
             </div>
-          </button>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Bluetooth</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Network</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Appearance</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Notifications</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Sound</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Focus</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Screen Time</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Privacy &amp; Security</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Desktop &amp; Dock</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Displays</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="flex items-center gap-3">
+                <Icon type="default" />
+                <span className="text-gray-900">Battery</span>
+              </div>
+            </div>
+          </nav>
+        </aside>
 
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Wi-Fi</span>
+        <section className="bg-[rgb(246,246,246)] h-full w-full overflow-y-auto">
+          <header className="flex items-center gap-3 px-6 py-5">
+            <Icon type="mac-settings" />
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">General</h2>
+              <p className="text-xs text-gray-600">
+                Manage your settings for macOS.
+              </p>
             </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Bluetooth</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Network</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Appearance</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Notifications</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Sound</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Focus</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Screen Time</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Privacy &amp; Security</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Desktop &amp; Dock</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Displays</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="flex items-center gap-3">
-              <Icon type="default" />
-              <span className="text-gray-900">Battery</span>
-            </div>
-          </div>
-        </nav>
-      </aside>
+          </header>
+          <div className="subtle-divider"></div>
 
-      <section className="bg-[rgb(246,246,246)] h-full w-full overflow-y-auto">
-        <header className="flex items-center gap-3 px-6 py-5">
-          <Icon type="mac-settings" />
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">General</h2>
-            <p className="text-xs text-gray-600">
-              Manage your settings for macOS.
-            </p>
-          </div>
-        </header>
-        <div className="subtle-divider"></div>
-
-        <ul className="text-sm">
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>About</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Software Update</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Storage</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>AirDrop &amp; Handoff</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Login Items</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Language &amp; Region</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Time Machine</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-          <li className="row">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-5 rounded bg-black/10"></span>
-              <span>Transfer or Reset</span>
-            </div>
-            <span aria-hidden="true" className="text-black/30">
-              ›
-            </span>
-          </li>
-        </ul>
-      </section>
-    </div>
+          <ul className="text-sm">
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>About</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Software Update</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Storage</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>AirDrop &amp; Handoff</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Login Items</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Language &amp; Region</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Time Machine</span>
+              </div>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+            <li className="row">
+              <a href="/" className="flex items-center gap-3">
+                <span className="h-5 w-5 rounded bg-black/10"></span>
+                <span>Return to dashboard</span>
+              </a>
+              <span aria-hidden="true" className="text-black/30">
+                ›
+              </span>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </>
   );
 
   /* WINDOWS */

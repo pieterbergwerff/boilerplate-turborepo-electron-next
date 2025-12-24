@@ -7,6 +7,7 @@ export * from './Image/index.js';
 export * from './Input/index.js';
 export * from './Label/index.js';
 export * from './Link/index.js';
+export * from './PageMeta/index.js';
 export * from './ProgressBar/index.js';
 export * from './RadioGroup/index.js';
 export * from './Skeleton/index.js';

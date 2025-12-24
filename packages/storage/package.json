@@ -1,5 +1,5 @@
 {
-  "name": "@packages/ui",
+  "name": "@packages/storage",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,8 +9,7 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    },
-    "./styles.css": "./src/styles.css"
+    }
   },
   "scripts": {
     "build": "tsc",
@@ -24,19 +23,15 @@
     "react": "^19.1.0"
   },
   "dependencies": {
-    "@packages/types": "*",
-    "@packages/validators": "*",
-    "@packages/storage": "*",
-    "react-icons": "^5.5.0"
+    "mobx": "^6.13.6",
+    "mobx-react-lite": "^4.0.7",
+    "@utils/client": "*"
   },
   "devDependencies": {
-    "@config/tailwind": "*",
     "@config/typescript": "*",
-    "@tailwindcss/postcss": "^4.1.0",
     "@types/react": "^19.2.0",
-    "babel-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
-    "eslint-plugin-react-compiler": "^19.0.0-beta-26db446-20241205",
-    "tailwindcss": "^4.1.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@packages/types": "*",
+    "@packages/validators": "*"
   }
 }

@@ -13,7 +13,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    items: { control: 'object' },
+    data: { control: 'object' },
     ordered: { control: 'boolean' },
   },
 } satisfies Meta<typeof List>;
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Unordered: Story = {
   args: {
-    items: ['First item', 'Second item', 'Third item'],
+    data: ['First item', 'Second item', 'Third item'],
   },
   decorators: [
     Story => (
@@ -37,7 +37,7 @@ export const Unordered: Story = {
 export const Ordered: Story = {
   args: {
     ordered: true,
-    items: ['First step', 'Second step', 'Third step'],
+    data: ['First step', 'Second step', 'Third step'],
   },
   decorators: [
     Story => (
@@ -50,7 +50,7 @@ export const Ordered: Story = {
 
 export const TodoList: Story = {
   args: {
-    items: [
+    data: [
       'Complete project documentation',
       'Review pull requests',
       'Update dependencies',
@@ -69,7 +69,7 @@ export const TodoList: Story = {
 
 export const ShoppingList: Story = {
   args: {
-    items: ['Milk', 'Bread', 'Eggs', 'Butter', 'Cheese', 'Apples', 'Bananas'],
+    data: ['Milk', 'Bread', 'Eggs', 'Butter', 'Cheese', 'Apples', 'Bananas'],
   },
   decorators: [
     Story => (
