@@ -1,29 +1,35 @@
 'use client';
 
-// import hooks
-import useThemeProvider from './hook.js';
+// import utils
+import { observer } from '@packages/storage';
 
-// import components
-import { ThemeContext } from './context.js';
+// import stores
+import { themeStoreInstance, osStoreInstance } from '@packages/storage';
+
+// import hooks
+import { useLayoutEffect } from 'react';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';
-import type { ThemeProviderProps } from '@packages/types';
 
 /**
  * ThemeProvider component to wrap children with theme context.
  * Currently a placeholder for future theme-related logic.
  * @returns {JSX.Element | null} ThemeProvider element
  */
-export const ThemeProviderProviderComponent: FC<
-  PropsWithChildren<Pick<ThemeProviderProps, 'defaultOSTheme'>>
-> = ({ children, defaultOSTheme = 'windows' }) => {
-  const { loading, osTheme, colorScheme } = useThemeProvider({
-    defaultOSTheme,
-  });
+export const ThemeProviderComponent: FC<PropsWithChildren> = observer(
+  ({ children }: PropsWithChildren) => {
+    const loading =
+      themeStoreInstance.isInitialized() === false ||
+      osStoreInstance.isInitialized() === false;
+    const osTheme = osStoreInstance.getOs();
+    const colorScheme = themeStoreInstance.colorTheme;
 
-  return (
-    <ThemeContext.Provider value={{ osTheme, colorScheme }}>
+    useLayoutEffect(() => {
+      void Promise.all([themeStoreInstance.init(), osStoreInstance.init()]);
+    }, []);
+
+    return (
       <div
         className="h-screen w-screen"
         {...(!loading
@@ -32,8 +38,8 @@ export const ThemeProviderProviderComponent: FC<
       >
         {children}
       </div>
-    </ThemeContext.Provider>
-  );
-};
+    );
+  }
+);
 
-export default ThemeProviderProviderComponent;
+export default ThemeProviderComponent;

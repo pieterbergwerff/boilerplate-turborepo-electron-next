@@ -1,4 +1,4 @@
 export {
   default,
-  ThemeProviderProviderComponent,
+  ThemeProviderComponent as ThemeProvider,
 } from './ThemeProvider.provider.js';

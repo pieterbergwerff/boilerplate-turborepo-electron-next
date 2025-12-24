@@ -1,6 +1,8 @@
 // import types
 import type { ReactNode } from 'react';
 
+type OSTheme = 'windows' | 'osx' | 'linux';
+
 // ThemeProvider types
 export interface ThemeContextValue {
   osTheme: OSTheme;
@@ -19,7 +21,9 @@ export interface UseThemeProviderReturnType {
 }
 
 // OSTheme type (used by ThemeProvider) - should match @packages/validators but include unknown for fallback
-export type OSTheme = 'windows' | 'osx' | 'linux';
+//export type OSTheme = 'windows' | 'osx' | 'linux';
+
+export * from './stores/index.js';
 
 // Re-export all component types
 // Atoms

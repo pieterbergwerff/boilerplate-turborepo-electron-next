@@ -2,7 +2,7 @@
 import type { ReactNode } from 'react';
 
 export interface ListOrganismPropTypes {
-  items: ReactNode[];
+  data: ReactNode[];
   ordered?: boolean;
   className?: string;
 }

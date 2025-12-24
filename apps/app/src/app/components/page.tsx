@@ -35,6 +35,7 @@ import {
   Toast,
   Toolbar,
   Tooltip,
+  PageMeta,
 } from '@packages/ui';
 import '@packages/ui/styles.css';
 
@@ -47,6 +48,7 @@ export default function ComponentsPage(): React.JSX.Element {
 
   return (
     <div>
+      <PageMeta title="UI Components Showcase" />
       <div className="mb-12">
         <Text as="h1" size="4xl" weight="bold">
           UI Components Showcase
@@ -56,6 +58,8 @@ export default function ComponentsPage(): React.JSX.Element {
           Tailwind CSS.
         </Text>
       </div>
+
+      <a href="/">Go to Home Page</a>
 
       {/* Atoms Section */}
       <section className="mb-16">
@@ -515,13 +519,13 @@ export default function ComponentsPage(): React.JSX.Element {
               <Text size="sm" weight="semibold" className="mb-2">
                 Unordered
               </Text>
-              <List items={['Item 1', 'Item 2', 'Item 3']} />
+              <List data={['Item 1', 'Item 2', 'Item 3']} />
             </div>
             <div>
               <Text size="sm" weight="semibold" className="mb-2">
                 Ordered
               </Text>
-              <List ordered items={['First', 'Second', 'Third']} />
+              <List ordered data={['First', 'Second', 'Third']} />
             </div>
           </div>
         </div>
