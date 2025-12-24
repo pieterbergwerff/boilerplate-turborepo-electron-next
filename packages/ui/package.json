@@ -4,24 +4,57 @@
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "types": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
-    "./styles.css": "./src/styles.css"
+    "./styles.css": "./src/styles.css",
+    "./atoms/*": {
+      "types": "./src/atoms/*/index.ts",
+      "default": "./src/atoms/*/index.ts"
+    },
+    "./molecules/*": {
+      "types": "./src/molecules/*/index.ts",
+      "default": "./src/molecules/*/index.ts"
+    },
+    "./organisms/*": {
+      "types": "./src/organisms/*/index.ts",
+      "default": "./src/organisms/*/index.ts"
+    },
+    "./providers/*": {
+      "types": "./src/providers/*/index.ts",
+      "default": "./src/providers/*/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/*"
+      ]
+    }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "echo 'Source-only package - no build needed'",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist .turbo"
   },
   "peerDependencies": {
-    "react": "^19.1.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "dependencies": {
     "@packages/types": "*",

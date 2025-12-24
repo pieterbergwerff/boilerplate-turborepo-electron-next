@@ -1,5 +1,5 @@
 // import components
-import { AppProvider } from '@packages/ui';
+import AppProvider from '@packages/ui/providers/AppProvider';
 
 // import styles
 import '@packages/fonts/fonts.css';

@@ -2,41 +2,39 @@
 // import utils
 import React from 'react';
 // import components
-import {
-  Accordion,
-  Avatar,
-  AvatarGroup,
-  Badge,
-  Breadcrumb,
-  Button,
-  Card,
-  Carousel,
-  Checkbox,
-  ColorPicker,
-  Combobox,
-  Divider,
-  Dropdown,
-  Image,
-  Input,
-  Label,
-  Link,
-  List,
-  Menu,
-  Popover,
-  ProgressBar,
-  RadioGroup,
-  SearchBox,
-  Select,
-  Skeleton,
-  Slider,
-  Switch,
-  Text,
-  Textarea,
-  Toast,
-  Toolbar,
-  Tooltip,
-  PageMeta,
-} from '@packages/ui';
+import { Accordion } from '@packages/ui/organisms/Accordion';
+import { Avatar } from '@packages/ui/atoms/Avatar';
+import { AvatarGroup } from '@packages/ui/molecules/AvatarGroup';
+import { Badge } from '@packages/ui/atoms/Badge';
+import { Breadcrumb } from '@packages/ui/molecules/Breadcrumb';
+import { Button } from '@packages/ui/atoms/Button';
+import { Card } from '@packages/ui/organisms/Card';
+import { Carousel } from '@packages/ui/organisms/Carousel';
+import { Checkbox } from '@packages/ui/atoms/Checkbox';
+import { ColorPicker } from '@packages/ui/molecules/ColorPicker';
+import { Combobox } from '@packages/ui/organisms/Combobox';
+import { Divider } from '@packages/ui/atoms/Divider';
+import { Dropdown } from '@packages/ui/organisms/Dropdown';
+import { Image } from '@packages/ui/atoms/Image';
+import { Input } from '@packages/ui/atoms/Input';
+import { Label } from '@packages/ui/atoms/Label';
+import { Link } from '@packages/ui/atoms/Link';
+import { List } from '@packages/ui/organisms/List';
+import { Menu } from '@packages/ui/organisms/Menu';
+import { Popover } from '@packages/ui/organisms/Popover';
+import { ProgressBar } from '@packages/ui/atoms/ProgressBar';
+import { RadioGroup } from '@packages/ui/atoms/RadioGroup';
+import { SearchBox } from '@packages/ui/molecules/SearchBox';
+import { Select } from '@packages/ui/molecules/Select';
+import { Skeleton } from '@packages/ui/atoms/Skeleton';
+import { Slider } from '@packages/ui/atoms/Slider';
+import { Switch } from '@packages/ui/atoms/Switch';
+import { Text } from '@packages/ui/atoms/Text';
+import { Textarea } from '@packages/ui/atoms/Textarea';
+import { Toast } from '@packages/ui/molecules/Toast';
+import { Toolbar } from '@packages/ui/organisms/Toolbar';
+import { Tooltip } from '@packages/ui/molecules/Tooltip';
+import { PageMeta } from '@packages/ui/atoms/PageMeta';
 import '@packages/ui/styles.css';
 
 /**

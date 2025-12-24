@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Link } from '@packages/ui';
+import { Link } from '@packages/ui/atoms/Link';
 
 /**
  * Link component for navigation.

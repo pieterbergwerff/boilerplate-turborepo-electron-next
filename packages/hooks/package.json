@@ -1,20 +1,41 @@
 {
   "name": "@packages/hooks",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/*"
+      ]
     }
   },
   "scripts": {
+    "build": "echo 'Source-only package - no build needed'",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "clean": "rm -rf dist .turbo"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^19.1.0"
   },
   "devDependencies": {

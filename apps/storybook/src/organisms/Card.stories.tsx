@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Card } from '@packages/ui';
+import { Card } from '@packages/ui/organisms/Card';
 
 /**
  * Card component for content containers.

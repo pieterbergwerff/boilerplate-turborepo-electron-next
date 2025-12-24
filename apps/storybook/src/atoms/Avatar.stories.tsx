@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Avatar } from '@packages/ui';
+import { Avatar } from '@packages/ui/atoms/Avatar';
 
 /**
  * Avatar component displays user profile images with fallback text support.

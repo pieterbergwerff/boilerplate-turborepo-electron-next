@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Accordion } from '@packages/ui';
+import { Accordion } from '@packages/ui/organisms/Accordion';
 
 /**
  * Accordion component for collapsible content sections.
