@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Tooltip } from '@packages/ui';
+import { Tooltip } from '@packages/ui/molecules/Tooltip';
 
 /**
  * Tooltip component for contextual information.

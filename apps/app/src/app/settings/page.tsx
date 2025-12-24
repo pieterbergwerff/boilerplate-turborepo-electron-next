@@ -1,5 +1,6 @@
 // import components
-import { Icon, PageMeta } from '@packages/ui';
+import { Icon } from '@packages/ui/molecules/Icon';
+import { PageMeta } from '@packages/ui/atoms/PageMeta';
 
 /**
  * Settings page showing example IPC calls.

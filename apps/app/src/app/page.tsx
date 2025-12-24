@@ -1,5 +1,5 @@
 // import components
-import { List } from '@packages/ui';
+import { List } from '@packages/ui/organisms/List';
 
 // import types
 import type { FC } from 'react';

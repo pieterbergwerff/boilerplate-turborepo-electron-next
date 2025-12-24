@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Input } from '@packages/ui';
+import { Input } from '@packages/ui/atoms/Input';
 
 /**
  * Input component for text entry.

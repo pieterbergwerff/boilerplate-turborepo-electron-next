@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Dialog } from '@packages/ui';
+import { Dialog } from '@packages/ui/organisms/Dialog';
 
 /**
  * Dialog component for modal interactions.

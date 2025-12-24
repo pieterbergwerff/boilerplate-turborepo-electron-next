@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Select } from '@packages/ui';
+import { Select } from '@packages/ui/molecules/Select';
 
 /**
  * Select component for dropdown selection.

@@ -8,7 +8,7 @@ import { observer } from '@packages/storage';
 import { themeStoreInstance, osStoreInstance } from '@packages/storage';
 
 // import components
-import { TitleBar } from '@packages/ui';
+import { TitleBar } from '@packages/ui/atoms/TitleBar';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';

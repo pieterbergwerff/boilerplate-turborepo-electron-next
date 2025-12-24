@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Divider } from '@packages/ui';
+import { Divider } from '@packages/ui/atoms/Divider';
 
 /**
  * Divider component for visual separation.

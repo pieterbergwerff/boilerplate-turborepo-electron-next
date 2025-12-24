@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Text } from '@packages/ui';
+import { Text } from '@packages/ui/atoms/Text';
 
 /**
  * Text component for typography.

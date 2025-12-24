@@ -34,7 +34,17 @@ const csp = [
 const base: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
-  transpilePackages: ['@packages/ui', '@packages/validators'],
+  transpilePackages: [
+    '@packages/ui',
+    '@packages/validators',
+    '@packages/database',
+    '@packages/hooks',
+    '@packages/storage',
+    '@packages/types',
+    '@utils/client',
+    '@utils/common',
+    '@utils/server',
+  ],
   headers: async () => [
     {
       source: '/:path*',

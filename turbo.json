@@ -27,6 +27,44 @@
             "cache": false,
             "outputs": []
         },
+        "@packages/ui#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@packages/database#build": {
+            "outputs": [
+                "dist/**"
+            ]
+        },
+        "@packages/hooks#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@packages/storage#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@packages/types#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@packages/validators#build": {
+            "outputs": [
+                "dist/**"
+            ]
+        },
+        "@utils/client#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@utils/common#build": {
+            "cache": false,
+            "outputs": []
+        },
+        "@utils/server#build": {
+            "cache": false,
+            "outputs": []
+        },
         "dev": {
             "dependsOn": [
                 "^build"

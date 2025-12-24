@@ -1,7 +1,7 @@
 // import utils
 import type { Meta, StoryObj } from '@storybook/react';
 // import components
-import { Combobox } from '@packages/ui';
+import { Combobox } from '@packages/ui/organisms/Combobox';
 
 /**
  * Combobox component for autocomplete input.
