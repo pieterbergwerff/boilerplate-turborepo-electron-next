@@ -28,7 +28,6 @@
     }
   },
   "scripts": {
-    "build": "echo 'Source-only package - no build needed'",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write src",

@@ -23,6 +23,9 @@ export interface UseThemeProviderReturnType {
 // OSTheme type (used by ThemeProvider) - should match @packages/validators but include unknown for fallback
 //export type OSTheme = 'windows' | 'osx' | 'linux';
 
+// Export Electron API types (window.api)
+export type { ElectronApi } from './electron.js';
+
 export * from './stores/index.js';
 
 // Re-export all component types

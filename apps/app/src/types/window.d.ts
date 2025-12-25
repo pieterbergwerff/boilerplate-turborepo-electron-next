@@ -1,23 +1,10 @@
-// import types
-import type {
-  AppInfoValidatorType,
-  OpenDialogOptionsType,
-  OpenDialogResultType,
-  SettingsValidatorType,
-  ThemeValidatorType,
-} from '@packages/validators';
-
-declare global {
-  interface Window {
-    api?: {
-      getSettings: () => Promise<Settings>;
-      setTheme: (theme: ThemeValidatorType) => Promise<SettingsValidatorType>;
-      getAppInfo: () => Promise<AppInfoValidatorType>;
-      openDialog: (
-        options?: OpenDialogOptionsType
-      ) => Promise<OpenDialogResultType>;
-    };
-  }
-}
+/**
+ * Global window type augmentation.
+ * Import the Electron API types from @packages/types.
+ *
+ * Note: This file re-exports the global Window augmentation from @packages/types.
+ * The actual type definition is in @packages/types/src/electron.d.ts
+ */
+import '@packages/types/electron.js';
 
 export {};

@@ -1,46 +1,46 @@
 {
-    "name": "@packages/validators",
-    "version": "1.0.0",
-    "private": true,
-    "main": "./src/index.ts",
-    "module": "./src/index.ts",
-    "types": "./src/index.ts",
-    "sideEffects": false,
-    "files": [
-        "src"
-    ],
-    "exports": {
-        ".": {
-            "types": "./src/index.ts",
-            "import": "./src/index.ts",
-            "require": "./dist/index.js"
-        },
-        "./*": {
-            "types": "./src/*.ts",
-            "import": "./src/*.ts",
-            "require": "./dist/*.js"
-        }
+  "name": "@packages/validators",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
     },
-    "typesVersions": {
-        "*": {
-            "*": [
-                "./src/*"
-            ]
-        }
-    },
-    "scripts": {
-        "build": "tsc",
-        "typecheck": "tsc --noEmit",
-        "lint": "eslint src",
-        "format": "prettier --write src",
-        "format:check": "prettier --check src",
-        "clean": "rm -rf dist .turbo"
-    },
-    "dependencies": {
-        "zod": "^3.22.0"
-    },
-    "devDependencies": {
-        "@config/typescript": "*",
-        "typescript": "^5.8.3"
+    "./*": {
+      "types": "./src/*.ts",
+      "import": "./src/*.ts",
+      "require": "./dist/*.js"
     }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "clean": "rm -rf dist .turbo node_modules"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@config/typescript": "*",
+    "typescript": "^5.8.3"
+  }
 }

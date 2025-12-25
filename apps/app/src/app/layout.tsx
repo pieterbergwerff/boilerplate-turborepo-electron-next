@@ -3,7 +3,7 @@ import AppProvider from '@packages/ui/providers/AppProvider';
 
 // import styles
 import '@packages/fonts/fonts.css';
-import '../styles/globals.css';
+import '@packages/ui/styles.css';
 
 // import types
 import type { Metadata } from 'next';
@@ -15,7 +15,7 @@ const RootLayout: FC<RootLayoutPropTypes> = ({ children }) => {
   return (
     <html lang="en">
       <head></head>
-      <body className="bg-gray-50">
+      <body>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

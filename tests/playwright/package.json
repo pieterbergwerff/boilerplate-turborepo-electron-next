@@ -1,22 +1,14 @@
 {
-    "name": "@tests/playwright",
-    "version": "1.0.0",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "test:e2e": "playwright test",
-        "test:e2e:ui": "playwright test --ui",
-        "test": "echo 'Use test:e2e for E2E tests'",
-        "test:coverage": "echo 'No coverage for E2E tests'",
-        "build": "echo 'No build needed for E2E tests'",
-        "clean": "echo 'No clean needed for E2E tests'",
-        "typecheck": "echo 'No typecheck needed for E2E tests'",
-        "lint": "echo 'No lint needed for E2E tests'",
-        "format": "echo 'No format needed for E2E tests'",
-        "format:check": "echo 'No format check needed for E2E tests'"
-    },
-    "devDependencies": {
-        "@playwright/test": "^1.50.0",
-        "playwright": "^1.50.0"
-    }
+  "name": "@tests/playwright",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "playwright": "^1.50.0"
+  }
 }

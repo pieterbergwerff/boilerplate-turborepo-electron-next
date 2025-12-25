@@ -45,12 +45,11 @@
     }
   },
   "scripts": {
-    "build": "echo 'Source-only package - no build needed'",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
-    "clean": "rm -rf dist .turbo"
+    "clean": "rm -rf dist .turbo node_modules"
   },
   "peerDependencies": {
     "react": "^19.1.0",

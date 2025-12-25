@@ -21,10 +21,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      lines: 80,
-      functions: 80,
-      branches: 75,
-      statements: 80,
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 75,
+        statements: 80,
+      },
       include: ['../../apps/*/src/**', '../../packages/*/src/**'],
       exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.config.*'],
     },
