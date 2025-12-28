@@ -1,1 +1,1 @@
-export { default, BoxAtomComponent } from './Box.atom';
+export { default, BoxAtomComponent } from './Box.atom.js';

@@ -1,4 +1,4 @@
 export {
   default,
   ThemeSwitcherMoleculeComponent,
-} from './ThemeSwitcher.molecule';
+} from './ThemeSwitcher.molecule.js';

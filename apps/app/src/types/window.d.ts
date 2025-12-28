@@ -1,10 +1,17 @@
 /**
- * Global window type augmentation.
- * Import the Electron API types from @packages/types.
- *
- * Note: This file re-exports the global Window augmentation from @packages/types.
- * The actual type definition is in @packages/types/src/electron.d.ts
+ * Global window type augmentation for the Next.js app.
+ * Re-exports the Electron API types from @packages/types.
  */
-import '@packages/types/electron';
+import type { ElectronApi } from '@packages/types';
+
+declare global {
+  interface Window {
+    /**
+     * Electron API exposed via contextBridge.
+     * Only available in Electron renderer process.
+     */
+    api?: ElectronApi;
+  }
+}
 
 export {};
