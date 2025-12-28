@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @source '../src';
 
 :root {
@@ -7,13 +6,8 @@
   --background: #ffffff;
 }
 
-[data-color-scheme='dark'] {
-  --foreground: #ffffff;
-  --background: #1a1a1a;
-}
-
 @media (prefers-color-scheme: dark) {
-  :root:not([data-color-scheme]) {
+  :root {
     --foreground: #ffffff;
     --background: #1a1a1a;
   }
@@ -35,5 +29,4 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  transition: all 0.3s ease;
 }

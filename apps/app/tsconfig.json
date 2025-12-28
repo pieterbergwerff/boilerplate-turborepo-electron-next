@@ -6,6 +6,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "src/types/window.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",

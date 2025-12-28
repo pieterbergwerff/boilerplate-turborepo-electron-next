@@ -1,8 +1,10 @@
 // import types
 import type { ReactNode } from 'react';
-
-export interface LabelAtomPropTypes {
+import type BoxAtomComponentPropTypes from './Box.types.js';
+export interface LabelAtomPropTypes extends BoxAtomComponentPropTypes<'label'> {
   children: ReactNode;
   htmlFor?: string;
   required?: boolean;
 }
+
+export default LabelAtomPropTypes;

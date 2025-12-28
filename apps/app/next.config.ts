@@ -39,7 +39,6 @@ const base: NextConfig = {
     '@packages/validators',
     '@packages/database',
     '@packages/hooks',
-    '@packages/storage',
     '@packages/types',
     '@utils/client',
     '@utils/common',

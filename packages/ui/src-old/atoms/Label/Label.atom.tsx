@@ -1,6 +1,3 @@
-// import components
-import Box from '../Box';
-
 // import types
 import type { JSX } from 'react';
 import type { LabelAtomPropTypes } from '@packages/types';
@@ -14,24 +11,15 @@ export const LabelAtomComponent = ({
   children,
   htmlFor,
   required = false,
-  ...props
 }: LabelAtomPropTypes): JSX.Element => {
   return (
-    <Box
-      component="label"
+    <label
       htmlFor={htmlFor}
-      clsx={['block text-sm font-medium text-gray-700', props.clsx]
-        .filter(Boolean)
-        .join(' ')}
-      {...props}
+      className="block text-sm font-medium text-gray-700"
     >
       {children}
-      {required && (
-        <Box component="span" className="text-red-500 ml-1">
-          *
-        </Box>
-      )}
-    </Box>
+      {required && <span className="text-red-500 ml-1">*</span>}
+    </label>
   );
 };
 

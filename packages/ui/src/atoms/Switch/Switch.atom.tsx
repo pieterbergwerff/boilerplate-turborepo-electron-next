@@ -1,3 +1,9 @@
+'use client';
+
+// import components
+import Box from '../Box';
+import Label from '../Label';
+
 // import types
 import type { JSX } from 'react';
 import type { SwitchAtomPropTypes } from '@packages/types';
@@ -13,18 +19,9 @@ export const SwitchAtomComponent = ({
   disabled = false,
   label,
 }: SwitchAtomPropTypes): JSX.Element => {
-  const trackStyles = [
-    // Windows 11 Fluent Design
-    'windows:peer-checked:bg-win-accent',
-    // macOS
-    'osx:peer-checked:bg-mac-accent',
-    // Linux GNOME
-    'linux:peer-checked:bg-linux-accent',
-  ].join(' ');
-
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
-      <div className="relative">
+    <Label className="flex items-center gap-2 cursor-pointer">
+      <Box clsx="relative">
         <input
           type="checkbox"
           checked={checked}
@@ -32,13 +29,28 @@ export const SwitchAtomComponent = ({
           disabled={disabled}
           className="sr-only peer"
         />
-        <div
-          className={`w-11 h-6 bg-gray-300 rounded-full peer peer-disabled:opacity-50 transition-colors ${trackStyles}`}
+        <Box
+          clsx={[
+            'w-11',
+            'h-6',
+            'bg-gray-300',
+            'rounded-full',
+            'peer',
+            'peer-disabled:opacity-50',
+            'transition-colors',
+            'windows:peer-checked:bg-win-accent',
+            'osx:peer-checked:bg-mac-accent',
+            'linux:peer-checked:bg-linux-accent',
+          ].join(' ')}
         />
-        <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform peer-checked:translate-x-5" />
-      </div>
-      {label && <span className="text-sm text-gray-700">{label}</span>}
-    </label>
+        <Box clsx="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform peer-checked:translate-x-5" />
+      </Box>
+      {label && (
+        <Box component="span" clsx="text-sm text-gray-700">
+          {label}
+        </Box>
+      )}
+    </Label>
   );
 };
 

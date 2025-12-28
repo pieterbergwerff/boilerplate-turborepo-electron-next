@@ -3,6 +3,7 @@ import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [],
+  darkMode: ['selector', '[data-color-scheme="dark"]'],
   theme: {
     extend: {
       // Windows 11 Fluent Design colors

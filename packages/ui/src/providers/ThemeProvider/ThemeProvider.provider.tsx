@@ -1,13 +1,12 @@
 'use client';
 
-// import utils
-import { observer } from '@packages/storage';
-
-// import stores
-import { themeStoreInstance, osStoreInstance } from '@packages/storage';
-
 // import hooks
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
+import useTheme from '@packages/hooks/useTheme.hook';
+import usePlatform from '@packages/hooks/usePlatform.hook';
+
+// import components
+import Box from '../../atoms/Box';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';
@@ -17,29 +16,33 @@ import type { FC, PropsWithChildren } from 'react';
  * Currently a placeholder for future theme-related logic.
  * @returns {JSX.Element | null} ThemeProvider element
  */
-export const ThemeProviderComponent: FC<PropsWithChildren> = observer(
-  ({ children }: PropsWithChildren) => {
-    const loading =
-      themeStoreInstance.isInitialized() === false ||
-      osStoreInstance.isInitialized() === false;
-    const osTheme = osStoreInstance.getOs();
-    const colorScheme = themeStoreInstance.colorTheme;
+export const ThemeProviderComponent: FC<PropsWithChildren> = ({
+  children,
+}: PropsWithChildren) => {
+  const platform = usePlatform();
+  const { isLoading, theme } = useTheme();
 
-    useLayoutEffect(() => {
-      void Promise.all([themeStoreInstance.init(), osStoreInstance.init()]);
-    }, []);
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
 
-    return (
-      <div
-        className="h-screen w-screen"
-        {...(!loading
-          ? { 'data-os-theme': osTheme, 'data-color-scheme': colorScheme }
-          : {})}
-      >
-        {children}
-      </div>
-    );
+    const root = document.documentElement;
+    root.dataset.colorScheme = theme;
+    root.dataset.osTheme = platform;
+  }, [theme, platform]);
+
+  if (isLoading) {
+    return null;
   }
-);
+
+  return (
+    <Box
+      clsx="h-screen w-screen"
+      data-color-scheme={theme}
+      data-os-theme={platform}
+    >
+      {children}
+    </Box>
+  );
+};
 
 export default ThemeProviderComponent;
