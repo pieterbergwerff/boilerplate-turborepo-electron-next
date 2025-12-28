@@ -4,7 +4,7 @@
 import useTheme from '@packages/hooks/useTheme.hook';
 
 // import components
-import Switch from '../../atoms/Switch';
+import Switch from '../../atoms/Switch/index.js';
 
 // import types
 import type { FC } from 'react';

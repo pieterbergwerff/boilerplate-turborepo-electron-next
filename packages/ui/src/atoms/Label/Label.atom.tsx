@@ -1,5 +1,5 @@
 // import components
-import Box from '../Box';
+import Box from '../Box/index.js';
 
 // import types
 import type { JSX } from 'react';

@@ -6,7 +6,7 @@ import useTheme from '@packages/hooks/useTheme.hook';
 import usePlatform from '@packages/hooks/usePlatform.hook';
 
 // import components
-import Box from '../../atoms/Box';
+import Box from '../../atoms/Box/index.js';
 
 // import types
 import type { FC, PropsWithChildren } from 'react';

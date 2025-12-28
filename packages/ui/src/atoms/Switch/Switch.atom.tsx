@@ -1,8 +1,8 @@
 'use client';
 
 // import components
-import Box from '../Box';
-import Label from '../Label';
+import Box from '../Box/index.js';
+import Label from '../Label/index.js';
 
 // import types
 import type { JSX } from 'react';
