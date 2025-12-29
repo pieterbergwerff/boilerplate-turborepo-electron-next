@@ -33,7 +33,7 @@ const csp = [
 
 const base: NextConfig = {
   output: 'standalone',
-  reactCompiler: true,
+  // reactCompiler: true, // Temporarily disabled due to potential WebAssembly conflicts in Electron
   transpilePackages: [
     '@packages/ui',
     '@packages/validators',

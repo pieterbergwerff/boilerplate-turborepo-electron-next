@@ -4,13 +4,16 @@ asar: true
 asarUnpack:
   - '**/*.node'
   - '**/node_modules/sqlite3/**'
+  - '**/*.wasm'
 electronVersion: 39.2.0
-npmRebuild: true
+npmRebuild: false
+buildDependenciesFromSource: false
 
 # Include Electron build + Next standalone app
 files:
   - dist/**/*
   - nextjs-standalone/**/*
+  - node_modules/**/*
   - '!nextjs-standalone/node_modules/electron'
   - '!nextjs-standalone/node_modules/electron/**'
 
@@ -23,15 +26,16 @@ extraResources:
 
 mac:
   category: public.app-category.productivity
-  hardenedRuntime: false
+  hardenedRuntime: true
   gatekeeperAssess: false
+  entitlements: entitlements.mac.plist
   # Skip signing when no certificate is available (e.g., in CI)
   identity: null
   type: distribution
-  # Use dmg target with separate arch builds to avoid universal binary symlink issues
+  # Use dir target instead of dmg to avoid hdiutil issues
   target:
-    - target: dmg
-      arch: [x64, arm64]
+    - target: dir
+      arch: [arm64, x64]
   artifactName: '${productName}-${version}-${arch}.${ext}'
 
 win:

@@ -4,7 +4,6 @@ const { app, BrowserWindow, protocol, Menu } = require('electron');
 
 import waitForDevServer from './utils/waitForDevServer.util.js';
 import getMenu from './utils/getMenu.util.js';
-import detectOSTheme from './utils/detectOSTheme.util.js';
 import loadEnv from './utils/loadEnv.util.js';
 import getKnex from './utils/getKnex.util.js';
 
@@ -14,8 +13,18 @@ const { registerIpcHandlers } = require('./handlers/index.js');
 
 // import types
 import type { Knex } from 'knex';
-import type { OsThemeValidatorType } from '@packages/validators';
 import type { BrowserWindow as BrowserWindowType } from 'electron';
+
+// Add V8 flags to resolve WebAssembly and security issues on macOS
+app.commandLine.appendSwitch('--disable-web-security');
+app.commandLine.appendSwitch('--no-sandbox');
+app.commandLine.appendSwitch('--disable-features', 'VizDisplayCompositor');
+app.commandLine.appendSwitch(
+  '--js-flags',
+  '--no-wasm-trap-handler --no-wasm-generic-wrapper'
+);
+app.commandLine.appendSwitch('--disable-dev-shm-usage');
+app.commandLine.appendSwitch('--ignore-certificate-errors');
 
 let win: BrowserWindowType | undefined;
 let knexInstance: Knex | undefined;
@@ -23,9 +32,8 @@ let ipcRegistered = false;
 let interceptorStop: (() => void) | undefined;
 let nextUrl: string | undefined;
 
-// Load .env file and detect OS theme
+// Load .env file
 loadEnv(app.getAppPath());
-const osTheme: OsThemeValidatorType = detectOSTheme(process.platform);
 
 /**
  * Create the main BrowserWindow and wire Next handler.
@@ -35,7 +43,7 @@ async function createWindow(): Promise<void> {
   const isPackaged = app.isPackaged;
   const useStandalone =
     isPackaged || process.env.ELECTRON_USE_STANDALONE === 'true';
-  const knex = await getKnex();
+  await getKnex();
   if (!ipcRegistered) {
     registerIpcHandlers();
     ipcRegistered = true;

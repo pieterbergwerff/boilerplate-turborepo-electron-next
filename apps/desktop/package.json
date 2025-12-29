@@ -16,7 +16,7 @@
     "build": "tsc",
     "dev": "tsc-watch --noClear --onSuccess 'electron .' --project tsconfig.json",
     "copy-nextjs": "node scripts/copy-nextjs.mjs",
-    "build:electron": "npm run copy-nextjs && electron-builder --config electron-builder.yml",
+    "build:electron": "npm run copy-nextjs && node scripts/prepare-workspace-packages.mjs && electron-builder --config electron-builder.yml",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write .",

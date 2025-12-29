@@ -10,7 +10,6 @@ Successfully refactored ALL workspace packages (`@packages/*` and `@utils/*`) to
 
 - `@packages/database` - Database layer with Knex/SQLite (hybrid: source for Next.js, dist for Electron)
 - `@packages/hooks` - React hooks library (pure source-only)
-- `@packages/storage` - MobX state management stores (pure source-only)
 - `@packages/types` - TypeScript type definitions (pure source-only)
 - `@packages/ui` - React component library (pure source-only) ✅ Previously completed
 - `@packages/validators` - Zod validation schemas (hybrid: source for Next.js, dist for Electron)
@@ -130,7 +129,6 @@ transpilePackages: [
   '@packages/validators',
   '@packages/database',
   '@packages/hooks',
-  '@packages/storage',
   '@packages/types',
   '@utils/client',
   '@utils/common',
